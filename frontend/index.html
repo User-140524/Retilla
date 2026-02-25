@@ -675,9 +675,10 @@
                 </div>
             </div>
             <nav>
-                <a onclick="showPage('home')" class="nav-link active">Home</a>
-                <a onclick="showPage('items')" class="nav-link">Browse Items</a>
-                <a onclick="showPage('login')" class="nav-link">Login</a>
+              
+                <a onclick="showPage('home', event)" class="nav-link active">Home</a>
+                <a onclick="showPage('items', event)" class="nav-link">Browse Items</a>
+                <a onclick="showPage('login', event)" class="nav-link">Login</a>
             </nav>
         </div>
     </header>
@@ -745,6 +746,7 @@
                 <button class="filter-btn" onclick="filterItems('beds')">Beds</button>
                 <button class="filter-btn" onclick="filterItems('furniture')">Furniture</button>
                 <button class="filter-btn" onclick="filterItems('appliances')">Appliances</button>
+                
             </div>
 
             <div class="items-grid" id="itemsGrid">
@@ -828,121 +830,129 @@
     </footer>
 
     <script>
-        // Items Data
-        const itemsData = [
-            { id: 1, title: "Single Bed", category: "beds", price: 200, emoji: "🛏️" },
-            { id: 2, title: "Double Bed", category: "beds", price: 400, emoji: "🛏️" },
-            { id: 3, title: "Sofa Set", category: "furniture", price: 500, emoji: "🛋️" },
-            { id: 4, title: "Dining Table", category: "furniture", price: 350, emoji: "🍽️" },
-            { id: 5, title: "Refrigerator", category: "appliances", price: 450, emoji: "🧊" },
-            { id: 6, title: "Washing Machine", category: "appliances", price: 550, emoji: "🧺" },
-            { id: 7, title: "Microwave", category: "appliances", price: 150, emoji: "🍞" },
-            { id: 8, title: "Bookshelf", category: "furniture", price: 200, emoji: "📚" },
-        ];
+const itemsData = [
+    { id: 1, title: "Single Bed", category: "beds", price: 200, emoji: "🛏️" },
+    { id: 2, title: "Double Bed", category: "beds", price: 400, emoji: "🛏️" },
+    { id: 3, title: "Sofa Set", category: "furniture", price: 500, emoji: "🛋️" },
+    { id: 4, title: "Dining Table", category: "furniture", price: 350, emoji: "🍽️" },
+    { id: 5, title: "Refrigerator", category: "appliances", price: 450, emoji: "🧊" },
+    { id: 6, title: "Washing Machine", category: "appliances", price: 550, emoji: "🧺" },
+    { id: 7, title: "Microwave", category: "appliances", price: 150, emoji: "🍞" },
+    { id: 8, title: "Bookshelf", category: "furniture", price: 200, emoji: "📚" },
+];
 
-        let currentFilter = 'all';
+let currentFilter = "all";
 
-        function initializeItems() {
-            renderItems(itemsData);
-        }
+function initializeItems() {
+    renderItems(itemsData);
+}
 
-        function renderItems(items) {
-            const grid = document.getElementById('itemsGrid');
-            grid.innerHTML = items.map(item => `
-                <div class="item-card">
-                    <div class="item-image">${item.emoji}</div>
-                    <div class="item-content">
-                        <div class="item-category">${item.category}</div>
-                        <h3 class="item-title">${item.title}</h3>
-                        <div class="item-price">
-                            <span class="monthly">₹${item.price}</span>/month
-                        </div>
-                        <button class="btn-small" onclick="addToCart(${item.id})">Add to Cart</button>
-                    </div>
+function renderItems(items) {
+    const grid = document.getElementById("itemsGrid");
+    grid.innerHTML = items.map(item => `
+        <div class="item-card">
+            <div class="item-image">${item.emoji}</div>
+            <div class="item-content">
+                <div class="item-category">${item.category}</div>
+                <h3 class="item-title">${item.title}</h3>
+                <div class="item-price">
+                    <span class="monthly">₹${item.price}</span>/month
                 </div>
-            `).join('');
-        }
+                <button class="btn-small" onclick="addToCart(${item.id})">
+                    Add to Cart
+                </button>
+            </div>
+        </div>
+    `).join("");
+}
 
-        function filterItems(category) {
-            currentFilter = category;
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            event.target.classList.add('active');
+function filterItems(category, event) {
+    currentFilter = category;
 
-            if (category === 'all') {
-                renderItems(itemsData);
-            } else {
-                const filtered = itemsData.filter(item => item.category === category);
-                renderItems(filtered);
-            }
-        }
+    document.querySelectorAll(".filter-btn").forEach(btn => {
+        btn.classList.remove("active");
+    });
 
-        function addToCart(itemId) {
-            const item = itemsData.find(i => i.id === itemId);
-            alert(`✓ "${item.title}" added to cart!`);
-        }
+    if (event) event.target.classList.add("active");
 
-        function showPage(pageId) {
-            document.querySelectorAll('.page').forEach(page => {
-                page.classList.remove('active');
-            });
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.classList.remove('active');
-            });
-            document.getElementById(pageId).classList.add('active');
-            event.target.classList.add('active');
-            if (pageId === 'items') {
-                initializeItems();
-            }
-            window.scrollTo(0, 0);
-        }
+    if (category === "all") {
+        renderItems(itemsData);
+    } else {
+        const filtered = itemsData.filter(item => item.category === category);
+        renderItems(filtered);
+    }
+}
 
-        function toggleLoginMethod(method) {
-            document.querySelectorAll('.toggle-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            event.target.classList.add('active');
+function addToCart(itemId) {
+    const item = itemsData.find(i => i.id === itemId);
+    alert(`✓ "${item.title}" added to cart!`);
+}
 
-            const emailGroup = document.getElementById('emailGroup');
-            const phoneGroup = document.getElementById('phoneGroup');
+function showPage(pageId, event) {
+    document.querySelectorAll(".page").forEach(page => {
+        page.classList.remove("active");
+    });
 
-            if (method === 'email') {
-                emailGroup.classList.remove('form-group-hidden');
-                phoneGroup.classList.add('form-group-hidden');
-                document.getElementById('email').required = true;
-                document.getElementById('phone').required = false;
-            } else {
-                emailGroup.classList.add('form-group-hidden');
-                phoneGroup.classList.remove('form-group-hidden');
-                document.getElementById('email').required = false;
-                document.getElementById('phone').required = true;
-            }
-        }
+    document.querySelectorAll(".nav-link").forEach(link => {
+        link.classList.remove("active");
+    });
 
-        function handleLogin(event) {
-            event.preventDefault();
-            const password = document.getElementById('password').value;
+    document.getElementById(pageId).classList.add("active");
 
-            if (password.length < 6) {
-                alert('Password must be at least 6 characters long');
-                return;
-            }
+    if (event) event.target.classList.add("active");
 
-            const successMsg = document.getElementById('successMessage');
-            successMsg.classList.add('show');
-            document.querySelector('form').reset();
+    if (pageId === "items") {
+        initializeItems();
+    }
 
-            setTimeout(() => {
-                successMsg.classList.remove('show');
-            }, 3000);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
 
-            setTimeout(() => {
-                showPage('home');
-            }, 1500);
-        }
+function toggleLoginMethod(method, event) {
+    document.querySelectorAll(".toggle-btn").forEach(btn => {
+        btn.classList.remove("active");
+    });
 
-        document.addEventListener('DOMContentLoaded', initializeItems);
-    </script>
+    if (event) event.target.classList.add("active");
+
+    const emailGroup = document.getElementById("emailGroup");
+    const phoneGroup = document.getElementById("phoneGroup");
+
+    if (method === "email") {
+        emailGroup.classList.remove("form-group-hidden");
+        phoneGroup.classList.add("form-group-hidden");
+        document.getElementById("email").required = true;
+        document.getElementById("phone").required = false;
+    } else {
+        emailGroup.classList.add("form-group-hidden");
+        phoneGroup.classList.remove("form-group-hidden");
+        document.getElementById("email").required = false;
+        document.getElementById("phone").required = true;
+    }
+}
+
+function handleLogin(event) {
+    event.preventDefault();
+
+    const password = document.getElementById("password").value;
+
+    if (password.length < 6) {
+        alert("Password must be at least 6 characters long");
+        return;
+    }
+
+    const successMsg = document.getElementById("successMessage");
+    successMsg.classList.add("show");
+
+    document.querySelector("form").reset();
+
+    setTimeout(() => {
+        successMsg.classList.remove("show");
+        showPage("home");
+    }, 1500);
+}
+
+document.addEventListener("DOMContentLoaded", initializeItems);
+</script>
 </body>
 </html>
