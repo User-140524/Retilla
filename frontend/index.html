@@ -1,1 +1,948 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rentilla - Furniture & Appliance Rentals</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Lora:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        :root {
+            --cream: #f5f3f0;
+            --white: #ffffff;
+            --dark-cream: #e8e4df;
+            --taupe: #a89a8f;
+            --charcoal: #2c2420;
+            --accent-dino: #6ba85a;
+            --light-gray: #f9f8f7;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Lora', serif;
+            background-color: var(--cream);
+            color: var(--charcoal);
+            overflow-x: hidden;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: linear-gradient(135deg, var(--white) 0%, var(--light-gray) 100%);
+            padding: 1rem 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--dark-cream);
+        }
+
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: white;
+            padding: 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--charcoal);
+            letter-spacing: 0.5px;
+            line-height: 1;
+        }
+
+        .tagline {
+            font-size: 0.75rem;
+            color: var(--accent-dino);
+            font-style: italic;
+            letter-spacing: 0.3px;
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--charcoal);
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            padding-bottom: 4px;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--accent-dino);
+            border-bottom-color: var(--accent-dino);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Page Sections */
+        .page {
+            display: none;
+            animation: fadeIn 0.4s ease-in;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* HOME PAGE */
+        .hero {
+            padding: 5rem 0;
+            text-align: center;
+            min-height: 70vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, var(--dark-cream) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: -1;
+        }
+
+        .hero-logo {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 2rem;
+            border-radius: 50%;
+            background: white;
+            padding: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--charcoal);
+            margin-bottom: 1rem;
+            letter-spacing: -1px;
+            line-height: 1.2;
+        }
+
+        .hero .tagline-main {
+            font-size: 1.8rem;
+            color: var(--accent-dino);
+            margin-bottom: 2rem;
+            font-style: italic;
+            font-weight: 500;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--taupe);
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            border-radius: 2px;
+        }
+
+        .btn-primary {
+            background: var(--accent-dino);
+            color: white;
+            box-shadow: 0 4px 15px rgba(107, 168, 90, 0.2);
+        }
+
+        .btn-primary:hover {
+            background: #5a9650;
+            box-shadow: 0 6px 20px rgba(107, 168, 90, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: var(--white);
+            color: var(--charcoal);
+            border: 2px solid var(--accent-dino);
+        }
+
+        .btn-secondary:hover {
+            background: var(--accent-dino);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 4rem 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 3rem;
+            margin: 3rem 0;
+        }
+
+        .feature-card {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 3px;
+            text-align: center;
+            border-top: 3px solid var(--accent-dino);
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .feature-card:hover {
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 0.8rem;
+            color: var(--charcoal);
+        }
+
+        .feature-card p {
+            color: var(--taupe);
+            line-height: 1.6;
+        }
+
+        /* ITEMS PAGE */
+        .items-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            padding: 3rem 0;
+        }
+
+        .item-card {
+            background: var(--white);
+            border-radius: 3px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .item-card:hover {
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            transform: translateY(-8px);
+        }
+
+        .item-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, var(--dark-cream), var(--light-gray));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: var(--taupe);
+        }
+
+        .item-content {
+            padding: 1.5rem;
+        }
+
+        .item-category {
+            font-size: 0.8rem;
+            color: var(--accent-dino);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .item-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--charcoal);
+        }
+
+        .item-price {
+            color: var(--taupe);
+            margin-bottom: 1rem;
+        }
+
+        .item-price .monthly {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--accent-dino);
+        }
+
+        .btn-small {
+            width: 100%;
+            padding: 0.8rem;
+            background: var(--accent-dino);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .btn-small:hover {
+            background: #5a9650;
+        }
+
+        .filter-section {
+            padding: 2rem 0;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filter-btn {
+            padding: 0.6rem 1.5rem;
+            border: 2px solid var(--accent-dino);
+            background: var(--white);
+            color: var(--charcoal);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Playfair Display', serif;
+            border-radius: 2px;
+        }
+
+        .filter-btn.active {
+            background: var(--accent-dino);
+            color: white;
+            border-color: var(--accent-dino);
+        }
+
+        .filter-btn:hover {
+            border-color: var(--accent-dino);
+            background: var(--accent-dino);
+            color: white;
+        }
+
+        /* LOGIN PAGE */
+        .login-container {
+            max-width: 500px;
+            margin: 3rem auto;
+            padding: 3rem;
+            background: var(--white);
+            border-radius: 3px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            min-height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .login-logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            border-radius: 50%;
+            background: white;
+            padding: 6px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .login-container h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: var(--charcoal);
+            text-align: center;
+        }
+
+        .login-subtitle {
+            text-align: center;
+            color: var(--taupe);
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.6rem;
+            color: var(--charcoal);
+            font-weight: 500;
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+        }
+
+        input[type="email"],
+        input[type="tel"],
+        input[type="password"] {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid var(--dark-cream);
+            border-radius: 2px;
+            font-size: 1rem;
+            font-family: 'Lora', serif;
+            background: var(--light-gray);
+            color: var(--charcoal);
+            transition: all 0.3s ease;
+        }
+
+        input[type="email"]:focus,
+        input[type="tel"]:focus,
+        input[type="password"]:focus {
+            outline: none;
+            border-color: var(--accent-dino);
+            background: var(--white);
+            box-shadow: 0 0 0 3px rgba(107, 168, 90, 0.1);
+        }
+
+        .login-toggle {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .toggle-btn {
+            flex: 1;
+            padding: 0.8rem;
+            border: 2px solid var(--dark-cream);
+            background: var(--light-gray);
+            color: var(--taupe);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+        }
+
+        .toggle-btn.active {
+            background: var(--accent-dino);
+            color: white;
+            border-color: var(--accent-dino);
+        }
+
+        .form-group-hidden {
+            display: none;
+        }
+
+        .form-group-hidden.show {
+            display: block;
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 1rem;
+            background: var(--accent-dino);
+            color: white;
+            border: none;
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 1rem;
+            letter-spacing: 0.5px;
+            border-radius: 2px;
+        }
+
+        .btn-login:hover {
+            background: #5a9650;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(107, 168, 90, 0.2);
+        }
+
+        .signup-link {
+            text-align: center;
+            color: var(--taupe);
+        }
+
+        .signup-link a {
+            color: var(--accent-dino);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .signup-link a:hover {
+            color: var(--charcoal);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--charcoal);
+            color: var(--cream);
+            padding: 3rem 0 1rem;
+            margin-top: 4rem;
+            border-top: 1px solid var(--dark-cream);
+        }
+
+        footer .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        footer h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--accent-dino);
+        }
+
+        footer p, footer a {
+            color: var(--dark-cream);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-size: 0.95rem;
+            margin-bottom: 0.6rem;
+            display: block;
+        }
+
+        footer a:hover {
+            color: var(--accent-dino);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--taupe);
+            padding-top: 1.5rem;
+            text-align: center;
+            color: var(--taupe);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav {
+                gap: 1.5rem;
+                font-size: 0.9rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .login-container {
+                margin: 2rem 1rem;
+                padding: 2rem;
+            }
+        }
+
+        /* Section Headers */
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem 0;
+        }
+
+        .section-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--charcoal);
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            color: var(--taupe);
+            font-size: 1.1rem;
+        }
+
+        /* Success Message */
+        .success-message {
+            display: none;
+            background: var(--light-gray);
+            border-left: 4px solid var(--accent-dino);
+            padding: 1.5rem;
+            border-radius: 2px;
+            margin-bottom: 2rem;
+            color: var(--charcoal);
+        }
+
+        .success-message.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo-section">
+                <img src="data:image/jpeg;base64,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" alt="Rentilla Logo" class="logo-img">
+                <div class="logo-text">
+                    <div class="brand-name">RENTILLA</div>
+                    <div class="tagline">Just Move In, We've Got You.</div>
+                </div>
+            </div>
+            <nav>
+                <a onclick="showPage('home')" class="nav-link active">Home</a>
+                <a onclick="showPage('items')" class="nav-link">Browse Items</a>
+                <a onclick="showPage('login')" class="nav-link">Login</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- HOME PAGE -->
+    <div id="home" class="page active">
+        <section class="hero">
+            <img src="data:image/jpeg;base64,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" alt="Rentilla Dinosaur" class="hero-logo">
+            <h1>Just Move In,</h1>
+            <h1>We've Got You.</h1>
+            <p>Premium furniture and appliances for rent. Flexible terms, affordable prices, and hassle-free rentals.</p>
+            <div class="cta-buttons">
+                <button class="btn btn-primary" onclick="showPage('items')">Browse Items</button>
+                <button class="btn btn-secondary" onclick="showPage('login')">Sign In</button>
+            </div>
+        </section>
+
+        <div class="container">
+            <section class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">💰</div>
+                    <h3>Affordable Rentals</h3>
+                    <p>Flexible monthly plans that fit your budget. Single bed from ₹200, Double bed from ₹400.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📦</div>
+                    <h3>Easy Setup</h3>
+                    <p>We handle delivery and installation. Just sit back and relax.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔧</div>
+                    <h3>Maintenance Included</h3>
+                    <p>Full maintenance and support included in every rental.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🚚</div>
+                    <h3>Fast Delivery</h3>
+                    <p>Quick delivery to your doorstep. No long waits, just quality service.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">✓</div>
+                    <h3>Quality Assurance</h3>
+                    <p>All items are inspected and maintained to the highest standards.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📞</div>
+                    <h3>24/7 Support</h3>
+                    <p>Customer support available round the clock for your peace of mind.</p>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- ITEMS PAGE -->
+    <div id="items" class="page">
+        <div class="container">
+            <div class="section-header">
+                <h2>Our Rental Inventory</h2>
+                <p>Choose from our carefully selected collection of furniture and appliances</p>
+            </div>
+
+            <div class="filter-section">
+                <span style="color: var(--charcoal); font-weight: 600;">Filter:</span>
+                <button class="filter-btn active" onclick="filterItems('all')">All Items</button>
+                <button class="filter-btn" onclick="filterItems('beds')">Beds</button>
+                <button class="filter-btn" onclick="filterItems('furniture')">Furniture</button>
+                <button class="filter-btn" onclick="filterItems('appliances')">Appliances</button>
+            </div>
+
+            <div class="items-grid" id="itemsGrid">
+                <!-- Items will be generated here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- LOGIN PAGE -->
+    <div id="login" class="page">
+        <div class="login-container">
+            <img src="data:image/jpeg;base64,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" alt="Rentilla Dinosaur" class="login-logo">
+            <h2>Welcome to Rentilla</h2>
+            <p class="login-subtitle">Sign in to manage your rental account</p>
+
+            <div class="success-message" id="successMessage">
+                ✓ Login successful! Welcome to Rentilla.
+            </div>
+
+            <div class="login-toggle">
+                <button class="toggle-btn active" onclick="toggleLoginMethod('email')">Email</button>
+                <button class="toggle-btn" onclick="toggleLoginMethod('phone')">Phone</button>
+            </div>
+
+            <form onsubmit="handleLogin(event)">
+                <div class="form-group" id="emailGroup">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" placeholder="your@email.com" required>
+                </div>
+
+                <div class="form-group form-group-hidden" id="phoneGroup">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" placeholder="+91 99999 99999">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Enter your password" required>
+                </div>
+
+                <button type="submit" class="btn-login">Sign In</button>
+            </form>
+
+            <p class="signup-link">
+                New to Rentilla? <a href="#signup">Create an account</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div>
+                <h4>RENTILLA</h4>
+                <p>Making premium rental furniture and appliances accessible to everyone.</p>
+            </div>
+            <div>
+                <h4>Quick Links</h4>
+                <a onclick="showPage('items')">Browse Items</a>
+                <a onclick="showPage('home')">Home</a>
+                <a href="#about">About Us</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <div>
+                <h4>Support</h4>
+                <a href="#help">Help Center</a>
+                <a href="#faq">FAQ</a>
+                <a href="#terms">Terms & Conditions</a>
+                <a href="#privacy">Privacy Policy</a>
+            </div>
+            <div>
+                <h4>Contact Us</h4>
+                <p>Email: support@rentilla.com</p>
+                <p>Phone: 1-800-RENTILLA</p>
+                <p>Hours: 24/7 Support</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Rentilla. All rights reserved. Just Move In, We've Got You.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Items Data
+        const itemsData = [
+            { id: 1, title: "Single Bed", category: "beds", price: 200, emoji: "🛏️" },
+            { id: 2, title: "Double Bed", category: "beds", price: 400, emoji: "🛏️" },
+            { id: 3, title: "Sofa Set", category: "furniture", price: 500, emoji: "🛋️" },
+            { id: 4, title: "Dining Table", category: "furniture", price: 350, emoji: "🍽️" },
+            { id: 5, title: "Refrigerator", category: "appliances", price: 450, emoji: "🧊" },
+            { id: 6, title: "Washing Machine", category: "appliances", price: 550, emoji: "🧺" },
+            { id: 7, title: "Microwave", category: "appliances", price: 150, emoji: "🍞" },
+            { id: 8, title: "Bookshelf", category: "furniture", price: 200, emoji: "📚" },
+        ];
+
+        let currentFilter = 'all';
+
+        function initializeItems() {
+            renderItems(itemsData);
+        }
+
+        function renderItems(items) {
+            const grid = document.getElementById('itemsGrid');
+            grid.innerHTML = items.map(item => `
+                <div class="item-card">
+                    <div class="item-image">${item.emoji}</div>
+                    <div class="item-content">
+                        <div class="item-category">${item.category}</div>
+                        <h3 class="item-title">${item.title}</h3>
+                        <div class="item-price">
+                            <span class="monthly">₹${item.price}</span>/month
+                        </div>
+                        <button class="btn-small" onclick="addToCart(${item.id})">Add to Cart</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterItems(category) {
+            currentFilter = category;
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            if (category === 'all') {
+                renderItems(itemsData);
+            } else {
+                const filtered = itemsData.filter(item => item.category === category);
+                renderItems(filtered);
+            }
+        }
+
+        function addToCart(itemId) {
+            const item = itemsData.find(i => i.id === itemId);
+            alert(`✓ "${item.title}" added to cart!`);
+        }
+
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            document.getElementById(pageId).classList.add('active');
+            event.target.classList.add('active');
+            if (pageId === 'items') {
+                initializeItems();
+            }
+            window.scrollTo(0, 0);
+        }
+
+        function toggleLoginMethod(method) {
+            document.querySelectorAll('.toggle-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            const emailGroup = document.getElementById('emailGroup');
+            const phoneGroup = document.getElementById('phoneGroup');
+
+            if (method === 'email') {
+                emailGroup.classList.remove('form-group-hidden');
+                phoneGroup.classList.add('form-group-hidden');
+                document.getElementById('email').required = true;
+                document.getElementById('phone').required = false;
+            } else {
+                emailGroup.classList.add('form-group-hidden');
+                phoneGroup.classList.remove('form-group-hidden');
+                document.getElementById('email').required = false;
+                document.getElementById('phone').required = true;
+            }
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            const password = document.getElementById('password').value;
+
+            if (password.length < 6) {
+                alert('Password must be at least 6 characters long');
+                return;
+            }
+
+            const successMsg = document.getElementById('successMessage');
+            successMsg.classList.add('show');
+            document.querySelector('form').reset();
+
+            setTimeout(() => {
+                successMsg.classList.remove('show');
+            }, 3000);
+
+            setTimeout(() => {
+                showPage('home');
+            }, 1500);
+        }
+
+        document.addEventListener('DOMContentLoaded', initializeItems);
+    </script>
+</body>
+</html>
