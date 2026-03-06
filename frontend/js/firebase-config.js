@@ -21,7 +21,7 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
+console.log("Firebase connected successfully");
+
 // Export services
 export { auth, db };
-
-console.log("Firebase connected successfully");
