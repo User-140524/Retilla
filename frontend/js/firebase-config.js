@@ -1,10 +1,9 @@
-
-// Firebase SDK imports
+// Import Firebase modules
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-// Firebase configuration
+// Your Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyDyUDpOct_C3J5k4tG2rBo0dtCn8qSAx_s",
   authDomain: "rentilla-app.firebaseapp.com",
@@ -22,5 +21,5 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-// export for use in other files
+// Export services
 export { auth, db };
