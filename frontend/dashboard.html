@@ -1,1 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rentilla Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f3f0;
+      margin: 0;
+      padding: 2rem;
+      color: #2c2420;
+    }
+    .dashboard {
+      max-width: 900px;
+      margin: 0 auto;
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+    }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    .card {
+      background: #f9f8f7;
+      padding: 1rem;
+      border-radius: 8px;
+      border-left: 4px solid #6ba85a;
+    }
+    button {
+      background: #6ba85a;
+      color: white;
+      border: none;
+      padding: 0.8rem 1.2rem;
+      cursor: pointer;
+      border-radius: 4px;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard">
+    <h1>Welcome to your Dashboard</h1>
+    <p id="userInfo">Loading user info...</p>
 
+    <button id="logoutBtn">Logout</button>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>Current Rentals</h3>
+        <p>No active rentals yet.</p>
+      </div>
+      <div class="card">
+        <h3>Rental History</h3>
+        <p>Your previous rentals will appear here.</p>
+      </div>
+      <div class="card">
+        <h3>Pending Requests</h3>
+        <p>Your pending approvals will appear here.</p>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="js/dashboard.js"></script>
+</body>
+</html>
