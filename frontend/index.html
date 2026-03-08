@@ -741,15 +741,34 @@
                 <h2>Our Rental Inventory</h2>
                 <p>Choose from our carefully selected collection of furniture and appliances</p>
             </div>
-
             <div class="filter-section">
-                <span style="color: var(--charcoal); font-weight: 600;">Filter:</span>
-                <button class="filter-btn active" onclick="filterItems('all')">All Items</button>
-                <button class="filter-btn" onclick="filterItems('beds')">Beds</button>
-                <button class="filter-btn" onclick="filterItems('furniture')">Furniture</button>
-                <button class="filter-btn" onclick="filterItems('appliances')">Appliances</button>
-                
+            <span style="color: var(--charcoal); font-weight: 600;">Filter:</span>
+
+            <button class="filter-btn active" onclick="filterItems('all', event)">
+            All Items
+            </button>
+
+            <button class="filter-btn" onclick="filterItems('beds', event)">
+            Beds
+            </button>
+
+            <button class="filter-btn" onclick="filterItems('furniture', event)">
+            Furniture
+            </button>
+
+            <button class="filter-btn" onclick="filterItems('electronics', event)">
+            Electronics
+            </button>
+
+            <button class="filter-btn" onclick="filterItems('tables', event)">
+            Tables
+            </button>
+
+            <button class="filter-btn" onclick="filterItems('sofas', event)">
+            Sofas
+            </button>
             </div>
+           
 
             <div class="items-grid" id="itemsGrid">
                 <!-- Items will be generated here -->
@@ -859,64 +878,6 @@
     </footer>
 
     <script>
-const itemsData = [
-    { id: 1, title: "Single Bed", category: "beds", price: 200, emoji: "🛏️" },
-    { id: 2, title: "Double Bed", category: "beds", price: 400, emoji: "🛏️" },
-    { id: 3, title: "Sofa Set", category: "furniture", price: 500, emoji: "🛋️" },
-    { id: 4, title: "Dining Table", category: "furniture", price: 350, emoji: "🍽️" },
-    { id: 5, title: "Refrigerator", category: "appliances", price: 450, emoji: "🧊" },
-    { id: 6, title: "Washing Machine", category: "appliances", price: 550, emoji: "🧺" },
-    { id: 7, title: "Microwave", category: "appliances", price: 150, emoji: "🍞" },
-    { id: 8, title: "Bookshelf", category: "furniture", price: 200, emoji: "📚" },
-];
-
-let currentFilter = "all";
-
-function initializeItems() {
-    renderItems(itemsData);
-}
-
-function renderItems(items) {
-    const grid = document.getElementById("itemsGrid");
-    grid.innerHTML = items.map(item => `
-        <div class="item-card">
-            <div class="item-image">${item.emoji}</div>
-            <div class="item-content">
-                <div class="item-category">${item.category}</div>
-                <h3 class="item-title">${item.title}</h3>
-                <div class="item-price">
-                    <span class="monthly">₹${item.price}</span>/month
-                </div>
-                <button class="btn-small" onclick="addToCart(${item.id})">
-                    Add to Cart
-                </button>
-            </div>
-        </div>
-    `).join("");
-}
-
-function filterItems(category, event) {
-    currentFilter = category;
-
-    document.querySelectorAll(".filter-btn").forEach(btn => {
-        btn.classList.remove("active");
-    });
-
-    if (event) event.target.classList.add("active");
-
-    if (category === "all") {
-        renderItems(itemsData);
-    } else {
-        const filtered = itemsData.filter(item => item.category === category);
-        renderItems(filtered);
-    }
-}
-
-function addToCart(itemId) {
-    const item = itemsData.find(i => i.id === itemId);
-    alert(`✓ "${item.title}" added to cart!`);
-}
-
 function showPage(pageId, event) {
     document.querySelectorAll(".page").forEach(page => {
         page.classList.remove("active");
@@ -960,30 +921,11 @@ function toggleLoginMethod(method, event) {
     }
 }
 
-function handleLogin(event) {
-    event.preventDefault();
 
-    const password = document.getElementById("password").value;
 
-    if (password.length < 6) {
-        alert("Password must be at least 6 characters long");
-        return;
-    }
-
-    const successMsg = document.getElementById("successMessage");
-    successMsg.classList.add("show");
-
-    document.querySelector("form").reset();
-
-    setTimeout(() => {
-        successMsg.classList.remove("show");
-        showPage("home");
-    }, 1500);
-}
-
-document.addEventListener("DOMContentLoaded", initializeItems);
 </script>
 <script type="module" src="js/firebase-config.js"></script>
 <script type="module" src="js/auth.js"></script>
+<script type="module" src="js/products.js"></script>
 </body>
 </html>
