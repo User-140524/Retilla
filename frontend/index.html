@@ -878,7 +878,7 @@
     </footer>
 
     <script>
-function showPage(pageId, event) {
+    function showPage(pageId, event) {
     document.querySelectorAll(".page").forEach(page => {
         page.classList.remove("active");
     });
@@ -891,8 +891,8 @@ function showPage(pageId, event) {
 
     if (event) event.target.classList.add("active");
 
-    if (pageId === "items") {
-        initializeItems();
+    if (pageId === "items" && window.fetchProducts) {
+    window.fetchProducts();
     }
 
     window.scrollTo({ top: 0, behavior: "smooth" });
