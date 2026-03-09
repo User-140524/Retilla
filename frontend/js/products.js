@@ -39,8 +39,8 @@ function renderProducts(items) {
         <div class="item-price">
           <span class="monthly">₹${item.price || 0}</span>/month
         </div>
-        <button class="btn-small" onclick="requestRental('${item.id}')">
-          Request Rental
+        <button class="btn-small" onclick="addProductToCart('${item.id}')">
+          Add to Cart
         </button>
       </div>
     </div>
@@ -63,11 +63,22 @@ window.filterItems = function(category, event) {
   renderProducts(filtered);
 };
 
-window.requestRental = function(productId) {
+window.addProductToCart = function(productId) {
   const product = allProducts.find(item => item.id === productId);
   if (!product) return;
 
-  alert(`Rental request feature coming next for: ${product.name}`);
+  if (!window.addToCart) {
+    alert("Cart system not loaded.");
+    return;
+  }
+
+  window.addToCart({
+    productId: product.id,
+    name: product.name,
+    category: product.category,
+    monthlyPrice: product.price,
+    emoji: product.emoji || "📦"
+  });
 };
 
 window.fetchProducts = fetchProducts;
