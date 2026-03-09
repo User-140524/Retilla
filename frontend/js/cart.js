@@ -134,7 +134,37 @@ function startRentalRequest() {
         return;
     }
 
-    alert("Rental request form will be added next.");
+    if (typeof showPage === "function") {
+        showPage("request");
+    } else {
+        const requestPage = document.getElementById("request");
+        document.querySelectorAll(".page").forEach(page => page.classList.remove("active"));
+        if (requestPage) requestPage.classList.add("active");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    renderRequestSummary();
+}
+
+function renderRequestSummary() {
+    const requestSummary = document.getElementById("requestSummary");
+    if (!requestSummary) return;
+
+    const total = cart.reduce((sum, item) => sum + (item.monthlyPrice * item.quantity), 0);
+
+    requestSummary.innerHTML = `
+        <div class="cart-summary" style="margin-bottom: 2rem;">
+            <h3>Request Summary</h3>
+            ${cart.map(item => `
+                <p>
+                    ${item.name} — Qty: ${item.quantity}, Duration: ${item.durationMonths} month(s),
+                    ₹${item.monthlyPrice}/month
+                </p>
+            `).join("")}
+            <hr style="margin: 1rem 0;">
+            <p><strong>Total Monthly Rent: ₹${total}</strong></p>
+        </div>
+    `;
 }
 
 window.addToCart = addToCart;
@@ -143,3 +173,4 @@ window.updateQuantity = updateQuantity;
 window.renderCart = renderCart;
 window.startRentalRequest = startRentalRequest;
 window.updateDuration = updateDuration;
+window.renderRequestSummary = renderRequestSummary;
