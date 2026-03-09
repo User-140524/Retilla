@@ -25,6 +25,10 @@ const signupForm = document.getElementById("signupForm");
 
 const authMessage = document.getElementById("authMessage");
 
+window.isUserLoggedIn = function() {
+  return !!auth.currentUser;
+};
+
 // ----- TOGGLE BETWEEN LOGIN & SIGNUP -----
 if (showSignupBtn) {
   showSignupBtn.addEventListener("click", (e) => {
@@ -85,7 +89,14 @@ if (signupForm) {
         createdAt: serverTimestamp()
       });
 
+      const checkoutIntent = localStorage.getItem("rentillaCheckoutIntent");
+
+      if (checkoutIntent === "true") {
       window.location.href = "dashboard.html";
+      } else {
+      window.location.href = "dashboard.html";
+    }
+      
     } catch (error) {
       authMessage.textContent = error.message;
     }
@@ -107,7 +118,14 @@ if (loginForm) {
 
     try {
       await signInWithEmailAndPassword(auth, email, password);
+      const checkoutIntent = localStorage.getItem("rentillaCheckoutIntent");
+
+      if (checkoutIntent === "true") {
       window.location.href = "dashboard.html";
+      } else {
+      window.location.href = "dashboard.html";
+      }
+
     } catch (error) {
       authMessage.textContent = "Invalid email or password.";
     }
