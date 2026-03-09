@@ -33,6 +33,62 @@
             overflow-x: hidden;
         }
 
+        .cart-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            }
+
+        .cart-item-card {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                background: var(--white);
+                padding: 1.5rem;
+                border-radius: 4px;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+                gap: 1rem;
+            }
+
+.cart-item-left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.cart-item-emoji {
+    font-size: 2.5rem;
+}
+
+.cart-item-right {
+    text-align: right;
+}
+
+.cart-quantity-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    justify-content: flex-end;
+    margin-bottom: 0.75rem;
+}
+
+.cart-quantity-controls button {
+    padding: 0.4rem 0.8rem;
+    border: none;
+    background: var(--accent-dino);
+    color: white;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.cart-summary {
+    background: var(--white);
+    padding: 1.5rem;
+    border-radius: 4px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    text-align: right;
+}
         /* Header & Navigation */
         header {
             background: linear-gradient(135deg, var(--white) 0%, var(--light-gray) 100%);
@@ -677,10 +733,10 @@
                 </div>
             </div>
             <nav>
-              
                 <a onclick="showPage('home', event)" class="nav-link active">Home</a>
                 <a onclick="showPage('items', event)" class="nav-link">Browse Items</a>
                 <a onclick="showPage('login', event)" class="nav-link">Login</a>
+                <a onclick="showPage('cart', event)" class="nav-link">Cart</a>
             </nav>
         </div>
     </header>
@@ -776,6 +832,19 @@
         </div>
     </div>
 
+    <div id="cart" class="page">
+    <div class="container">
+        <div class="section-header">
+            <h2>Your Cart</h2>
+            <p>Review selected items before submitting a rental request</p>
+        </div>
+
+        <div id="cartContent">
+            <p>Your cart is empty.</p>
+        </div>
+    </div>
+</div>
+    
     <!-- LOGIN PAGE -->
 <div id="login" class="page">
   <div class="login-container">
@@ -892,11 +961,16 @@
     if (event) event.target.classList.add("active");
 
     if (pageId === "items" && window.fetchProducts) {
-    window.fetchProducts();
+        window.fetchProducts();
+    }
+
+    if (pageId === "cart" && window.renderCart) {
+        window.renderCart();
     }
 
     window.scrollTo({ top: 0, behavior: "smooth" });
 }
+
 
 function toggleLoginMethod(method, event) {
     document.querySelectorAll(".toggle-btn").forEach(btn => {
@@ -927,5 +1001,6 @@ function toggleLoginMethod(method, event) {
 <script type="module" src="js/firebase-config.js"></script>
 <script type="module" src="js/auth.js"></script>
 <script type="module" src="js/products.js"></script>
+<script src="js/cart.js"></script>
 </body>
 </html>
