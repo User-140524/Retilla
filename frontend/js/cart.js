@@ -60,11 +60,18 @@ function renderCart() {
     if (!cartContent) return;
 
     if (cart.length === 0) {
-        cartContent.innerHTML = `<p>Your cart is empty.</p>`;
+        cartContent.innerHTML = `
+            <div class="empty-cart-state">
+                <h3>Your cart is empty</h3>
+                <p>Add products from the Browse Items page to continue.</p>
+                <button class="btn btn-primary" onclick="showPage('items')">Browse Items</button>
+            </div>
+        `;
         return;
     }
 
     let total = 0;
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
 
     const cartItemsHTML = cart.map(item => {
         const subtotal = item.monthlyPrice * item.quantity;
@@ -75,10 +82,10 @@ function renderCart() {
                 <div class="cart-item-left">
                     <div class="cart-item-emoji">${item.emoji}</div>
 
-                    <div>
+                    <div class="cart-item-details">
                         <h3>${item.name}</h3>
-                        <p>${item.category}</p>
-                        <p>₹${item.monthlyPrice}/month</p>
+                        <p class="cart-item-category">${item.category}</p>
+                        <p class="cart-item-price">₹${item.monthlyPrice}/month</p>
 
                         <label class="cart-duration-label">Rental Duration</label>
                         <select onchange="updateDuration('${item.productId}', this.value)" class="cart-duration-select">
@@ -92,14 +99,14 @@ function renderCart() {
 
                 <div class="cart-item-right">
                     <div class="cart-quantity-controls">
-                        <button onclick="updateQuantity('${item.productId}', -1)">-</button>
+                        <button onclick="updateQuantity('${item.productId}', -1)">−</button>
                         <span>${item.quantity}</span>
                         <button onclick="updateQuantity('${item.productId}', 1)">+</button>
                     </div>
 
-                    <p><strong>₹${subtotal}/month</strong></p>
+                    <div class="cart-item-subtotal">₹${subtotal}/month</div>
 
-                    <button onclick="removeFromCart('${item.productId}')">
+                    <button class="cart-remove-btn" onclick="removeFromCart('${item.productId}')">
                         Remove
                     </button>
                 </div>
@@ -108,15 +115,37 @@ function renderCart() {
     }).join("");
 
     cartContent.innerHTML = `
-        <div class="cart-list">
-            ${cartItemsHTML}
-        </div>
+        <div class="cart-layout">
+            <div class="cart-list">
+                ${cartItemsHTML}
+            </div>
 
-        <div class="cart-summary">
-            <h3>Total Monthly Rent: ₹${total}</h3>
-            <p>Total Items: ${cart.reduce((sum, item) => sum + item.quantity, 0)}</p>
-            <p>Payment will be requested only after approval.</p>
-            <button class="btn btn-primary" onclick="startRentalRequest()">Proceed to Request</button>
+            <div class="cart-summary-card">
+                <h3>Order Summary</h3>
+
+                <div class="cart-summary-line">
+                    <span>Total Items</span>
+                    <span>${totalItems}</span>
+                </div>
+
+                <div class="cart-summary-line">
+                    <span>Request Type</span>
+                    <span>Rental</span>
+                </div>
+
+                <div class="cart-summary-total">
+                    <span>Monthly Total</span>
+                    <span>₹${total}</span>
+                </div>
+
+                <p class="cart-summary-note">
+                    Payment will be requested only after the business owner approves item availability and delivery feasibility.
+                </p>
+
+                <button class="btn btn-primary" onclick="startRentalRequest()">
+                    Proceed to Request
+                </button>
+            </div>
         </div>
     `;
 }
