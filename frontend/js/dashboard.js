@@ -12,6 +12,10 @@ import {
 const userInfo = document.getElementById("userInfo");
 const logoutBtn = document.getElementById("logoutBtn");
 
+function getEmailPrefix(email) {
+  if (!email) return "User";
+  return email.split("@")[0];
+}
 onAuthStateChanged(auth, async (user) => {
   if (!user) {
     window.location.href = "index.html";
@@ -21,11 +25,19 @@ onAuthStateChanged(auth, async (user) => {
   const userRef = doc(db, "users", user.uid);
   const userSnap = await getDoc(userRef);
 
+  let displayName = getEmailPrefix(user.email);
+
   if (userSnap.exists()) {
     const userData = userSnap.data();
-    userInfo.textContent = `Logged in as ${userData.name} (${userData.email})`;
+    displayName = userData.name || getEmailPrefix(user.email);
+    userInfo.textContent = `Welcome, ${displayName}`;
   } else {
-    userInfo.textContent = `Logged in as ${user.email}`;
+    userInfo.textContent = `Welcome, ${displayName}`;
+  }
+
+  const checkoutIntent = localStorage.getItem("rentillaCheckoutIntent");
+  if (checkoutIntent === "true") {
+    console.log("Checkout intent detected. Open request form next.");
   }
 });
 
