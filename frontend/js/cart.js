@@ -156,16 +156,21 @@ function startRentalRequest() {
         return;
     }
 
-    if (typeof showPage === "function") {
-        showPage("request");
-    } else {
-        const requestPage = document.getElementById("request");
-        document.querySelectorAll(".page").forEach(page => page.classList.remove("active"));
-        if (requestPage) requestPage.classList.add("active");
-        window.scrollTo({ top: 0, behavior: "smooth" });
+    // Save checkout intent so app knows user wants to complete a request
+    localStorage.setItem("rentillaCheckoutIntent", "true");
+
+    // If user is not logged in, send them to login page
+    if (!window.isUserLoggedIn || !window.isUserLoggedIn()) {
+        if (typeof showPage === "function") {
+            showPage("login");
+        } else {
+            window.location.href = "index.html";
+        }
+        return;
     }
 
-    renderRequestSummary();
+    // If already logged in, go directly to dashboard
+    window.location.href = "dashboard.html";
 }
 
 function renderRequestSummary() {
