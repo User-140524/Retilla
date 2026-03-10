@@ -1243,7 +1243,9 @@
 
     document.getElementById(pageId).classList.add("active");
 
-    if (event) event.target.classList.add("active");
+    if (event && event.target) {
+        event.target.classList.add("active");
+    }
 
     if (pageId === "items" && window.fetchProducts) {
         window.fetchProducts();
@@ -1255,7 +1257,6 @@
 
     window.scrollTo({ top: 0, behavior: "smooth" });
 }
-
 
 function toggleLoginMethod(method, event) {
     document.querySelectorAll(".toggle-btn").forEach(btn => {
