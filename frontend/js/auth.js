@@ -55,18 +55,18 @@ function updateAccountNav(user) {
 if (showSignupBtn) {
   showSignupBtn.addEventListener("click", (e) => {
     e.preventDefault();
-    loginSection.style.display = "none";
-    signupSection.style.display = "block";
-    authMessage.textContent = "";
+    if (loginSection) loginSection.style.display = "none";
+    if (signupSection) signupSection.style.display = "block";
+    if (authMessage) authMessage.textContent = "";
   });
 }
 
 if (showLoginBtn) {
   showLoginBtn.addEventListener("click", (e) => {
     e.preventDefault();
-    signupSection.style.display = "none";
-    loginSection.style.display = "block";
-    authMessage.textContent = "";
+    if (signupSection) signupSection.style.display = "none";
+    if (loginSection) loginSection.style.display = "block";
+    if (authMessage) authMessage.textContent = "";
   });
 }
 
@@ -75,24 +75,24 @@ if (signupForm) {
   signupForm.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const name = document.getElementById("signupName").value.trim();
-    const phone = document.getElementById("signupPhone").value.trim();
-    const email = document.getElementById("signupEmail").value.trim();
-    const password = document.getElementById("signupPassword").value;
-    const confirmPassword = document.getElementById("signupConfirmPassword").value;
+    const name = document.getElementById("signupName")?.value.trim();
+    const phone = document.getElementById("signupPhone")?.value.trim();
+    const email = document.getElementById("signupEmail")?.value.trim();
+    const password = document.getElementById("signupPassword")?.value;
+    const confirmPassword = document.getElementById("signupConfirmPassword")?.value;
 
     if (!name || !phone || !email || !password || !confirmPassword) {
-      authMessage.textContent = "Please fill all signup fields.";
+      if (authMessage) authMessage.textContent = "Please fill all signup fields.";
       return;
     }
 
     if (password.length < 6) {
-      authMessage.textContent = "Password must be at least 6 characters.";
+      if (authMessage) authMessage.textContent = "Password must be at least 6 characters.";
       return;
     }
 
     if (password !== confirmPassword) {
-      authMessage.textContent = "Passwords do not match.";
+      if (authMessage) authMessage.textContent = "Passwords do not match.";
       return;
     }
 
@@ -116,12 +116,10 @@ if (signupForm) {
       if (checkoutIntent === "true") {
         window.location.href = "dashboard.html";
       } else {
-        if (typeof showPage === "function") {
-          showPage("home");
-        }
+        window.location.href = "index.html";
       }
     } catch (error) {
-      authMessage.textContent = error.message;
+      if (authMessage) authMessage.textContent = error.message;
     }
   });
 }
@@ -131,11 +129,11 @@ if (loginForm) {
   loginForm.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const email = document.getElementById("loginEmail").value.trim();
-    const password = document.getElementById("loginPassword").value;
+    const email = document.getElementById("loginEmail")?.value.trim();
+    const password = document.getElementById("loginPassword")?.value;
 
     if (!email || !password) {
-      authMessage.textContent = "Please enter email and password.";
+      if (authMessage) authMessage.textContent = "Please enter email and password.";
       return;
     }
 
@@ -147,12 +145,10 @@ if (loginForm) {
       if (checkoutIntent === "true") {
         window.location.href = "dashboard.html";
       } else {
-        if (typeof showPage === "function") {
-          showPage("home");
-        }
+        window.location.href = "index.html";
       }
     } catch (error) {
-      authMessage.textContent = "Invalid email or password.";
+      if (authMessage) authMessage.textContent = "Invalid email or password.";
     }
   });
 }
@@ -161,8 +157,13 @@ if (loginForm) {
 onAuthStateChanged(auth, async (user) => {
   updateAccountNav(user);
 
+  // Only run extra read logic when on main site
   if (user && window.location.pathname.includes("index.html")) {
-    const userRef = doc(db, "users", user.uid);
-    await getDoc(userRef);
+    try {
+      const userRef = doc(db, "users", user.uid);
+      await getDoc(userRef);
+    } catch (error) {
+      console.error("Error loading user profile:", error);
+    }
   }
 });
