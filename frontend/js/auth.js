@@ -25,7 +25,8 @@ const signupForm = document.getElementById("signupForm");
 
 const authMessage = document.getElementById("authMessage");
 
-window.isUserLoggedIn = function() {
+// ----- LOGIN STATE HELPER -----
+window.isUserLoggedIn = function () {
   return !!auth.currentUser;
 };
 
@@ -92,11 +93,10 @@ if (signupForm) {
       const checkoutIntent = localStorage.getItem("rentillaCheckoutIntent");
 
       if (checkoutIntent === "true") {
-      window.location.href = "dashboard.html";
+        window.location.href = "dashboard.html";
       } else {
-      window.location.href = "dashboard.html";
-    }
-      
+        window.location.href = "index.html";
+      }
     } catch (error) {
       authMessage.textContent = error.message;
     }
@@ -118,29 +118,29 @@ if (loginForm) {
 
     try {
       await signInWithEmailAndPassword(auth, email, password);
+
       const checkoutIntent = localStorage.getItem("rentillaCheckoutIntent");
 
       if (checkoutIntent === "true") {
-      window.location.href = "dashboard.html";
+        window.location.href = "dashboard.html";
       } else {
-      window.location.href = "dashboard.html";
+        window.location.href = "index.html";
       }
-
     } catch (error) {
       authMessage.textContent = "Invalid email or password.";
     }
   });
 }
 
-// ----- AUTO-REDIRECT IF ALREADY LOGGED IN -----
+// ----- OPTIONAL CHECK FOR LOGGED-IN USERS ON INDEX -----
 onAuthStateChanged(auth, async (user) => {
   if (user && window.location.pathname.includes("index.html")) {
     const userRef = doc(db, "users", user.uid);
     const userSnap = await getDoc(userRef);
 
     if (userSnap.exists()) {
-      // optional: auto redirect logged-in users
-      // window.location.href = "dashboard.html";
+      // Logged-in user is allowed to stay on main site and continue browsing.
+      // No forced redirect here.
     }
   }
 });
