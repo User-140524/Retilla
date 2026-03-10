@@ -24,11 +24,32 @@ const loginForm = document.getElementById("loginForm");
 const signupForm = document.getElementById("signupForm");
 
 const authMessage = document.getElementById("authMessage");
+const accountNavBtn = document.getElementById("accountNavBtn");
 
 // ----- LOGIN STATE HELPER -----
 window.isUserLoggedIn = function () {
   return !!auth.currentUser;
 };
+
+// ----- UPDATE NAV BUTTON -----
+function updateAccountNav(user) {
+  if (!accountNavBtn) return;
+
+  if (user) {
+    accountNavBtn.textContent = "Dashboard";
+    accountNavBtn.href = "dashboard.html";
+    accountNavBtn.onclick = null;
+  } else {
+    accountNavBtn.textContent = "Login";
+    accountNavBtn.href = "#";
+    accountNavBtn.onclick = function (e) {
+      e.preventDefault();
+      if (typeof showPage === "function") {
+        showPage("login");
+      }
+    };
+  }
+}
 
 // ----- TOGGLE BETWEEN LOGIN & SIGNUP -----
 if (showSignupBtn) {
@@ -95,7 +116,9 @@ if (signupForm) {
       if (checkoutIntent === "true") {
         window.location.href = "dashboard.html";
       } else {
-        window.location.href = "index.html";
+        if (typeof showPage === "function") {
+          showPage("home");
+        }
       }
     } catch (error) {
       authMessage.textContent = error.message;
@@ -124,7 +147,9 @@ if (loginForm) {
       if (checkoutIntent === "true") {
         window.location.href = "dashboard.html";
       } else {
-        window.location.href = "index.html";
+        if (typeof showPage === "function") {
+          showPage("home");
+        }
       }
     } catch (error) {
       authMessage.textContent = "Invalid email or password.";
@@ -132,15 +157,12 @@ if (loginForm) {
   });
 }
 
-// ----- OPTIONAL CHECK FOR LOGGED-IN USERS ON INDEX -----
+// ----- AUTH STATE -----
 onAuthStateChanged(auth, async (user) => {
+  updateAccountNav(user);
+
   if (user && window.location.pathname.includes("index.html")) {
     const userRef = doc(db, "users", user.uid);
-    const userSnap = await getDoc(userRef);
-
-    if (userSnap.exists()) {
-      // Logged-in user is allowed to stay on main site and continue browsing.
-      // No forced redirect here.
-    }
+    await getDoc(userRef);
   }
 });
