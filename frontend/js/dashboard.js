@@ -16,6 +16,7 @@ function getEmailPrefix(email) {
   if (!email) return "User";
   return email.split("@")[0];
 }
+
 onAuthStateChanged(auth, async (user) => {
   if (!user) {
     window.location.href = "index.html";
@@ -30,18 +31,19 @@ onAuthStateChanged(auth, async (user) => {
   if (userSnap.exists()) {
     const userData = userSnap.data();
     displayName = userData.name || getEmailPrefix(user.email);
-    userInfo.textContent = `Welcome, ${displayName}`;
-  } else {
+  }
+
+  if (userInfo) {
     userInfo.textContent = `Welcome, ${displayName}`;
   }
 
-  const checkoutIntent = localStorage.getItem("rentillaCheckoutIntent");
-  if (checkoutIntent === "true") {
-    console.log("Checkout intent detected. Open request form next.");
-  }
+  document.body.style.visibility = "visible";
 });
 
-logoutBtn.addEventListener("click", async () => {
-  await signOut(auth);
-  window.location.href = "index.html";
-});
+if (logoutBtn) {
+  logoutBtn.addEventListener("click", async () => {
+    await signOut(auth);
+    localStorage.removeItem("rentillaCheckoutIntent");
+    window.location.href = "index.html";
+  });
+}
