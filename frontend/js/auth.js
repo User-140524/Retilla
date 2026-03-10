@@ -49,6 +49,8 @@ function updateAccountNav(user) {
       }
     };
   }
+
+  accountNavBtn.classList.remove("account-nav-loading");
 }
 
 // ----- TOGGLE BETWEEN LOGIN & SIGNUP -----
@@ -157,7 +159,6 @@ if (loginForm) {
 onAuthStateChanged(auth, async (user) => {
   updateAccountNav(user);
 
-  // Only run extra read logic when on main site
   if (user && window.location.pathname.includes("index.html")) {
     try {
       const userRef = doc(db, "users", user.uid);
