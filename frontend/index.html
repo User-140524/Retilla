@@ -532,29 +532,24 @@
         }
 
        /* Features Section */
-        /* Features Section */
+       /* Features Section */
         .features-wrapper {
             width: 100%;
-            overflow: hidden; /* Hides the scrollbar and overflowing cards */
-            padding: 1rem 0;
+            overflow: hidden; 
+            padding: 2rem 0; /* Extra padding prevents box-shadow cutoff */
         }
 
         .features-track {
             display: flex;
             width: max-content;
-            /* Adjust the '35s' to make it faster or slower */
-            animation: autoScroll 35s linear infinite;
-        }
-
-        /* Pauses the auto-scroll when a user hovers over the cards */
-        .features-track:hover {
-            animation-play-state: paused;
+            /* Runs continuously, no pauses. Adjust '25s' to change speed */
+            animation: autoScroll 25s linear infinite; 
         }
 
         .features-group {
             display: flex;
             gap: 3rem;
-            padding-right: 3rem; /* Equals the gap to keep spacing even between duplicates */
+            padding-right: 3rem; /* Matches the gap for a seamless loop */
         }
 
         @keyframes autoScroll {
@@ -562,7 +557,7 @@
                 transform: translateX(0);
             }
             100% {
-                transform: translateX(-50%); /* Scrolls exactly half the track width */
+                transform: translateX(-50%); 
             }
         }
 
@@ -574,7 +569,7 @@
             border-top: 3px solid var(--accent-dino);
             transition: all 0.3s ease;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            min-width: 280px; /* Keeps original size */
+            min-width: 320px; /* Forces cards back to their larger, original size */
             flex: 0 0 auto; 
         }
 
