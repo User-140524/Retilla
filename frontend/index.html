@@ -699,6 +699,11 @@
             background: var(--accent-dino);
             color: white;
         }
+        
+        /* dashboard-login button */
+        .account-nav-loading {
+            visibility: hidden;
+        }
 
         /* LOGIN PAGE */
         .login-container {
@@ -984,7 +989,7 @@
                 <a onclick="showPage('home', event)" class="nav-link active">Home</a>
                 <a onclick="showPage('items', event)" class="nav-link">Browse Items</a>
                 <a onclick="showPage('cart', event)" class="nav-link">Cart</a>
-                <a href="#" id="accountNavBtn" class="nav-link">Login</a>
+                <a href="#" id="accountNavBtn" class="nav-link account-nav-loading">Login</a>
                                
             </nav>
         </div>
