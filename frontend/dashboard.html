@@ -42,9 +42,42 @@
       border-radius: 4px;
       margin-top: 1rem;
     }
+    .dashboard-nav {
+  max-width: 900px;
+  margin: 0 auto 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dashboard-home-btn,
+.dashboard-logout-btn {
+  display: inline-block;
+  padding: 0.7rem 1.1rem;
+  background: white;
+  color: #2c2420;
+  text-decoration: none;
+  border: 1px solid rgba(168,154,143,0.3);
+  border-radius: 8px;
+  font-weight: 600;
+  transition: 0.25s ease;
+  cursor: pointer;
+}
+
+.dashboard-home-btn:hover,
+.dashboard-logout-btn:hover {
+  border-color: #6ba85a;
+  color: #6ba85a;
+  background: rgba(107,168,90,0.04);
+}
+    
   </style>
 </head>
 <body>
+  <div class="dashboard-nav">
+  <a href="index.html" class="dashboard-home-btn">Home</a>
+  <button id="logoutBtn" class="dashboard-logout-btn">Logout</button>
+</div>
   <div class="dashboard">
     <h1>Your Rentilla Dashboard</h1>
     <p id="userInfo">Loading user info...</p>
