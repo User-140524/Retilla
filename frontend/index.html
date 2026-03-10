@@ -535,23 +535,35 @@
         /* Features Section */
         .features-wrapper {
             width: 100%;
-            overflow-x: auto;
-            /* Hide scrollbar for a cleaner look */
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-            padding: 1rem 0; /* Extra padding so box-shadows aren't cut off */
+            overflow: hidden; /* Hides the scrollbar and overflowing cards */
+            padding: 1rem 0;
         }
 
-        .features-wrapper::-webkit-scrollbar {
-            display: none;
-        }
-
-        .features {
+        .features-track {
             display: flex;
-            flex-wrap: nowrap;
+            width: max-content;
+            /* Adjust the '35s' to make it faster or slower */
+            animation: autoScroll 35s linear infinite;
+        }
+
+        /* Pauses the auto-scroll when a user hovers over the cards */
+        .features-track:hover {
+            animation-play-state: paused;
+        }
+
+        .features-group {
+            display: flex;
             gap: 3rem;
-            margin: 2rem 0;
-            padding: 1rem; 
+            padding-right: 3rem; /* Equals the gap to keep spacing even between duplicates */
+        }
+
+        @keyframes autoScroll {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%); /* Scrolls exactly half the track width */
+            }
         }
 
         .feature-card {
@@ -562,8 +574,7 @@
             border-top: 3px solid var(--accent-dino);
             transition: all 0.3s ease;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            /* This ensures the cards stay their original size and don't shrink */
-            min-width: 280px;
+            min-width: 280px; /* Keeps original size */
             flex: 0 0 auto; 
         }
 
@@ -588,6 +599,9 @@
             color: var(--taupe);
             line-height: 1.6;
         }
+
+
+        
         /* ITEMS PAGE */
         .items-grid {
             display: grid;
@@ -1007,24 +1021,34 @@
             <div class="features-wrapper">
                 <section class="features">
                     <div class="feature-card">
-                        <div class="feature-icon">🎖️</div>
-                        <h3>Top-quality<br>Products</h3>
+                        <div class="feature-icon">💰</div>
+                        <h3>Affordable Rentals</h3>
+                        <p>Flexible monthly plans that fit your budget. Single bed from ₹200, Double bed from ₹400.</p>
                     </div>
                     <div class="feature-card">
-                        <div class="feature-icon">🚀</div>
-                        <h3>Free<br>Relocation</h3>
+                        <div class="feature-icon">📦</div>
+                        <h3>Easy Setup</h3>
+                        <p>We handle delivery and installation. Just sit back and relax.</p>
                     </div>
                     <div class="feature-card">
-                        <div class="feature-icon">⚙️</div>
-                        <h3>Free<br>Maintenance</h3>
+                        <div class="feature-icon">🔧</div>
+                        <h3>Maintenance Included</h3>
+                        <p>Full maintenance and support included in every rental.</p>
                     </div>
                     <div class="feature-card">
-                        <div class="feature-icon">📅</div>
-                        <h3>Cancel<br>Anytime</h3>
+                        <div class="feature-icon">🚚</div>
+                        <h3>Fast Delivery</h3>
+                        <p>Quick delivery to your doorstep. No long waits, just quality service.</p>
                     </div>
                     <div class="feature-card">
-                        <div class="feature-icon">🔄</div>
-                        <h3>Easy returns<br>on delivery</h3>
+                        <div class="feature-icon">✓</div>
+                        <h3>Quality Assurance</h3>
+                        <p>All items are inspected and maintained to the highest standards.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📞</div>
+                        <h3>24/7 Support</h3>
+                        <p>Customer support available round the clock for your peace of mind.</p>
                     </div>
                 </section>
             </div>
