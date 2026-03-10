@@ -531,8 +531,17 @@
             transform: translateY(-2px);
         }
 
-       /* Features Section */
+       
       /* Features Section */
+        /* Specific rules to size the new image icons to match the old emojis */
+.feature-icon img {
+    display: block;
+    /* Forces the image to the same physical size as the old emoji text */
+    width: 2.5rem; 
+    height: auto;
+    object-fit: contain;
+    margin: 0 auto;
+}
         .features-wrapper {
             width: 100%;
             overflow: hidden;
@@ -1095,7 +1104,6 @@
                 </div>
             </div>
         </div>
-    </div>
 
     <!-- ITEMS PAGE -->
     <div id="items" class="page">
