@@ -531,45 +531,81 @@
             transform: translateY(-2px);
         }
 
-        /* Features Section */
+       /* Features Section */
+        .features-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            padding: 2rem 0;
+            /* Hide scrollbar for a cleaner look */
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .features-wrapper::-webkit-scrollbar {
+            display: none;
+        }
+
         .features {
-            padding: 4rem 0;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 3rem;
-            margin: 3rem 0;
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: nowrap;
+            min-width: max-content; 
+            margin: 2rem auto;
+            padding: 0 1rem;
         }
 
         .feature-card {
-            background: var(--white);
-            padding: 2.5rem;
-            border-radius: 3px;
+            background: #eef0f2; /* Light gray background matching the video */
+            padding: 1.5rem;
+            border-radius: 20px;
             text-align: center;
-            border-top: 3px solid var(--accent-dino);
+            width: 160px;
+            height: 160px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             transition: all 0.3s ease;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            box-shadow: none;
+            border: 1px solid rgba(0,0,0,0.02);
+            cursor: pointer;
         }
 
         .feature-card:hover {
-            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-            transform: translateY(-5px);
+            background: #e4e6e9;
+            transform: translateY(-3px);
         }
 
         .feature-icon {
             font-size: 2.5rem;
             margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* If you decide to use actual images/SVGs later instead of emojis */
+        .feature-icon img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
         }
 
         .feature-card h3 {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
-            margin-bottom: 0.8rem;
+            font-family: 'Lora', serif;
+            font-size: 0.95rem;
+            font-weight: 600;
             color: var(--charcoal);
+            line-height: 1.3;
+            margin: 0;
         }
 
-        .feature-card p {
-            color: var(--taupe);
-            line-height: 1.6;
+        @media (max-width: 900px) {
+            .features {
+                justify-content: flex-start; /* Aligns left on mobile so users can swipe */
+            }
         }
 
         /* ITEMS PAGE */
@@ -988,38 +1024,30 @@
         </section>
 
         <div class="container">
-            <section class="features">
-                <div class="feature-card">
-                    <div class="feature-icon">💰</div>
-                    <h3>Affordable Rentals</h3>
-                    <p>Flexible monthly plans that fit your budget. Single bed from ₹200, Double bed from ₹400.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📦</div>
-                    <h3>Easy Setup</h3>
-                    <p>We handle delivery and installation. Just sit back and relax.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🔧</div>
-                    <h3>Maintenance Included</h3>
-                    <p>Full maintenance and support included in every rental.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🚚</div>
-                    <h3>Fast Delivery</h3>
-                    <p>Quick delivery to your doorstep. No long waits, just quality service.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">✓</div>
-                    <h3>Quality Assurance</h3>
-                    <p>All items are inspected and maintained to the highest standards.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📞</div>
-                    <h3>24/7 Support</h3>
-                    <p>Customer support available round the clock for your peace of mind.</p>
-                </div>
-            </section>
+            <div class="features-wrapper">
+                <section class="features">
+                    <div class="feature-card">
+                        <div class="feature-icon">🎖️</div>
+                        <h3>Top-quality<br>Products</h3>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🚀</div>
+                        <h3>Free<br>Relocation</h3>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">⚙️</div>
+                        <h3>Free<br>Maintenance</h3>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📅</div>
+                        <h3>Cancel<br>Anytime</h3>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🔄</div>
+                        <h3>Easy returns<br>on delivery</h3>
+                    </div>
+                </section>
+            </div>
         </div>
     </div>
 
