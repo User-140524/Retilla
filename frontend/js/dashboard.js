@@ -52,6 +52,31 @@ function hideRequestSection() {
   requestCheckoutSection.classList.remove("active");
 }
 
+function calculateCartTotals(cart) {
+  let totalItems = 0;
+  let totalMonthlyRent = 0;
+
+  cart.forEach(item => {
+    totalItems += item.quantity;
+    totalMonthlyRent += item.monthlyPrice * item.quantity;
+  });
+
+  return { totalItems, totalMonthlyRent };
+}
+
+function buildRequestItems(cart) {
+  return cart.map(item => ({
+    productId: item.productId,
+    productName: item.name,
+    category: item.category,
+    quantity: item.quantity,
+    durationMonths: item.durationMonths || 3,
+    monthlyPrice: item.monthlyPrice,
+    emoji: item.emoji || "📦",
+    subtotal: item.monthlyPrice * item.quantity
+  }));
+}
+
 function renderRequestSummaryFromCart() {
   if (!requestSummaryItems || !requestSummaryItemCount || !requestSummaryMonthlyTotal) return;
 
@@ -138,7 +163,6 @@ onAuthStateChanged(auth, async (user) => {
     renderRequestSummaryFromCart();
     prefillRequestForm(userData, user);
 
-    // Optional: scroll directly to request section
     setTimeout(() => {
       requestCheckoutSection?.scrollIntoView({ behavior: "smooth", block: "start" });
     }, 150);
@@ -148,6 +172,7 @@ onAuthStateChanged(auth, async (user) => {
 
   document.body.style.visibility = "visible";
 });
+
 if (dashboardRequestForm) {
   dashboardRequestForm.addEventListener("submit", async (e) => {
     e.preventDefault();
