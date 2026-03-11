@@ -1152,6 +1152,48 @@
                 transform: translateY(0);
             }
         }
+        /* Hero Corner Images */
+        .hero-img-left,
+        .hero-img-right {
+            position: absolute;
+            bottom: -50px; /* Pulls the image slightly down outside the frame */
+            z-index: 0; /* Keeps them behind your text and buttons, but above the background */
+            max-width: 380px; /* Controls the size, adjust as needed */
+            height: auto;
+            opacity: 0.85; /* Slight fade so they don't overpower the text */
+            pointer-events: none; /* Prevents users from accidentally clicking/dragging the images */
+        }
+
+        .hero-img-left {
+            left: -40px; /* Anchors to the left edge */
+            transform: rotate(-15deg); /* Tilts it outward */
+        }
+
+        .hero-img-right {
+            right: -40px; /* Anchors to the right edge */
+            transform: rotate(15deg); /* Tilts it outward */
+        }
+
+        /* CRITICAL: Ensure your existing .hero text elements sit on top */
+        .hero h1, .hero p, .hero-logo, .cta-buttons {
+            position: relative;
+            z-index: 10; 
+        }
+
+        /* Responsive adjustments to prevent text overlap */
+        @media (max-width: 1100px) {
+            .hero-img-left, .hero-img-right {
+                max-width: 250px;
+                opacity: 0.4; /* Fade them more so text stays readable */
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-img-left, .hero-img-right {
+                /* Completely hides the decorative images on mobile to keep the layout clean */
+                display: none; 
+            }
+        }
     </style>
 </head>
 <body>
@@ -1178,6 +1220,9 @@
     <!-- HOME PAGE -->
     <div id="home" class="page active">
         <section class="hero">
+            <img src="images/hero-left-furniture.png" class="hero-img-left" alt="Furniture Mockup">
+            <img src="images/hero-right-appliance.png" class="hero-img-right" alt="Appliance Mockup">
+            
             <img src = "images/logo.jpeg" class="hero-logo">
             <h1>Just Move In,</h1>
             <h1>We've Got You.</h1>
