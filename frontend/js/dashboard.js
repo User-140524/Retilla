@@ -9,7 +9,11 @@ import {
   getDoc,
   collection,
   addDoc,
-  serverTimestamp
+  serverTimestamp,
+  query,
+  where,
+  getDocs,
+  orderBy
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const userInfo = document.getElementById("userInfo");
@@ -28,6 +32,8 @@ const requestAddress = document.getElementById("requestAddress");
 const requestPincode = document.getElementById("requestPincode");
 const requestDeliveryDate = document.getElementById("requestDeliveryDate");
 const requestNotes = document.getElementById("requestNotes");
+
+const userRequestsList = document.getElementById("userRequestsList");
 
 function getEmailPrefix(email) {
   if (!email) return "User";
@@ -77,6 +83,21 @@ function buildRequestItems(cart) {
   }));
 }
 
+function formatDate(value) {
+  if (!value) return "Not set";
+
+  try {
+    const date = new Date(value);
+    return date.toLocaleDateString("en-IN", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric"
+    });
+  } catch {
+    return value;
+  }
+}
+
 function renderRequestSummaryFromCart() {
   if (!requestSummaryItems || !requestSummaryItemCount || !requestSummaryMonthlyTotal) return;
 
@@ -117,6 +138,102 @@ function renderRequestSummaryFromCart() {
   requestSummaryMonthlyTotal.textContent = `₹${total}`;
 }
 
+function renderUserRequests(requests) {
+  if (!userRequestsList) return;
+
+  if (!requests || requests.length === 0) {
+    userRequestsList.innerHTML = `
+      <div class="request-list-empty">
+        <p>No rental requests found yet.</p>
+      </div>
+    `;
+    return;
+  }
+
+  userRequestsList.innerHTML = requests.map(request => {
+    const statusClass = `request-status-${request.status || "pending"}`;
+    const items = request.items || [];
+
+    return `
+      <div class="user-request-card">
+        <div class="user-request-top">
+          <div>
+            <h3 class="user-request-title">Rental Request</h3>
+            <div class="user-request-date">
+              Submitted: ${request.createdAt?.toDate
+                ? request.createdAt.toDate().toLocaleString("en-IN")
+                : "Recently"}
+            </div>
+          </div>
+
+          <span class="request-status-badge ${statusClass}">
+            ${request.status || "pending"}
+          </span>
+        </div>
+
+        <div class="user-request-meta">
+          <div class="user-request-meta-box">
+            <span class="user-request-meta-label">Preferred Delivery</span>
+            <span class="user-request-meta-value">${formatDate(request.preferredDeliveryDate)}</span>
+          </div>
+
+          <div class="user-request-meta-box">
+            <span class="user-request-meta-label">Monthly Total</span>
+            <span class="user-request-meta-value">₹${request.totalMonthlyRent || 0}</span>
+          </div>
+
+          <div class="user-request-meta-box">
+            <span class="user-request-meta-label">Total Items</span>
+            <span class="user-request-meta-value">${request.totalItems || 0}</span>
+          </div>
+        </div>
+
+        <div class="user-request-items">
+          <h4>Requested Items</h4>
+          ${items.map(item => `
+            <div class="user-request-item">
+              ${item.emoji || "📦"} ${item.productName}
+              — Qty: ${item.quantity}
+              — Duration: ${item.durationMonths} month(s)
+              — ₹${item.monthlyPrice}/month
+            </div>
+          `).join("")}
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+async function loadUserRequests(userId) {
+  if (!userId || !userRequestsList) return;
+
+  try {
+    const requestsRef = collection(db, "rentalRequests");
+    const requestsQuery = query(
+      requestsRef,
+      where("userId", "==", userId),
+      orderBy("createdAt", "desc")
+    );
+
+    const snapshot = await getDocs(requestsQuery);
+
+    const requests = snapshot.docs.map(docSnap => ({
+      id: docSnap.id,
+      ...docSnap.data()
+    }));
+
+    renderUserRequests(requests);
+  } catch (error) {
+    console.error("Error loading user requests:", error);
+
+    userRequestsList.innerHTML = `
+      <div class="request-list-empty">
+        <p>Unable to load requests right now.</p>
+      </div>
+    `;
+  }
+}
+
 function prefillRequestForm(userData, user) {
   if (requestFullName) {
     requestFullName.value =
@@ -154,6 +271,8 @@ onAuthStateChanged(auth, async (user) => {
   if (userInfo) {
     userInfo.textContent = `Welcome, ${displayName}`;
   }
+
+  await loadUserRequests(user.uid);
 
   const cart = getCart();
   const checkoutIntent = hasCheckoutIntent();
@@ -235,8 +354,9 @@ if (dashboardRequestForm) {
 
       dashboardRequestForm.reset();
       hideRequestSection();
-
       renderRequestSummaryFromCart();
+
+      await loadUserRequests(user.uid);
 
       window.location.reload();
     } catch (error) {
