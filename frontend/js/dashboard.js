@@ -6,7 +6,10 @@ import {
 
 import {
   doc,
-  getDoc
+  getDoc,
+  collection,
+  addDoc,
+  serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const userInfo = document.getElementById("userInfo");
@@ -19,6 +22,12 @@ const requestSummaryMonthlyTotal = document.getElementById("requestSummaryMonthl
 
 const requestFullName = document.getElementById("requestFullName");
 const requestPhone = document.getElementById("requestPhone");
+
+const dashboardRequestForm = document.getElementById("dashboardRequestForm");
+const requestAddress = document.getElementById("requestAddress");
+const requestPincode = document.getElementById("requestPincode");
+const requestDeliveryDate = document.getElementById("requestDeliveryDate");
+const requestNotes = document.getElementById("requestNotes");
 
 function getEmailPrefix(email) {
   if (!email) return "User";
@@ -139,6 +148,78 @@ onAuthStateChanged(auth, async (user) => {
 
   document.body.style.visibility = "visible";
 });
+if (dashboardRequestForm) {
+  dashboardRequestForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const user = auth.currentUser;
+    if (!user) {
+      alert("You must be logged in to submit a rental request.");
+      window.location.href = "index.html";
+      return;
+    }
+
+    const cart = getCart();
+    if (cart.length === 0) {
+      alert("Your cart is empty.");
+      return;
+    }
+
+    const fullName = requestFullName?.value.trim();
+    const phone = requestPhone?.value.trim();
+    const address = requestAddress?.value.trim();
+    const pincode = requestPincode?.value.trim();
+    const preferredDeliveryDate = requestDeliveryDate?.value;
+    const notes = requestNotes?.value.trim() || "";
+
+    if (!fullName || !phone || !address || !pincode || !preferredDeliveryDate) {
+      alert("Please fill in all required request details.");
+      return;
+    }
+
+    const items = buildRequestItems(cart);
+    const { totalItems, totalMonthlyRent } = calculateCartTotals(cart);
+
+    try {
+      await addDoc(collection(db, "rentalRequests"), {
+        userId: user.uid,
+        userName: fullName,
+        userEmail: user.email || "",
+        userPhone: phone,
+
+        address,
+        pincode,
+        preferredDeliveryDate,
+        notes,
+
+        items,
+        totalItems,
+        totalMonthlyRent,
+
+        status: "pending",
+        paymentStatus: "unpaid",
+
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp()
+      });
+
+      alert("Your rental request has been submitted successfully.");
+
+      localStorage.removeItem("rentillaCart");
+      localStorage.removeItem("rentillaCheckoutIntent");
+
+      dashboardRequestForm.reset();
+      hideRequestSection();
+
+      renderRequestSummaryFromCart();
+
+      window.location.reload();
+    } catch (error) {
+      console.error("Error submitting rental request:", error);
+      alert("Could not submit your rental request. Please try again.");
+    }
+  });
+}
 
 if (logoutBtn) {
   logoutBtn.addEventListener("click", async () => {
