@@ -193,23 +193,27 @@
             transform: translateY(-2px);
         }
 
-        /* =========================================
-           HOME PAGE HERO (APERTURE OVERLAY CARDS)
+       /* =========================================
+           HOME PAGE HERO (UPRIGHT PHOTO OVERLAYS) 
            ========================================= */
         .hero {
             padding: 8rem 0; 
             text-align: center;
-            min-height: 70vh;
+            min-height: 75vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             position: relative;
+            
+            /* Hides the massive corners of the frames that bleed off screen */
             overflow: hidden; 
+            
+            /* Keeps your original cream background */
             background-color: var(--cream); 
         }
 
-        /* Ensures text stays above the image cards */
+        /* Ensures central text is above the frames */
         .hero h1, 
         .hero p, 
         .hero-logo, 
@@ -263,52 +267,72 @@
             flex-wrap: wrap;
         }
 
-        /* Floating Overlay Cards */
+        /* The Outer Tilted Frames */
         .hero-card-left,
         .hero-card-right {
             position: absolute;
             top: 50%;
             z-index: 0;
-            width: 340px; 
-            height: 650px; 
-            border-radius: 32px; 
+            
+            /* These dimensions create the tall, diagonal panels */
+            width: 30vw; 
+            max-width: 450px;
+            height: 90vh; 
+            border-radius: 20px;
+            overflow: hidden; /* This acts as the diagonal cookie-cutter */
             pointer-events: none;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.1);
+        }
+
+        .hero-card-left {
+            left: -5%; /* Positions it on the left edge */
+            /* Rotates the frame positively (Top leans IN to the right) */
+            transform: translateY(-50%) rotate(22deg); 
+            border: 15px solid var(--white); /* Thick white frame from the example */
+        }
+
+        .hero-card-right {
+            right: -5%; /* Positions it on the right edge */
+            /* Rotates the frame negatively (Top leans IN to the left) */
+            transform: translateY(-50%) rotate(-22deg); 
+            border: 15px solid #3a322d; /* Thick dark frame from the example */
+        }
+
+        /* The Inner Photo Containers */
+        .card-bg {
+            position: absolute;
+            /* We make the inner container huge so it completely fills the corners of the rotated parent */
+            top: -40%; bottom: -40%; left: -40%; right: -40%;
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
         }
 
-        .hero-card-left {
-            left: -120px; 
-            transform: translateY(-50%) rotate(30deg); 
-            background-image: url('images/chair.jpg'); 
-            box-shadow: inset 0 0 0 2000px rgba(255, 255, 255, 0.15), 0 30px 60px rgba(0,0,0,0.12);
+        .chair-bg {
+            background-image: url('images/chair.jpg');
+            /* Counter-rotates the photo so the chair stays perfectly vertical! */
+            transform: rotate(-22deg); 
         }
 
-        .hero-card-right {
-            right: -120px; 
-            transform: translateY(-50%) rotate(-30deg); 
+        .ac-bg {
             background-image: url('images/ac.jpeg');
-            box-shadow: inset 0 0 0 2000px rgba(0, 0, 0, 0.2), 0 30px 60px rgba(0,0,0,0.12);
+            /* Counter-rotates the photo so the AC stays perfectly vertical! */
+            transform: rotate(22deg); 
         }
 
-        /* Responsive hero adjustments */
+        /* Responsive adjustments */
         @media (max-width: 1100px) {
             .hero-card-left, .hero-card-right {
-                width: 260px;
-                height: 500px;
-                opacity: 0.6; 
+                width: 25vw;
+                opacity: 0.4; /* Fades the frames back so text remains easily readable */
             }
-            .hero-card-left { left: -80px; }
-            .hero-card-right { right: -80px; }
         }
 
         @media (max-width: 768px) {
+            .hero-card-left, .hero-card-right {
+                display: none; /* Hide on mobile so the screen isn't crowded */
+            }
             .hero h1 { font-size: 2.8rem; }
-            .hero-card-left, .hero-card-right { display: none; }
-            .header-container { flex-direction: column; gap: 1rem; }
-            nav { gap: 1.5rem; font-size: 0.9rem; }
-            .btn { width: 100%; max-width: 300px; }
         }
 
         /* =========================================
@@ -1155,8 +1179,12 @@
 
     <div id="home" class="page active">
         <section class="hero">
-        <div class="hero-card-left"></div>
-        <div class="hero-card-right"></div>
+        <div class="hero-card-left">
+            <div class="card-bg chair-bg"></div>
+        </div>
+        <div class="hero-card-right">
+            <div class="card-bg ac-bg"></div>
+        </div>
             
             <img src="images/logo.jpeg" class="hero-logo">
             <h1>Just Move In,</h1>
