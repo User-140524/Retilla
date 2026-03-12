@@ -599,7 +599,7 @@
 
         /* HOME PAGE */
         .hero {
-            padding: 5rem 0;
+            padding: 7rem 0;
             text-align: center;
             min-height: 70vh;
             display: flex;
@@ -608,6 +608,7 @@
             align-items: center;
             position: relative;
             overflow: hidden;
+            background: linear-gradient(135deg, #2c2420 0%, #3a322d 100%);
         }
 
         .hero::before {
@@ -636,7 +637,7 @@
             font-family: 'Playfair Display', serif;
             font-size: 3.5rem;
             font-weight: 700;
-            color: var(--charcoal);
+            color: var(--white);
             margin-bottom: 1rem;
             letter-spacing: -1px;
             line-height: 1.2;
@@ -652,7 +653,7 @@
 
         .hero p {
             font-size: 1.1rem;
-            color: var(--taupe);
+            color: var(--cream);
             margin-bottom: 2rem;
             max-width: 600px;
             margin-left: auto;
@@ -700,6 +701,39 @@
             background: var(--accent-dino);
             color: white;
             transform: translateY(-2px);
+        }
+        .hero-img-left {
+            top: 50%;
+            left: -100px; /* Pull it slightly off-screen */
+            transform: translateY(-50%) rotate(-15deg); /* Center vertically, tilt */
+        }
+
+        .hero-img-right {
+            top: 50%;
+            right: -100px; /* Pull it slightly off-screen */
+            transform: translateY(-50%) rotate(15deg); /* Center vertically, tilt */
+        }
+
+        /* CRITICAL: Ensure your existing .hero text elements sit on top */
+        .hero h1, .hero p, .hero-logo, .cta-buttons {
+            position: relative;
+            z-index: 10; 
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 1100px) {
+            .hero-img-left, .hero-img-right {
+                max-width: 250px;
+                opacity: 0.3; /* Fade them more so text stays readable on smaller screens */
+            }
+            .hero-img-left { left: -50px; }
+            .hero-img-right { right: -50px; }
+        }
+
+        @media (max-width: 768px) {
+            .hero-img-left, .hero-img-right {
+                display: none; 
+            }
         }
 
        
