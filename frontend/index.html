@@ -193,61 +193,59 @@
             transform: translateY(-2px);
         }
 
-       /* =========================================
-           HOME PAGE HERO (UPRIGHT PHOTO OVERLAYS) 
+         /* =========================================
+           HOME PAGE HERO (CLIP-PATH OVERLAYS) 
            ========================================= */
         .hero {
-            padding: 8rem 0; 
-            text-align: center;
-            min-height: 75vh;
+            position: relative;
+            width: 100%;
+            min-height: 70vh;
+            background-color: var(--cream);
             display: flex;
-            flex-direction: column;
-            justify-content: center;
             align-items: center;
-            position: relative;
-            
-            /* Hides the massive corners of the frames that bleed off screen */
-            overflow: hidden; 
-            
-            /* Keeps your original cream background */
-            background-color: var(--cream); 
+            justify-content: center;
+            overflow: hidden; /* Clips the slanted cards at the edges */
+            padding: 5rem 0;
         }
 
-        /* Ensures central text is above the frames */
-        .hero h1, 
-        .hero p, 
-        .hero-logo, 
-        .hero .tagline-main,
-        .cta-buttons {
-            position: relative;
-            z-index: 10; 
+        /* Base Card Styling */
+        .card {
+            position: absolute;
+            top: -10%; /* Taller than container to ensure coverage */
+            height: 120%; 
+            width: 380px; /* Adjust this to make the overlay panels wider/thinner */
+            background: var(--dark-cream);
+            z-index: 0;
         }
 
-        .hero h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 3.8rem;
-            font-weight: 700;
-            color: var(--charcoal); 
-            margin-bottom: 1rem;
-            letter-spacing: -1px;
-            line-height: 1.2;
+        .card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensures image fills the card without distortion */
         }
 
-        .hero .tagline-main {
-            font-size: 1.8rem;
-            color: var(--accent-dino);
-            margin-bottom: 2rem;
-            font-style: italic;
-            font-weight: 500;
+        /* Left Card: Slanted Right */
+        .card-left {
+            left: -20px;
+            /* Creates the parallelogram shape */
+            clip-path: polygon(0 0, 100% 0, 75% 100%, 0% 100%);
         }
 
-        .hero p {
-            font-size: 1.1rem;
-            color: var(--taupe); 
-            margin-bottom: 2.5rem;
+        /* Right Card: Slanted Left */
+        .card-right {
+            right: -20px;
+            /* Creates the opposite parallelogram shape */
+            clip-path: polygon(25% 0, 100% 0, 100% 100%, 0% 100%);
+            opacity: 0.85; /* Slight fade if you want it to blend */
+        }
+
+        /* Center Text Content */
+        .hero-content {
+            text-align: center;
+            z-index: 10;
             max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
+            padding: 0 2rem;
+            position: relative;
         }
 
         .hero-logo {
@@ -260,6 +258,22 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
 
+        .hero-content h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.8rem;
+            font-weight: 700;
+            color: var(--charcoal);
+            margin-bottom: 1rem;
+            letter-spacing: -1px;
+            line-height: 1.2;
+        }
+
+        .hero-content p {
+            color: var(--taupe);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
         .cta-buttons {
             display: flex;
             gap: 1.5rem;
@@ -267,72 +281,14 @@
             flex-wrap: wrap;
         }
 
-        /* The Outer Tilted Frames */
-        .hero-card-left,
-        .hero-card-right {
-            position: absolute;
-            top: 50%;
-            z-index: 0;
-            
-            /* These dimensions create the tall, diagonal panels */
-            width: 30vw; 
-            max-width: 450px;
-            height: 90vh; 
-            border-radius: 20px;
-            overflow: hidden; /* This acts as the diagonal cookie-cutter */
-            pointer-events: none;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.1);
-        }
-
-        .hero-card-left {
-            left: -5%; /* Positions it on the left edge */
-            /* Rotates the frame positively (Top leans IN to the right) */
-            transform: translateY(-50%) rotate(22deg); 
-            border: 15px solid var(--white); /* Thick white frame from the example */
-        }
-
-        .hero-card-right {
-            right: -5%; /* Positions it on the right edge */
-            /* Rotates the frame negatively (Top leans IN to the left) */
-            transform: translateY(-50%) rotate(-22deg); 
-            border: 15px solid #3a322d; /* Thick dark frame from the example */
-        }
-
-        /* The Inner Photo Containers */
-        .card-bg {
-            position: absolute;
-            /* We make the inner container huge so it completely fills the corners of the rotated parent */
-            top: -40%; bottom: -40%; left: -40%; right: -40%;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-        }
-
-        .chair-bg {
-            background-image: url('images/chair.jpg');
-            /* Counter-rotates the photo so the chair stays perfectly vertical! */
-            transform: rotate(-22deg); 
-        }
-
-        .ac-bg {
-            background-image: url('images/ac.jpeg');
-            /* Counter-rotates the photo so the AC stays perfectly vertical! */
-            transform: rotate(22deg); 
-        }
-
         /* Responsive adjustments */
         @media (max-width: 1100px) {
-            .hero-card-left, .hero-card-right {
-                width: 25vw;
-                opacity: 0.4; /* Fades the frames back so text remains easily readable */
-            }
+            .card { width: 280px; }
         }
 
         @media (max-width: 768px) {
-            .hero-card-left, .hero-card-right {
-                display: none; /* Hide on mobile so the screen isn't crowded */
-            }
-            .hero h1 { font-size: 2.8rem; }
+            .card { display: none; } /* Hides on mobile so text doesn't overlap */
+            .hero-content h1 { font-size: 2.8rem; }
         }
 
         /* =========================================
@@ -1178,21 +1134,24 @@
     </header>
 
     <div id="home" class="page active">
-        <section class="hero">
-        <div class="hero-card-left">
-            <div class="card-bg chair-bg"></div>
-        </div>
-        <div class="hero-card-right">
-            <div class="card-bg ac-bg"></div>
-        </div>
-            
-            <img src="images/logo.jpeg" class="hero-logo">
-            <h1>Just Move In,</h1>
-            <h1>We've Got You.</h1>
-            <p>Premium furniture and appliances for rent. Flexible terms, affordable prices, and hassle-free rentals.</p>
-            <div class="cta-buttons">
-                <button class="btn btn-primary" onclick="showPage('items')">Browse Items</button>
-                <button class="btn btn-secondary" onclick="showPage('login')">Sign In</button>
+    <section class="hero">
+            <div class="card card-left">
+                <img src="images/chair.jpg" alt="Furniture Mockup">
+            </div>
+
+            <div class="hero-content">
+                <img src="images/logo.jpeg" class="hero-logo" alt="Rentilla Logo">
+                <h1>Just Move In,</h1>
+                <h1>We've Got You.</h1>
+                <p>Premium furniture and appliances for rent. Flexible terms, affordable prices, and hassle-free rentals.</p>
+                <div class="cta-buttons">
+                    <button class="btn btn-primary" onclick="showPage('items')">Browse Items</button>
+                    <button class="btn btn-secondary" onclick="showPage('login')">Sign In</button>
+                </div>
+            </div>
+
+            <div class="card card-right">
+                <img src="images/ac.jpeg" alt="Appliance Mockup">
             </div>
         </section>
 
