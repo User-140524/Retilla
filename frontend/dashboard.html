@@ -397,12 +397,136 @@
     align-items: flex-start;
   }
 }
+    .request-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.4rem;
+  box-shadow: 0 3px 14px rgba(0,0,0,0.05);
+  border: 1px solid rgba(168,154,143,0.12);
+}
+
+.request-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.request-card-header h3 {
+  margin: 0 0 0.3rem;
+  font-size: 1.15rem;
+  color: #2c2420;
+}
+
+.request-submitted-text {
+  font-size: 0.9rem;
+  color: #7b6f66;
+  margin: 0;
+}
+
+.request-card-body {
+  display: block;
+}
+
+.request-card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.request-card-grid p {
+  background: #f9f8f7;
+  border-radius: 10px;
+  padding: 0.85rem 0.9rem;
+  margin: 0;
+}
+
+.request-items-block {
+  border-top: 1px solid #ece8e4;
+  padding-top: 1rem;
+}
+
+.request-items-block strong {
+  display: block;
+  margin-bottom: 0.7rem;
+  color: #2c2420;
+}
+
+.request-items-list {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.request-items-list li {
+  padding: 0.4rem 0;
+  color: #2c2420;
+  border-bottom: 1px dashed #ece8e4;
+}
+
+.request-items-list li:last-child {
+  border-bottom: none;
+}
+
+.request-item-meta {
+  color: #7b6f66;
+  font-size: 0.9rem;
+}
+
+.status-badge {
+  padding: 0.4rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: capitalize;
+  display: inline-block;
+}
+
+.status-pending {
+  background: rgba(255, 193, 7, 0.14);
+  color: #8b6a00;
+}
+
+.status-approved {
+  background: rgba(40, 167, 69, 0.12);
+  color: #166534;
+}
+
+.status-rejected {
+  background: rgba(220, 53, 69, 0.12);
+  color: #991b1b;
+}
+
+.status-active {
+  background: rgba(37, 99, 235, 0.12);
+  color: #1d4ed8;
+}
+
+.status-completed {
+  background: rgba(107, 114, 128, 0.12);
+  color: #374151;
+}
+
+.error-box {
+  background: #fff1f2;
+  color: #991b1b;
+  border: 1px solid #fecdd3;
+  border-radius: 12px;
+  padding: 1rem;
+}
+
+@media (max-width: 900px) {
+  .request-card-grid {
+    grid-template-columns: 1fr;
+  }
+}
     
   </style>
 </head>
 <body>
   <div class="dashboard-nav">
-  <a href="index.html" class="dashboard-home-btn">Home</a>
+  <a href="index.html" id="homeBtn" class="dashboard-home-btn">Home</a>
   <button id="logoutBtn" class="dashboard-logout-btn">Logout</button>
 </div>
   <div class="dashboard">
@@ -412,19 +536,24 @@
     
 
     <div class="card-grid">
-      <div class="card">
-        <h3>Current Rentals</h3>
-        <p>No active rentals yet.</p>
-      </div>
-      <div class="card">
-        <h3>Rental History</h3>
-        <p>Your previous rentals will appear here.</p>
-      </div>
-      <div class="card">
-        <h3>Pending Requests</h3>
-        <p>Your pending approvals will appear here.</p>
-      </div>
-    </div>
+  <div class="card">
+    <h3>Pending Requests</h3>
+    <p id="pendingCount">0</p>
+  </div>
+  <div class="card">
+    <h3>Approved Requests</h3>
+    <p id="approvedCount">0</p>
+  </div>
+  <div class="card">
+    <h3>Active Rentals</h3>
+    <p id="activeCount">0</p>
+  </div>
+  <div class="card">
+    <h3>Total Requests</h3>
+    <p id="totalRequestsCount">0</p>
+  </div>
+</div>
+    
 
     <div class="request-history-section">
   <div class="request-history-header">
@@ -432,11 +561,15 @@
     <p>Track pending and submitted rental requests here.</p>
   </div>
 
-  <div id="userRequestsList" class="user-requests-list">
-    <div class="request-list-empty">
-      <p>No rental requests found yet.</p>
-    </div>
-  </div>
+  <p id="requestsLoadingState" class="request-list-empty" style="display:none;">
+    Loading your requests...
+  </p>
+
+  <p id="requestsEmptyState" class="request-list-empty" style="display:none;">
+    No rental requests found yet.
+  </p>
+
+  <div id="requestsList" class="user-requests-list"></div>
 </div>
 
     
@@ -451,7 +584,7 @@
     <div class="request-form-card">
       <h3>Delivery & Contact Details</h3>
 
-      <form id="dashboardRequestForm">
+      <form id="requestForm">
         <div class="request-form-grid">
           <div class="request-form-group">
             <label for="requestFullName">Full Name</label>
@@ -474,8 +607,8 @@
           </div>
 
           <div class="request-form-group">
-            <label for="requestDeliveryDate">Preferred Delivery Date</label>
-            <input type="date" id="requestDeliveryDate" required>
+            <label for="requestPreferredDate">Preferred Delivery Date</label>
+            <input type="date" id="requestPreferredDate" required>
           </div>
 
           <div class="request-form-group full-width">
@@ -484,9 +617,10 @@
           </div>
         </div>
 
-        <button type="submit" class="dashboard-logout-btn request-submit-btn">
-          Submit Rental Request
+        <button type="submit" id="requestSubmitBtn" class="dashboard-logout-btn request-submit-btn">
+        Submit Rental Request
         </button>
+        
       </form>
     </div>
 
