@@ -519,6 +519,8 @@ onAuthStateChanged(auth, async (user) => {
     return;
   }
 
+  document.body.style.visibility = "visible";
+
   await loadUserProfile(user);
   renderCheckoutSummary();
   await loadUserRequests(user);
