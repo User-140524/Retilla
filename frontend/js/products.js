@@ -32,7 +32,8 @@ function renderProducts(items) {
 
   grid.innerHTML = items.map(item => `
     <div class="item-card">
-      <div class="item-image">${item.emoji || "📦"}</div>
+      <img src="${item.imageUrl || 'images/placeholder.jpg'}" class="item-image" alt="${item.name || 'Product'}">
+      
       <div class="item-content">
         <div class="item-category">${item.category || ""}</div>
         <h3 class="item-title">${item.name || ""}</h3>
@@ -77,7 +78,8 @@ window.addProductToCart = function(productId) {
     name: product.name,
     category: product.category,
     monthlyPrice: product.price,
-    emoji: product.emoji || "📦"
+    // CHANGED: Sending the imageUrl to the cart instead of the emoji
+    imageUrl: product.imageUrl || 'images/placeholder.jpg'
   });
 };
 
