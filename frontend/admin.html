@@ -88,6 +88,40 @@
       font-weight: 700;
     }
 
+    /* ---------------------------
+       FILTER BAR
+    --------------------------- */
+    .filter-bar {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+    }
+
+    .filter-btn {
+      padding: 0.5rem 1rem;
+      border-radius: 999px;
+      border: 1.5px solid rgba(168,154,143,0.3);
+      background: white;
+      color: #7b6f66;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .filter-btn:hover {
+      border-color: #6ba85a;
+      color: #6ba85a;
+      background: rgba(107,168,90,0.04);
+    }
+
+    .filter-btn.active {
+      background: #6ba85a;
+      color: white;
+      border-color: #6ba85a;
+    }
+
     .admin-state,
     .error-box {
       margin: 1rem 0;
@@ -290,6 +324,14 @@
         <h3>Total</h3>
         <p id="adminTotalCount">0</p>
       </div>
+    </div>
+
+    <!-- FILTER BAR -->
+    <div class="filter-bar">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="pending">Pending</button>
+      <button class="filter-btn" data-filter="approved">Approved</button>
+      <button class="filter-btn" data-filter="rejected">Rejected</button>
     </div>
 
     <p id="adminRequestsLoadingState" class="admin-state" style="display:none;">Loading requests...</p>
