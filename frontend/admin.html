@@ -1,1 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rentilla Admin</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f3f0;
+      margin: 0;
+      padding: 2rem;
+      color: #2c2420;
+      visibility: hidden;
+    }
 
+    .admin-nav {
+      max-width: 1100px;
+      margin: 0 auto 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .admin-nav-actions {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .admin-btn {
+      display: inline-block;
+      padding: 0.75rem 1.1rem;
+      background: white;
+      color: #2c2420;
+      text-decoration: none;
+      border: 1px solid rgba(168,154,143,0.3);
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .admin-btn:hover {
+      border-color: #6ba85a;
+      color: #6ba85a;
+      background: rgba(107,168,90,0.04);
+    }
+
+    .admin-shell {
+      max-width: 1100px;
+      margin: 0 auto;
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 3px 14px rgba(0,0,0,0.05);
+    }
+
+    .admin-header h1 {
+      margin: 0 0 0.4rem;
+    }
+
+    .admin-header p {
+      margin: 0;
+      color: #7b6f66;
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+
+    .metric-card {
+      background: #f9f8f7;
+      border-left: 4px solid #6ba85a;
+      border-radius: 10px;
+      padding: 1rem;
+    }
+
+    .metric-card h3 {
+      margin: 0 0 0.5rem;
+      font-size: 1rem;
+    }
+
+    .metric-card p {
+      margin: 0;
+      font-size: 1.8rem;
+      font-weight: 700;
+    }
+
+    .admin-state,
+    .error-box {
+      margin: 1rem 0;
+      padding: 1rem;
+      border-radius: 10px;
+      background: #f9f8f7;
+    }
+
+    .error-box {
+      background: #fff1f2;
+      color: #991b1b;
+      border: 1px solid #fecdd3;
+    }
+
+    .requests-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .admin-request-card {
+      background: #fff;
+      border: 1px solid rgba(168,154,143,0.16);
+      border-radius: 12px;
+      padding: 1.25rem;
+      box-shadow: 0 3px 14px rgba(0,0,0,0.04);
+    }
+
+    .admin-request-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .admin-request-top h3 {
+      margin: 0 0 0.35rem;
+      font-size: 1.1rem;
+    }
+
+    .admin-request-subtext {
+      color: #7b6f66;
+      font-size: 0.9rem;
+      margin: 0;
+    }
+
+    .status-badge {
+      padding: 0.4rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: capitalize;
+      display: inline-block;
+    }
+
+    .status-pending {
+      background: rgba(255, 193, 7, 0.14);
+      color: #8b6a00;
+    }
+
+    .status-approved {
+      background: rgba(40, 167, 69, 0.12);
+      color: #166534;
+    }
+
+    .status-rejected {
+      background: rgba(220, 53, 69, 0.12);
+      color: #991b1b;
+    }
+
+    .status-active {
+      background: rgba(37, 99, 235, 0.12);
+      color: #1d4ed8;
+    }
+
+    .status-completed {
+      background: rgba(107, 114, 128, 0.12);
+      color: #374151;
+    }
+
+    .request-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .request-box {
+      background: #f9f8f7;
+      border-radius: 10px;
+      padding: 0.9rem;
+    }
+
+    .request-box strong {
+      display: block;
+      margin-bottom: 0.3rem;
+      font-size: 0.85rem;
+      color: #7b6f66;
+    }
+
+    .items-block {
+      border-top: 1px solid #ece8e4;
+      padding-top: 1rem;
+      margin-top: 1rem;
+    }
+
+    .items-block h4 {
+      margin: 0 0 0.6rem;
+    }
+
+    .items-list {
+      margin: 0;
+      padding-left: 1.25rem;
+    }
+
+    .items-list li {
+      margin-bottom: 0.45rem;
+    }
+
+    .admin-actions {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .approve-btn,
+    .reject-btn {
+      border: none;
+      border-radius: 8px;
+      padding: 0.8rem 1rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .approve-btn {
+      background: #6ba85a;
+      color: white;
+    }
+
+    .reject-btn {
+      background: #b42318;
+      color: white;
+    }
+
+    .approve-btn:disabled,
+    .reject-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    @media (max-width: 900px) {
+      .request-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .admin-request-top {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .admin-nav {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="admin-nav">
+    <div id="adminInfo">Checking admin access...</div>
+    <div class="admin-nav-actions">
+      <a href="index.html" class="admin-btn">Home</a>
+      <button id="adminLogoutBtn" class="admin-btn">Logout</button>
+    </div>
+  </div>
+
+  <div class="admin-shell">
+    <div class="admin-header">
+      <h1>Rentilla Admin Panel</h1>
+      <p>Review and manage incoming rental requests.</p>
+    </div>
+
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <h3>Pending</h3>
+        <p id="adminPendingCount">0</p>
+      </div>
+      <div class="metric-card">
+        <h3>Approved</h3>
+        <p id="adminApprovedCount">0</p>
+      </div>
+      <div class="metric-card">
+        <h3>Rejected</h3>
+        <p id="adminRejectedCount">0</p>
+      </div>
+      <div class="metric-card">
+        <h3>Total</h3>
+        <p id="adminTotalCount">0</p>
+      </div>
+    </div>
+
+    <p id="adminRequestsLoadingState" class="admin-state" style="display:none;">Loading requests...</p>
+    <p id="adminRequestsEmptyState" class="admin-state" style="display:none;">No requests found.</p>
+    <div id="adminRequestsList" class="requests-list"></div>
+  </div>
+
+  <script type="module" src="js/admin.js"></script>
+</body>
+</html>
