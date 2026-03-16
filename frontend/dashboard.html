@@ -43,645 +43,571 @@
       margin-top: 1rem;
     }
     .dashboard-nav {
-  max-width: 900px;
-  margin: 0 auto 1rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+      max-width: 900px;
+      margin: 0 auto 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-.dashboard-home-btn,
-.dashboard-logout-btn {
-  display: inline-block;
-  padding: 0.7rem 1.1rem;
-  background: white;
-  color: #2c2420;
-  text-decoration: none;
-  border: 1px solid rgba(168,154,143,0.3);
-  border-radius: 8px;
-  font-weight: 600;
-  transition: 0.25s ease;
-  cursor: pointer;
-}
+    .dashboard-home-btn,
+    .dashboard-logout-btn {
+      display: inline-block;
+      padding: 0.7rem 1.1rem;
+      background: white;
+      color: #2c2420;
+      text-decoration: none;
+      border: 1px solid rgba(168,154,143,0.3);
+      border-radius: 8px;
+      font-weight: 600;
+      transition: 0.25s ease;
+      cursor: pointer;
+    }
 
-.dashboard-home-btn:hover,
-.dashboard-logout-btn:hover {
-  border-color: #6ba85a;
-  color: #6ba85a;
-  background: rgba(107,168,90,0.04);
-}
+    .dashboard-home-btn:hover,
+    .dashboard-logout-btn:hover {
+      border-color: #6ba85a;
+      color: #6ba85a;
+      background: rgba(107,168,90,0.04);
+    }
+
     .request-checkout-section {
-  margin-top: 2.5rem;
-  display: none;
-}
+      margin-top: 2.5rem;
+      display: none;
+    }
 
-.request-checkout-section.active {
-  display: block;
-}
+    .request-checkout-section.active {
+      display: block;
+    }
 
-.request-checkout-header {
-  margin-bottom: 1.5rem;
-}
+    .request-checkout-header {
+      margin-bottom: 1.5rem;
+    }
 
-.request-checkout-header h2 {
-  font-size: 1.8rem;
-  margin-bottom: 0.4rem;
-  color: #2c2420;
-}
+    .request-checkout-header h2 {
+      font-size: 1.8rem;
+      margin-bottom: 0.4rem;
+      color: #2c2420;
+    }
 
-.request-checkout-header p {
-  color: #7b6f66;
-  margin: 0;
-}
+    .request-checkout-header p {
+      color: #7b6f66;
+      margin: 0;
+    }
 
-.request-checkout-layout {
-  display: grid;
-  grid-template-columns: 1.3fr 0.9fr;
-  gap: 1.5rem;
-  align-items: start;
-}
+    .request-checkout-layout {
+      display: grid;
+      grid-template-columns: 1.3fr 0.9fr;
+      gap: 1.5rem;
+      align-items: start;
+    }
 
-.request-form-card,
-.request-summary-card {
-  background: white;
-  border-radius: 12px;
-  padding: 1.5rem;
-  box-shadow: 0 3px 14px rgba(0,0,0,0.05);
-  border: 1px solid rgba(168,154,143,0.12);
-}
+    .request-form-card,
+    .request-summary-card {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 3px 14px rgba(0,0,0,0.05);
+      border: 1px solid rgba(168,154,143,0.12);
+    }
 
-.request-form-card h3,
-.request-summary-card h3 {
-  margin-top: 0;
-  margin-bottom: 1rem;
-  font-size: 1.35rem;
-  color: #2c2420;
-}
+    .request-form-card h3,
+    .request-summary-card h3 {
+      margin-top: 0;
+      margin-bottom: 1rem;
+      font-size: 1.35rem;
+      color: #2c2420;
+    }
 
-.request-form-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-}
+    .request-form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
 
-.request-form-group {
-  display: flex;
-  flex-direction: column;
-}
+    .request-form-group {
+      display: flex;
+      flex-direction: column;
+    }
 
-.request-form-group.full-width {
-  grid-column: 1 / -1;
-}
+    .request-form-group.full-width {
+      grid-column: 1 / -1;
+    }
 
-.request-form-group label {
-  margin-bottom: 0.45rem;
-  font-weight: 600;
-  color: #2c2420;
-}
+    .request-form-group label {
+      margin-bottom: 0.45rem;
+      font-weight: 600;
+      color: #2c2420;
+    }
 
-.request-form-group input,
-.request-form-group textarea {
-  width: 100%;
-  padding: 0.9rem 1rem;
-  border: 2px solid #e8e4df;
-  border-radius: 8px;
-  font-size: 0.95rem;
-  background: #f9f8f7;
-  color: #2c2420;
-  box-sizing: border-box;
-  transition: 0.25s ease;
-}
+    .request-form-group input,
+    .request-form-group textarea {
+      width: 100%;
+      padding: 0.9rem 1rem;
+      border: 2px solid #e8e4df;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      background: #f9f8f7;
+      color: #2c2420;
+      box-sizing: border-box;
+      transition: 0.25s ease;
+    }
 
-.request-form-group input:focus,
-.request-form-group textarea:focus {
-  outline: none;
-  border-color: #6ba85a;
-  background: white;
-  box-shadow: 0 0 0 3px rgba(107, 168, 90, 0.08);
-}
+    .request-form-group input:focus,
+    .request-form-group textarea:focus {
+      outline: none;
+      border-color: #6ba85a;
+      background: white;
+      box-shadow: 0 0 0 3px rgba(107, 168, 90, 0.08);
+    }
 
-.request-form-group textarea {
-  min-height: 110px;
-  resize: vertical;
-}
+    .request-form-group textarea {
+      min-height: 110px;
+      resize: vertical;
+    }
 
-.request-submit-btn {
-  margin-top: 1.25rem;
-  width: 100%;
-}
+    .request-submit-btn {
+      margin-top: 1.25rem;
+      width: 100%;
+    }
 
-.request-summary-items {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin-bottom: 1.25rem;
-}
+    .request-summary-items {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
 
-.request-summary-item {
-  display: flex;
-  gap: 0.9rem;
-  align-items: flex-start;
-  padding-bottom: 0.9rem;
-  border-bottom: 1px solid #ece8e4;
-}
+    .request-summary-item {
+      display: flex;
+      gap: 0.9rem;
+      align-items: flex-start;
+      padding-bottom: 0.9rem;
+      border-bottom: 1px solid #ece8e4;
+    }
 
-.request-summary-item:last-child {
-  border-bottom: none;
-  padding-bottom: 0;
-}
+    .request-summary-item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
 
-.request-summary-emoji {
-  width: 46px;
-  height: 46px;
-  min-width: 46px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #f9f8f7;
-  border-radius: 10px;
-  font-size: 1.5rem;
-}
+    .request-summary-emoji {
+      width: 46px;
+      height: 46px;
+      min-width: 46px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f9f8f7;
+      border-radius: 10px;
+      font-size: 1.5rem;
+    }
 
-.request-summary-item h4 {
-  margin: 0 0 0.3rem;
-  font-size: 1rem;
-  color: #2c2420;
-}
+    .request-summary-item h4 {
+      margin: 0 0 0.3rem;
+      font-size: 1rem;
+      color: #2c2420;
+    }
 
-.request-summary-meta {
-  font-size: 0.88rem;
-  color: #7b6f66;
-  line-height: 1.5;
-}
+    .request-summary-meta {
+      font-size: 0.88rem;
+      color: #7b6f66;
+      line-height: 1.5;
+    }
 
-.request-summary-total {
-  border-top: 1px solid #e8e4df;
-  padding-top: 1rem;
-  margin-top: 1rem;
-}
+    .request-summary-total {
+      border-top: 1px solid #e8e4df;
+      padding-top: 1rem;
+      margin-top: 1rem;
+    }
 
-.request-summary-total-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.6rem;
-  color: #2c2420;
-}
+    .request-summary-total-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.6rem;
+      color: #2c2420;
+    }
 
-.request-summary-total-row.final {
-  font-size: 1.1rem;
-  font-weight: 700;
-}
+    .request-summary-total-row.final {
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
 
-.request-summary-note {
-  margin-top: 1rem;
-  font-size: 0.9rem;
-  color: #7b6f66;
-  line-height: 1.5;
-}
+    .request-summary-note {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      color: #7b6f66;
+      line-height: 1.5;
+    }
 
-.request-empty-state {
-  color: #7b6f66;
-  font-size: 0.95rem;
-}
+    .request-empty-state {
+      color: #7b6f66;
+      font-size: 0.95rem;
+    }
 
-@media (max-width: 900px) {
-  .request-checkout-layout {
-    grid-template-columns: 1fr;
-  }
+    @media (max-width: 900px) {
+      .request-checkout-layout {
+        grid-template-columns: 1fr;
+      }
 
-  .request-form-grid {
-    grid-template-columns: 1fr;
-  }
-}
+      .request-form-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
     .request-history-section {
-  margin-top: 2.5rem;
-}
+      margin-top: 2.5rem;
+    }
 
-.request-history-header {
-  margin-bottom: 1rem;
-}
+    .request-history-header {
+      margin-bottom: 1rem;
+    }
 
-.request-history-header h2 {
-  margin: 0 0 0.4rem;
-  font-size: 1.7rem;
-  color: #2c2420;
-}
+    .request-history-header h2 {
+      margin: 0 0 0.4rem;
+      font-size: 1.7rem;
+      color: #2c2420;
+    }
 
-.request-history-header p {
-  margin: 0;
-  color: #7b6f66;
-}
+    .request-history-header p {
+      margin: 0;
+      color: #7b6f66;
+    }
 
-.user-requests-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
+    .user-requests-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
 
-.request-list-empty {
-  background: white;
-  border-radius: 12px;
-  padding: 1.4rem;
-  box-shadow: 0 3px 14px rgba(0,0,0,0.05);
-  border: 1px solid rgba(168,154,143,0.12);
-  color: #7b6f66;
-}
+    .request-list-empty {
+      background: white;
+      border-radius: 12px;
+      padding: 1.4rem;
+      box-shadow: 0 3px 14px rgba(0,0,0,0.05);
+      border: 1px solid rgba(168,154,143,0.12);
+      color: #7b6f66;
+    }
 
-.user-request-card {
-  background: white;
-  border-radius: 12px;
-  padding: 1.4rem;
-  box-shadow: 0 3px 14px rgba(0,0,0,0.05);
-  border: 1px solid rgba(168,154,143,0.12);
-}
-
-.user-request-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 1rem;
-  margin-bottom: 1rem;
-}
-
-.user-request-title {
-  margin: 0 0 0.3rem;
-  font-size: 1.15rem;
-  color: #2c2420;
-}
-
-.user-request-date {
-  font-size: 0.9rem;
-  color: #7b6f66;
-}
-
-.request-status-badge {
-  padding: 0.4rem 0.75rem;
-  border-radius: 999px;
-  font-size: 0.82rem;
-  font-weight: 700;
-  text-transform: capitalize;
-  display: inline-block;
-}
-
-.request-status-pending {
-  background: rgba(255, 193, 7, 0.14);
-  color: #8b6a00;
-}
-
-.request-status-approved {
-  background: rgba(40, 167, 69, 0.12);
-  color: #166534;
-}
-
-.request-status-rejected {
-  background: rgba(220, 53, 69, 0.12);
-  color: #991b1b;
-}
-
-.user-request-meta {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.75rem;
-  margin-bottom: 1rem;
-}
-
-.user-request-meta-box {
-  background: #f9f8f7;
-  border-radius: 10px;
-  padding: 0.85rem 0.9rem;
-}
-
-.user-request-meta-label {
-  display: block;
-  font-size: 0.8rem;
-  color: #7b6f66;
-  margin-bottom: 0.25rem;
-}
-
-.user-request-meta-value {
-  font-size: 0.95rem;
-  color: #2c2420;
-  font-weight: 600;
-}
-
-.user-request-items {
-  border-top: 1px solid #ece8e4;
-  padding-top: 1rem;
-}
-
-.user-request-items h4 {
-  margin: 0 0 0.7rem;
-  font-size: 1rem;
-  color: #2c2420;
-}
-
-.user-request-item {
-  padding: 0.55rem 0;
-  font-size: 0.92rem;
-  color: #2c2420;
-  border-bottom: 1px dashed #ece8e4;
-}
-
-.user-request-item:last-child {
-  border-bottom: none;
-}
-
-@media (max-width: 900px) {
-  .user-request-meta {
-    grid-template-columns: 1fr;
-  }
-
-  .user-request-top {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-}
     .request-card {
-  background: white;
-  border-radius: 12px;
-  padding: 1.4rem;
-  box-shadow: 0 3px 14px rgba(0,0,0,0.05);
-  border: 1px solid rgba(168,154,143,0.12);
-}
+      background: white;
+      border-radius: 12px;
+      padding: 1.4rem;
+      box-shadow: 0 3px 14px rgba(0,0,0,0.05);
+      border: 1px solid rgba(168,154,143,0.12);
+    }
 
-.request-card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 1rem;
-  margin-bottom: 1rem;
-}
+    .request-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
 
-.request-card-header h3 {
-  margin: 0 0 0.3rem;
-  font-size: 1.15rem;
-  color: #2c2420;
-}
+    .request-card-header h3 {
+      margin: 0 0 0.3rem;
+      font-size: 1.15rem;
+      color: #2c2420;
+    }
 
-.request-submitted-text {
-  font-size: 0.9rem;
-  color: #7b6f66;
-  margin: 0;
-}
+    .request-submitted-text {
+      font-size: 0.9rem;
+      color: #7b6f66;
+      margin: 0;
+    }
 
-.request-card-body {
-  display: block;
-}
+    .request-card-body {
+      display: block;
+    }
 
-.request-card-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 0.75rem;
-  margin-bottom: 1rem;
-}
+    .request-card-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
 
-.request-card-grid p {
-  background: #f9f8f7;
-  border-radius: 10px;
-  padding: 0.85rem 0.9rem;
-  margin: 0;
-}
+    .request-card-grid p {
+      background: #f9f8f7;
+      border-radius: 10px;
+      padding: 0.85rem 0.9rem;
+      margin: 0;
+    }
 
-.request-items-block {
-  border-top: 1px solid #ece8e4;
-  padding-top: 1rem;
-}
+    .request-items-block {
+      border-top: 1px solid #ece8e4;
+      padding-top: 1rem;
+    }
 
-.request-items-block strong {
-  display: block;
-  margin-bottom: 0.7rem;
-  color: #2c2420;
-}
+    .request-items-block strong {
+      display: block;
+      margin-bottom: 0.7rem;
+      color: #2c2420;
+    }
 
-.request-items-list {
-  margin: 0;
-  padding-left: 1.2rem;
-}
+    .request-items-list {
+      margin: 0;
+      padding-left: 1.2rem;
+    }
 
-.request-items-list li {
-  padding: 0.4rem 0;
-  color: #2c2420;
-  border-bottom: 1px dashed #ece8e4;
-}
+    .request-items-list li {
+      padding: 0.4rem 0;
+      color: #2c2420;
+      border-bottom: 1px dashed #ece8e4;
+    }
 
-.request-items-list li:last-child {
-  border-bottom: none;
-}
+    .request-items-list li:last-child {
+      border-bottom: none;
+    }
 
-.request-item-meta {
-  color: #7b6f66;
-  font-size: 0.9rem;
-}
+    .request-item-meta {
+      color: #7b6f66;
+      font-size: 0.9rem;
+    }
 
-.status-badge {
-  padding: 0.4rem 0.75rem;
-  border-radius: 999px;
-  font-size: 0.82rem;
-  font-weight: 700;
-  text-transform: capitalize;
-  display: inline-block;
-}
+    .status-badge {
+      padding: 0.4rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: capitalize;
+      display: inline-block;
+    }
 
-.status-pending {
-  background: rgba(255, 193, 7, 0.14);
-  color: #8b6a00;
-}
+    .status-pending {
+      background: rgba(255, 193, 7, 0.14);
+      color: #8b6a00;
+    }
 
-.status-approved {
-  background: rgba(40, 167, 69, 0.12);
-  color: #166534;
-}
+    .status-approved {
+      background: rgba(40, 167, 69, 0.12);
+      color: #166534;
+    }
 
-.status-rejected {
-  background: rgba(220, 53, 69, 0.12);
-  color: #991b1b;
-}
+    .status-rejected {
+      background: rgba(220, 53, 69, 0.12);
+      color: #991b1b;
+    }
 
-.status-active {
-  background: rgba(37, 99, 235, 0.12);
-  color: #1d4ed8;
-}
+    .status-active {
+      background: rgba(37, 99, 235, 0.12);
+      color: #1d4ed8;
+    }
 
-.status-completed {
-  background: rgba(107, 114, 128, 0.12);
-  color: #374151;
-}
+    .status-completed {
+      background: rgba(107, 114, 128, 0.12);
+      color: #374151;
+    }
 
-.error-box {
-  background: #fff1f2;
-  color: #991b1b;
-  border: 1px solid #fecdd3;
-  border-radius: 12px;
-  padding: 1rem;
-}
+    .error-box {
+      background: #fff1f2;
+      color: #991b1b;
+      border: 1px solid #fecdd3;
+      border-radius: 12px;
+      padding: 1rem;
+    }
 
-@media (max-width: 900px) {
-  .request-card-grid {
-    grid-template-columns: 1fr;
-  }
-}
+    @media (max-width: 900px) {
+      .request-card-grid {
+        grid-template-columns: 1fr;
+      }
+    }
 
-/* ---------------------------
-   STATUS MESSAGES
---------------------------- */
-.request-status-message {
-  margin: 0 0 1rem;
-  font-size: 0.92rem;
-  padding: 0.6rem 0.9rem;
-  border-radius: 8px;
-  font-weight: 500;
-}
+    /* ---------------------------
+       STATUS MESSAGES
+    --------------------------- */
+    .request-status-message {
+      margin: 0 0 1rem;
+      font-size: 0.92rem;
+      padding: 0.6rem 0.9rem;
+      border-radius: 8px;
+      font-weight: 500;
+    }
 
-.request-status-message-pending {
-  background: rgba(255, 193, 7, 0.1);
-  color: #8b6a00;
-}
+    .request-status-message-pending {
+      background: rgba(255, 193, 7, 0.1);
+      color: #8b6a00;
+    }
 
-.request-status-message-approved {
-  background: rgba(40, 167, 69, 0.1);
-  color: #166534;
-}
+    .request-status-message-approved {
+      background: rgba(40, 167, 69, 0.1);
+      color: #166534;
+    }
 
-.request-status-message-rejected {
-  background: rgba(220, 53, 69, 0.1);
-  color: #991b1b;
-}
+    .request-status-message-rejected {
+      background: rgba(220, 53, 69, 0.1);
+      color: #991b1b;
+    }
 
-.request-status-message-active {
-  background: rgba(37, 99, 235, 0.1);
-  color: #1d4ed8;
-}
+    .request-status-message-active {
+      background: rgba(37, 99, 235, 0.1);
+      color: #1d4ed8;
+    }
 
-.request-status-message-completed {
-  background: rgba(107, 114, 128, 0.1);
-  color: #374151;
-}
+    .request-status-message-completed {
+      background: rgba(107, 114, 128, 0.1);
+      color: #374151;
+    }
+
+    /* ---------------------------
+       PAY NOW BUTTON
+    --------------------------- */
+    .pay-now-block {
+      margin-top: 1.25rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid #ece8e4;
+    }
+
+    .pay-now-btn {
+      display: inline-block;
+      width: 100%;
+      padding: 0.95rem 1.2rem;
+      background: #2563eb;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 0;
+      transition: background 0.2s ease, transform 0.1s ease;
+      text-align: center;
+    }
+
+    .pay-now-btn:hover {
+      background: #1d4ed8;
+    }
+
+    .pay-now-btn:active {
+      transform: scale(0.98);
+    }
 
   </style>
 </head>
 <body>
   <div class="dashboard-nav">
-  <a href="index.html" id="homeBtn" class="dashboard-home-btn">Home</a>
-  <button id="logoutBtn" class="dashboard-logout-btn">Logout</button>
-</div>
+    <a href="index.html" id="homeBtn" class="dashboard-home-btn">Home</a>
+    <button id="logoutBtn" class="dashboard-logout-btn">Logout</button>
+  </div>
+
   <div class="dashboard">
     <h1>Your Rentilla Dashboard</h1>
     <p id="userInfo">Loading user info...</p>
 
     <div class="card-grid">
-  <div class="card">
-    <h3>Pending Requests</h3>
-    <p id="pendingCount">0</p>
-  </div>
-  <div class="card">
-    <h3>Approved Requests</h3>
-    <p id="approvedCount">0</p>
-  </div>
-  <div class="card">
-    <h3>Active Rentals</h3>
-    <p id="activeCount">0</p>
-  </div>
-  <div class="card">
-    <h3>Total Requests</h3>
-    <p id="totalRequestsCount">0</p>
-  </div>
-</div>
+      <div class="card">
+        <h3>Pending Requests</h3>
+        <p id="pendingCount">0</p>
+      </div>
+      <div class="card">
+        <h3>Approved Requests</h3>
+        <p id="approvedCount">0</p>
+      </div>
+      <div class="card">
+        <h3>Active Rentals</h3>
+        <p id="activeCount">0</p>
+      </div>
+      <div class="card">
+        <h3>Total Requests</h3>
+        <p id="totalRequestsCount">0</p>
+      </div>
+    </div>
 
     <div class="request-history-section">
-  <div class="request-history-header">
-    <h2>Your Requests</h2>
-    <p>Track pending and submitted rental requests here.</p>
-  </div>
+      <div class="request-history-header">
+        <h2>Your Requests</h2>
+        <p>Track pending and submitted rental requests here.</p>
+      </div>
 
-  <p id="requestsLoadingState" class="request-list-empty" style="display:none;">
-    Loading your requests...
-  </p>
+      <p id="requestsLoadingState" class="request-list-empty" style="display:none;">
+        Loading your requests...
+      </p>
 
-  <p id="requestsEmptyState" class="request-list-empty" style="display:none;">
-    No rental requests found yet.
-  </p>
+      <p id="requestsEmptyState" class="request-list-empty" style="display:none;">
+        No rental requests found yet.
+      </p>
 
-  <div id="requestsList" class="user-requests-list"></div>
-</div>
+      <div id="requestsList" class="user-requests-list"></div>
+    </div>
 
     <div id="requestCheckoutSection" class="request-checkout-section">
-  <div class="request-checkout-header">
-    <h2>Complete Your Rental Request</h2>
-    <p>Fill in your delivery details and review the selected items before submitting.</p>
-  </div>
-
-  <div class="request-checkout-layout">
-    <!-- LEFT: FORM -->
-    <div class="request-form-card">
-      <h3>Delivery & Contact Details</h3>
-
-      <form id="requestForm">
-        <div class="request-form-grid">
-          <div class="request-form-group">
-            <label for="requestFullName">Full Name</label>
-            <input type="text" id="requestFullName" placeholder="Enter your full name" required>
-          </div>
-
-          <div class="request-form-group">
-            <label for="requestPhone">Phone Number</label>
-            <input type="tel" id="requestPhone" placeholder="+91 99999 99999" required>
-          </div>
-
-          <div class="request-form-group full-width">
-            <label for="requestAddress">Address</label>
-            <input type="text" id="requestAddress" placeholder="Enter full delivery address" required>
-          </div>
-
-          <div class="request-form-group">
-            <label for="requestPincode">Pincode</label>
-            <input type="text" id="requestPincode" placeholder="Enter pincode" required>
-          </div>
-
-          <div class="request-form-group">
-            <label for="requestPreferredDate">Preferred Delivery Date</label>
-            <input type="date" id="requestPreferredDate" required>
-          </div>
-
-          <div class="request-form-group full-width">
-            <label for="requestNotes">Notes</label>
-            <textarea id="requestNotes" placeholder="Any special delivery instructions?"></textarea>
-          </div>
-        </div>
-
-        <button type="submit" id="requestSubmitBtn" class="dashboard-logout-btn request-submit-btn">
-        Submit Rental Request
-        </button>
-
-      </form>
-    </div>
-
-    <!-- RIGHT: SUMMARY -->
-    <div class="request-summary-card">
-      <h3>Selected Items</h3>
-
-      <div id="requestSummaryItems" class="request-summary-items">
-        <p class="request-empty-state">No items selected.</p>
+      <div class="request-checkout-header">
+        <h2>Complete Your Rental Request</h2>
+        <p>Fill in your delivery details and review the selected items before submitting.</p>
       </div>
 
-      <div class="request-summary-total">
-        <div class="request-summary-total-row">
-          <span>Total Items</span>
-          <span id="requestSummaryItemCount">0</span>
+      <div class="request-checkout-layout">
+        <!-- LEFT: FORM -->
+        <div class="request-form-card">
+          <h3>Delivery & Contact Details</h3>
+
+          <form id="requestForm">
+            <div class="request-form-grid">
+              <div class="request-form-group">
+                <label for="requestFullName">Full Name</label>
+                <input type="text" id="requestFullName" placeholder="Enter your full name" required>
+              </div>
+
+              <div class="request-form-group">
+                <label for="requestPhone">Phone Number</label>
+                <input type="tel" id="requestPhone" placeholder="+91 99999 99999" required>
+              </div>
+
+              <div class="request-form-group full-width">
+                <label for="requestAddress">Address</label>
+                <input type="text" id="requestAddress" placeholder="Enter full delivery address" required>
+              </div>
+
+              <div class="request-form-group">
+                <label for="requestPincode">Pincode</label>
+                <input type="text" id="requestPincode" placeholder="Enter pincode" required>
+              </div>
+
+              <div class="request-form-group">
+                <label for="requestPreferredDate">Preferred Delivery Date</label>
+                <input type="date" id="requestPreferredDate" required>
+              </div>
+
+              <div class="request-form-group full-width">
+                <label for="requestNotes">Notes</label>
+                <textarea id="requestNotes" placeholder="Any special delivery instructions?"></textarea>
+              </div>
+            </div>
+
+            <button type="submit" id="requestSubmitBtn" class="dashboard-logout-btn request-submit-btn">
+              Submit Rental Request
+            </button>
+          </form>
         </div>
 
-        <div class="request-summary-total-row final">
-          <span>Monthly Total</span>
-          <span id="requestSummaryMonthlyTotal">₹0</span>
+        <!-- RIGHT: SUMMARY -->
+        <div class="request-summary-card">
+          <h3>Selected Items</h3>
+
+          <div id="requestSummaryItems" class="request-summary-items">
+            <p class="request-empty-state">No items selected.</p>
+          </div>
+
+          <div class="request-summary-total">
+            <div class="request-summary-total-row">
+              <span>Total Items</span>
+              <span id="requestSummaryItemCount">0</span>
+            </div>
+
+            <div class="request-summary-total-row final">
+              <span>Monthly Total</span>
+              <span id="requestSummaryMonthlyTotal">₹0</span>
+            </div>
+          </div>
+
+          <p class="request-summary-note">
+            Payment is requested only after approval from the business owner.
+          </p>
         </div>
       </div>
-
-      <p class="request-summary-note">
-        Payment is requested only after approval from the business owner.
-      </p>
     </div>
-  </div>
-</div>
   </div>
 
   <script type="module" src="js/dashboard.js"></script>
