@@ -312,6 +312,9 @@ async function loadAllRequests() {
 
 /* ---------------------------
    UPDATE REQUEST STATUS
+   - Sets approvedAt timestamp when approving
+   - Sets paymentStatus to "unpaid" on any status change
+   - Always updates updatedAt
 --------------------------- */
 async function updateRequestStatus(requestId, newStatus) {
   try {
@@ -319,6 +322,8 @@ async function updateRequestStatus(requestId, newStatus) {
 
     await updateDoc(requestRef, {
       status: newStatus,
+      paymentStatus: "unpaid",
+      approvedAt: newStatus === "approved" ? serverTimestamp() : null,
       updatedAt: serverTimestamp()
     });
 
