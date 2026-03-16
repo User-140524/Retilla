@@ -31,6 +31,14 @@ const adminRequestsEmptyState = document.getElementById("adminRequestsEmptyState
 const adminRequestsList = document.getElementById("adminRequestsList");
 
 /* ---------------------------
+   FILTER STATE
+   Stores all loaded requests so
+   filtering never re-fetches Firestore
+--------------------------- */
+let allRequests = [];
+let currentFilter = "all";
+
+/* ---------------------------
    HELPERS
 --------------------------- */
 function formatCurrency(amount) {
@@ -134,6 +142,8 @@ async function ensureAdmin(user) {
 
 /* ---------------------------
    METRICS
+   Always based on ALL requests,
+   not the current filtered view
 --------------------------- */
 function renderAdminMetrics(requests) {
   const pending = requests.filter((r) => normalizeStatus(r.status) === "pending").length;
@@ -145,6 +155,38 @@ function renderAdminMetrics(requests) {
   if (adminApprovedCount) adminApprovedCount.textContent = String(approved);
   if (adminRejectedCount) adminRejectedCount.textContent = String(rejected);
   if (adminTotalCount) adminTotalCount.textContent = String(total);
+}
+
+/* ---------------------------
+   FILTER LOGIC
+   Filters allRequests by currentFilter
+   and re-renders the list only
+--------------------------- */
+function applyFilter() {
+  const filtered = currentFilter === "all"
+    ? allRequests
+    : allRequests.filter((r) => normalizeStatus(r.status) === currentFilter);
+
+  renderRequests(filtered);
+}
+
+/* ---------------------------
+   FILTER BUTTONS
+--------------------------- */
+function bindFilterButtons() {
+  const filterBtns = document.querySelectorAll(".filter-btn");
+
+  filterBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      currentFilter = btn.dataset.filter || "all";
+
+      // Update active state
+      filterBtns.forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+
+      applyFilter();
+    });
+  });
 }
 
 /* ---------------------------
@@ -274,6 +316,8 @@ function renderRequests(requests) {
 
 /* ---------------------------
    LOAD ALL REQUESTS
+   Fetches from Firestore once,
+   stores in allRequests, then applies filter
 --------------------------- */
 async function loadAllRequests() {
   if (!adminRequestsList) return;
@@ -290,13 +334,13 @@ async function loadAllRequests() {
 
     const snapshot = await getDocs(requestsQuery);
 
-    const requests = snapshot.docs.map((docSnap) => ({
+    allRequests = snapshot.docs.map((docSnap) => ({
       id: docSnap.id,
       ...docSnap.data()
     }));
 
-    renderAdminMetrics(requests);
-    renderRequests(requests);
+    renderAdminMetrics(allRequests);
+    applyFilter();
   } catch (error) {
     console.error("Error loading admin requests:", error);
     adminRequestsList.innerHTML = `
@@ -391,6 +435,8 @@ onAuthStateChanged(auth, async (user) => {
     if (!allowed) return;
 
     document.body.style.visibility = "visible";
+
+    bindFilterButtons();
     await loadAllRequests();
   } catch (error) {
     console.error("Admin auth error:", error);
