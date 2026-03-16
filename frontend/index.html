@@ -193,102 +193,605 @@
             transform: translateY(-2px);
         }
 
-         /* =========================================
-           HOME PAGE HERO (CLIP-PATH OVERLAYS) 
+        /* =========================================
+           HERO — PREMIUM LIGHT
            ========================================= */
+        @keyframes heroFadeUp {
+            from { opacity: 0; transform: translateY(28px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes heroFadeIn {
+            from { opacity: 0; }
+            to   { opacity: 1; }
+        }
+        @keyframes heroImgReveal {
+            from { opacity: 0; transform: translateY(20px) scale(0.97); }
+            to   { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        @keyframes floatGentle {
+            0%, 100% { transform: translateY(0); }
+            50%       { transform: translateY(-10px); }
+        }
+        @keyframes badgeSlideUp {
+            from { opacity: 0; transform: translateY(14px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes lineGrow {
+            from { width: 0; }
+            to   { width: 100%; }
+        }
+
+        /* --- Wrapper --- */
         .hero {
             position: relative;
             width: 100%;
-            min-height: 70vh;
-            background-color: var(--cream);
+            min-height: 88vh;
+            background: var(--cream);
             display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden; /* Clips the slanted cards at the edges */
-            padding: 5rem 0;
+            align-items: stretch;
+            overflow: hidden;
         }
 
-        /* Base Card Styling */
-        .card {
+        /* Very soft green bloom — right side only */
+        .hero::after {
+            content: '';
             position: absolute;
-            top: -10%; /* Taller than container to ensure coverage */
-            height: 120%; 
-            width: 380px; /* Adjust this to make the overlay panels wider/thinner */
-            background: var(--dark-cream);
+            top: 0; right: 0;
+            width: 55%;
+            height: 100%;
+            background: radial-gradient(ellipse at 80% 40%, rgba(107,168,90,0.07) 0%, transparent 65%);
+            pointer-events: none;
             z-index: 0;
         }
 
-        .card img {
+        /* Thin green top border */
+        .hero-top-line {
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent 0%, var(--accent-dino) 35%, var(--accent-dino) 65%, transparent 100%);
+            z-index: 5;
+        }
+
+        /* --- Two-column inner grid --- */
+        .hero-inner {
+            position: relative;
+            z-index: 2;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            max-width: 1400px;
             width: 100%;
-            height: 100%;
-            object-fit: cover; /* Ensures image fills the card without distortion */
+            margin: 0 auto;
+            padding: 0 4rem;
+            align-items: center;
+            gap: 4rem;
         }
 
-        /* Left Card: Slanted Right */
-        .card-left {
-            left: -20px;
-            /* Creates the parallelogram shape */
-            clip-path: polygon(0 0, 100% 0, 75% 100%, 0% 100%);
+        /* ---- LEFT ---- */
+        .hero-left {
+            padding: 6rem 0;
+            display: flex;
+            flex-direction: column;
         }
 
-        /* Right Card: Slanted Left */
-        .card-right {
-            right: -20px;
-            /* Creates the opposite parallelogram shape */
-            clip-path: polygon(25% 0, 100% 0, 100% 100%, 0% 100%);
-            opacity: 0.85; /* Slight fade if you want it to blend */
+        .hero-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.7rem;
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: heroFadeIn 0.6s ease 0.2s forwards;
         }
 
-        /* Center Text Content */
-        .hero-content {
-            text-align: center;
-            z-index: 10;
-            max-width: 600px;
-            padding: 0 2rem;
+        @keyframes pulseRing {
+            0%   { transform: scale(1);   opacity: 0.7; }
+            100% { transform: scale(2.2); opacity: 0; }
+        }
+
+        .hero-eyebrow-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #e05252;
+            flex-shrink: 0;
             position: relative;
         }
-
-        .hero-logo {
-            width: 120px;
-            height: 120px;
-            margin: 0 auto 2rem;
+        .hero-eyebrow-dot::after {
+            content: '';
+            position: absolute;
+            inset: -3px;
             border-radius: 50%;
-            background: white;
-            padding: 0px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border: 1.5px solid #e05252;
+            animation: pulseRing 1.8s ease-out infinite;
         }
 
-        .hero-content h1 {
+        .hero-eyebrow-text {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--accent-dino);
+            font-weight: 600;
+            font-family: 'Lora', serif;
+        }
+
+        .hero-headline {
             font-family: 'Playfair Display', serif;
-            font-size: 3.8rem;
+            font-size: clamp(3rem, 4.2vw, 5rem);
+            font-weight: 700;
+            line-height: 1.08;
+            color: var(--charcoal);
+            letter-spacing: -2px;
+            margin: 0;
+            opacity: 0;
+            animation: heroFadeUp 0.75s ease 0.4s forwards;
+        }
+
+        .hero-headline-line2 {
+            opacity: 0;
+            animation: heroFadeUp 0.75s ease 0.55s forwards;
+            margin-bottom: 0;
+        }
+
+        /* "You." in green with a drawn underline */
+        .hero-accent-word {
+            color: var(--accent-dino);
+            position: relative;
+            white-space: nowrap;
+        }
+        .hero-accent-word::after {
+            content: '';
+            position: absolute;
+            bottom: 4px;
+            left: 0;
+            height: 2.5px;
+            background: var(--accent-dino);
+            border-radius: 2px;
+            width: 0;
+            animation: lineGrow 0.7s ease 1.3s forwards;
+        }
+
+        .hero-subtext {
+            font-family: 'Lora', serif;
+            font-size: 1.05rem;
+            color: var(--taupe);
+            line-height: 1.8;
+            margin-top: 2rem;
+            max-width: 420px;
+            opacity: 0;
+            animation: heroFadeUp 0.75s ease 0.75s forwards;
+        }
+
+        /* Minimal stat row */
+        .hero-stats {
+            display: flex;
+            gap: 2.5rem;
+            margin-top: 2.8rem;
+            opacity: 0;
+            animation: heroFadeUp 0.7s ease 0.95s forwards;
+        }
+
+        .hero-stat {
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+        }
+
+        .hero-stat-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
             font-weight: 700;
             color: var(--charcoal);
-            margin-bottom: 1rem;
-            letter-spacing: -1px;
+            line-height: 1;
+        }
+
+        .hero-stat-label {
+            font-size: 0.78rem;
+            color: var(--taupe);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .hero-stat-divider {
+            width: 1px;
+            background: var(--dark-cream);
+            align-self: stretch;
+        }
+
+        /* CTA row */
+        .hero-cta-row {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            margin-top: 3rem;
+            opacity: 0;
+            animation: heroFadeUp 0.75s ease 1.1s forwards;
+        }
+
+        .hero-btn-primary {
+            padding: 1rem 2.5rem;
+            background: var(--accent-dino);
+            color: white;
+            border: none;
+            border-radius: 3px;
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.25s ease;
+            box-shadow: 0 4px 18px rgba(107,168,90,0.25);
+        }
+        .hero-btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+            transition: left 0.4s ease;
+        }
+        .hero-btn-primary:hover::before { left: 100%; }
+        .hero-btn-primary:hover {
+            background: #5a9650;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 28px rgba(107,168,90,0.3);
+        }
+
+        .hero-btn-secondary {
+            padding: 1rem 2.5rem;
+            background: transparent;
+            color: var(--charcoal);
+            border: 1.5px solid var(--dark-cream);
+            border-radius: 3px;
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: border-color 0.3s ease, color 0.3s ease, transform 0.25s ease;
+        }
+        .hero-btn-secondary:hover {
+            border-color: var(--accent-dino);
+            color: var(--accent-dino);
+            transform: translateY(-2px);
+        }
+
+        /* ---- RIGHT — single large image with one floating card ---- */
+        .hero-right {
+            position: relative;
+            padding: 4rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-img-main-wrap {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        /* Main tall image */
+        .hero-img-main {
+            width: 100%;
+            aspect-ratio: 4 / 5;
+            border-radius: 16px;
+            object-fit: cover;
+            display: block;
+            box-shadow: 0 30px 70px rgba(44,36,32,0.13), 0 8px 20px rgba(44,36,32,0.07);
+            opacity: 0;
+            animation: heroImgReveal 1s cubic-bezier(0.2, 0, 0.2, 1) 0.5s forwards,
+                       floatGentle 7s ease-in-out 1.5s infinite;
+        }
+
+        /* Floating price card — bottom-left, pops over image */
+        .hero-float-card {
+            position: absolute;
+            bottom: -20px;
+            left: -28px;
+            background: var(--white);
+            border-radius: 12px;
+            padding: 1.1rem 1.4rem;
+            box-shadow: 0 12px 36px rgba(44,36,32,0.12);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            opacity: 0;
+            animation: badgeSlideUp 0.6s ease 1.3s forwards;
+            z-index: 10;
+            min-width: 200px;
+        }
+
+        .hero-float-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            background: rgba(107,168,90,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+
+        .hero-float-label {
+            font-family: 'Playfair Display', serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--charcoal);
+            line-height: 1.2;
+            margin-bottom: 0.15rem;
+        }
+
+        .hero-float-sub {
+            font-size: 0.75rem;
+            color: var(--taupe);
+            font-family: 'Lora', serif;
+        }
+
+        /* Small second card — top-right corner */
+        .hero-float-card-2 {
+            position: absolute;
+            top: 24px;
+            right: -24px;
+            background: var(--white);
+            border-radius: 10px;
+            padding: 0.9rem 1.1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+            opacity: 0;
+            animation: badgeSlideUp 0.6s ease 1.55s forwards;
+            z-index: 10;
+            box-shadow: 0 8px 24px rgba(44,36,32,0.1);
+            border: 1px solid var(--dark-cream);
+        }
+
+        .hero-float-card-2 .fc2-num {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--accent-dino);
+            line-height: 1;
+        }
+
+        .hero-float-card-2 .fc2-label {
+            font-size: 0.7rem;
+            color: var(--taupe);
+            font-family: 'Lora', serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Soft decorative blob behind image */
+        .hero-img-main-wrap::before {
+            content: '';
+            position: absolute;
+            top: 5%;
+            left: 5%;
+            right: -5%;
+            bottom: -5%;
+            background: var(--dark-cream);
+            border-radius: 18px;
+            z-index: -1;
+        }
+
+        /* --- Responsive --- */
+        @media (max-width: 1060px) {
+            .hero-inner {
+                grid-template-columns: 1fr;
+                padding: 0 2.5rem;
+                gap: 2rem;
+            }
+            .hero-left {
+                padding: 4rem 0 1rem;
+                align-items: center;
+                text-align: center;
+            }
+            .hero-eyebrow { align-self: center; }
+            .hero-subtext { max-width: 520px; text-align: center; }
+            .hero-stats { justify-content: center; }
+            .hero-cta-row { justify-content: center; }
+            .hero-right { padding: 0 0 4rem; }
+            .hero-img-main-wrap { max-width: 380px; }
+        }
+        @media (max-width: 600px) {
+            .hero { min-height: auto; }
+            .hero-headline { font-size: 2.6rem; letter-spacing: -1px; }
+            .hero-float-card { left: -8px; min-width: 170px; padding: 0.9rem 1rem; }
+            .hero-float-card-2 { right: -8px; }
+            .hero-stats { gap: 1.5rem; }
+            .hero-btn-primary, .hero-btn-secondary { padding: 0.9rem 2rem; }
+        }
+
+        /* =========================================
+           CUSTOMER REVIEWS SECTION
+           ========================================= */
+        .reviews-section {
+            padding: 5rem 0;
+            background: var(--white);
+            border-top: 1px solid var(--dark-cream);
+            border-bottom: 1px solid var(--dark-cream);
+            overflow: hidden;
+        }
+
+        .reviews-header {
+            text-align: center;
+            margin-bottom: 3.5rem;
+        }
+
+        .reviews-header .eyebrow {
+            display: inline-block;
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--accent-dino);
+            font-weight: 600;
+            margin-bottom: 0.9rem;
+        }
+
+        .reviews-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.6rem;
+            color: var(--charcoal);
+            margin-bottom: 0.8rem;
             line-height: 1.2;
         }
 
-        .hero-content p {
+        .reviews-header p {
             color: var(--taupe);
-            font-size: 1.1rem;
-            margin-bottom: 2rem;
+            font-size: 1.05rem;
         }
 
-        .cta-buttons {
+        .reviews-aggregate {
             display: flex;
-            gap: 1.5rem;
+            align-items: center;
             justify-content: center;
-            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 3rem;
         }
 
-        /* Responsive adjustments */
-        @media (max-width: 1100px) {
-            .card { width: 280px; }
+        .aggregate-score {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--charcoal);
+            line-height: 1;
         }
 
-        @media (max-width: 768px) {
-            .card { display: none; } /* Hides on mobile so text doesn't overlap */
-            .hero-content h1 { font-size: 2.8rem; }
+        .aggregate-right {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+
+        .stars-row {
+            display: flex;
+            gap: 3px;
+        }
+
+        .star {
+            color: #e8a020;
+            font-size: 1.2rem;
+        }
+
+        .aggregate-label {
+            color: var(--taupe);
+            font-size: 0.9rem;
+        }
+
+        .reviews-divider {
+            width: 60px;
+            height: 1px;
+            background: var(--dark-cream);
+            margin: 0 1.5rem;
+        }
+
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.8rem;
+        }
+
+        @media (max-width: 980px) {
+            .reviews-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 620px) {
+            .reviews-grid { grid-template-columns: 1fr; }
+            .reviews-header h2 { font-size: 2rem; }
+        }
+
+        .review-card {
+            background: var(--light-gray);
+            border-radius: 12px;
+            padding: 2rem 1.8rem;
+            border: 1px solid var(--dark-cream);
+            position: relative;
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+        }
+
+        .review-card:hover {
+            box-shadow: 0 10px 30px rgba(0,0,0,0.07);
+            transform: translateY(-4px);
+        }
+
+        .review-card::before {
+            content: '\201C';
+            font-family: 'Playfair Display', serif;
+            font-size: 5rem;
+            color: var(--accent-dino);
+            opacity: 0.15;
+            position: absolute;
+            top: 0.5rem;
+            left: 1.2rem;
+            line-height: 1;
+        }
+
+        .review-card-stars {
+            display: flex;
+            gap: 3px;
+            margin-bottom: 1rem;
+        }
+
+        .review-card-stars .star {
+            font-size: 1rem;
+        }
+
+        .review-text {
+            color: var(--charcoal);
+            font-size: 0.97rem;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+
+        .review-author {
+            display: flex;
+            align-items: center;
+            gap: 0.9rem;
+            border-top: 1px solid var(--dark-cream);
+            padding-top: 1.2rem;
+        }
+
+        .review-avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: var(--accent-dino);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .review-avatar.alt { background: var(--charcoal); }
+        .review-avatar.alt2 { background: var(--taupe); }
+
+        .review-author-info .author-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--charcoal);
+            margin-bottom: 0.15rem;
+        }
+
+        .review-author-info .author-detail {
+            font-size: 0.8rem;
+            color: var(--taupe);
+        }
+
+        .review-verified {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-size: 0.75rem;
+            color: var(--accent-dino);
+            font-weight: 600;
         }
 
         /* =========================================
@@ -445,79 +948,325 @@
             font-size: 1.2rem;
         }
 
-        .promo-card {
-            background: linear-gradient(145deg, var(--charcoal) 0%, #3a322d 100%);
+        /* =========================================
+           IMAGE CAROUSEL (replaces promo-card)
+           ========================================= */
+        .promo-carousel-wrap {
+            position: relative;
             border-radius: 16px;
-            padding: 3rem 2.5rem;
-            color: var(--white);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+            background: var(--charcoal);
+            aspect-ratio: 3/4;
+            max-height: 520px;
+        }
+
+        .promo-carousel-track {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .promo-carousel-slide {
+            min-width: 100%;
+            height: 100%;
             position: relative;
             overflow: hidden;
         }
 
-        .promo-card::after {
-            content: '';
-            position: absolute;
-            top: -50px;
-            right: -50px;
-            width: 150px;
-            height: 150px;
-            background: var(--accent-dino);
-            border-radius: 50%;
-            opacity: 0.1;
-        }
-
-        .promo-card h3 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.2rem;
-            margin-bottom: 0.5rem;
-            color: var(--cream);
-            line-height: 1.2;
-        }
-
-        .promo-subtitle {
-            color: var(--taupe);
-            margin-bottom: 2rem;
-            font-size: 1rem;
-        }
-
-        .package-list {
-            list-style: none;
-            margin-bottom: 2.5rem;
-        }
-
-        .package-list li {
-            background: rgba(255, 255, 255, 0.05);
-            margin-bottom: 1rem;
-            padding: 1rem 1.2rem;
-            border-radius: 8px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .pkg-name {
-            font-weight: 600;
-            color: var(--cream);
-        }
-
-        .pkg-price {
-            color: var(--accent-dino);
-            font-family: 'Playfair Display', serif;
-            font-size: 1.2rem;
-            font-weight: 700;
-        }
-
-        .promo-card .btn {
+        .promo-carousel-slide img {
             width: 100%;
-            background: var(--accent-dino);
-            color: var(--white);
-            border-radius: 6px;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Nav arrows */
+        .carousel-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 20;
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.9);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+            transition: background 0.2s ease, transform 0.2s ease;
+            backdrop-filter: blur(4px);
+        }
+
+        .carousel-arrow:hover {
+            background: var(--white);
+            transform: translateY(-50%) scale(1.08);
+        }
+
+        .carousel-arrow svg {
+            width: 16px;
+            height: 16px;
+            stroke: var(--charcoal);
+            stroke-width: 2.5;
+            fill: none;
+        }
+
+        .carousel-arrow-left { left: 12px; }
+        .carousel-arrow-right { right: 12px; }
+
+        /* Dots */
+        .carousel-dots {
+            position: absolute;
+            bottom: 14px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 7px;
+            z-index: 20;
+        }
+
+        .carousel-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.45);
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.3s ease;
+            border: none;
+            padding: 0;
+        }
+
+        .carousel-dot.active {
+            background: var(--white);
+            transform: scale(1.3);
         }
 
         @media (max-width: 980px) {
             .comparison-container { grid-template-columns: 1fr; }
+            .promo-carousel-wrap { max-height: 400px; aspect-ratio: auto; height: 400px; }
+        }
+
+        /* =========================================
+           PACKAGES SECTION (moved below comparison)
+           ========================================= */
+        .packages-section {
+            padding: 5rem 0;
+            background: var(--cream);
+            border-top: 1px solid var(--dark-cream);
+        }
+
+        .packages-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .packages-header .eyebrow {
+            display: inline-block;
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--accent-dino);
+            font-weight: 600;
+            margin-bottom: 0.9rem;
+        }
+
+        .packages-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--charcoal);
+            margin-bottom: 0.7rem;
+        }
+
+        .packages-header p {
+            color: var(--taupe);
+            font-size: 1.05rem;
+        }
+
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.8rem;
+        }
+
+        @media (max-width: 900px) {
+            .packages-grid { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; }
+        }
+
+        .package-tile {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 2.5rem 2rem;
+            border: 1.5px solid var(--dark-cream);
+            text-align: center;
+            position: relative;
+            transition: box-shadow 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
+            overflow: hidden;
+        }
+
+        .package-tile::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--dark-cream);
+            transition: background 0.3s ease;
+        }
+
+        .package-tile:hover {
+            box-shadow: 0 16px 40px rgba(107, 168, 90, 0.12);
+            transform: translateY(-6px);
+            border-color: rgba(107, 168, 90, 0.35);
+        }
+
+        .package-tile:hover::before {
+            background: var(--accent-dino);
+        }
+
+        .package-tile.featured {
+            background: var(--charcoal);
+            border-color: var(--charcoal);
+        }
+
+        .package-tile.featured::before {
+            background: var(--accent-dino);
+        }
+
+        .package-tile.featured:hover {
+            box-shadow: 0 16px 40px rgba(44, 36, 32, 0.2);
+            border-color: var(--accent-dino);
+        }
+
+        .pkg-badge {
+            display: inline-block;
+            background: var(--accent-dino);
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            padding: 0.3rem 0.9rem;
+            border-radius: 999px;
+            margin-bottom: 1.3rem;
+        }
+
+        .pkg-icon {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .pkg-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--charcoal);
+            margin-bottom: 0.4rem;
+        }
+
+        .package-tile.featured .pkg-title {
+            color: var(--cream);
+        }
+
+        .pkg-subtitle {
+            font-size: 0.88rem;
+            color: var(--taupe);
+            margin-bottom: 2rem;
+        }
+
+        .package-tile.featured .pkg-subtitle {
+            color: rgba(245, 243, 240, 0.6);
+        }
+
+        .pkg-price-wrap {
+            margin-bottom: 2rem;
+        }
+
+        .pkg-price-amount {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: var(--accent-dino);
+            line-height: 1;
+        }
+
+        .pkg-price-period {
+            font-size: 0.88rem;
+            color: var(--taupe);
+            margin-top: 0.3rem;
+        }
+
+        .package-tile.featured .pkg-price-period {
+            color: rgba(245, 243, 240, 0.6);
+        }
+
+        .pkg-features {
+            list-style: none;
+            text-align: left;
+            margin-bottom: 2rem;
+        }
+
+        .pkg-features li {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.9rem;
+            color: var(--charcoal);
+            padding: 0.45rem 0;
+            border-bottom: 1px solid var(--dark-cream);
+        }
+
+        .package-tile.featured .pkg-features li {
+            color: var(--cream);
+            border-bottom-color: rgba(255,255,255,0.08);
+        }
+
+        .pkg-features li:last-child {
+            border-bottom: none;
+        }
+
+        .pkg-features li::before {
+            content: '✓';
+            color: var(--accent-dino);
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .pkg-cta {
+            width: 100%;
+            padding: 0.95rem;
+            border-radius: 8px;
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid var(--accent-dino);
+            background: transparent;
+            color: var(--accent-dino);
+            letter-spacing: 0.3px;
+        }
+
+        .pkg-cta:hover {
+            background: var(--accent-dino);
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        .package-tile.featured .pkg-cta {
+            background: var(--accent-dino);
+            color: white;
+            border-color: var(--accent-dino);
+        }
+
+        .package-tile.featured .pkg-cta:hover {
+            background: #5a9650;
+            border-color: #5a9650;
         }
 
         /* =========================================
@@ -547,10 +1296,10 @@
         .item-image {
             width: 100%;
             height: 200px;
-            object-fit: cover; /* This forces the photo to fill the box perfectly without stretching */
+            object-fit: cover;
             display: block;
-            background-color: var(--light-gray); /* A fallback background while the image loads */
-            border-bottom: 1px solid rgba(0,0,0,0.05); /* Optional: creates a clean line between the photo and text */
+            background-color: var(--light-gray);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
         }
 
         .item-content { padding: 1.5rem; }
@@ -1133,23 +1882,192 @@
 
     <div id="home" class="page active">
     <section class="hero">
-            <div class="card card-left">
-                <img src="images/chair.jpg" alt="Furniture Mockup">
-            </div>
+            <div class="hero-top-line"></div>
 
-            <div class="hero-content">
-                <img src="images/logo.jpeg" class="hero-logo" alt="Rentilla Logo">
-                <h1>Just Move In,</h1>
-                <h1>We've Got You.</h1>
-                <p>Premium furniture and appliances for rent. Flexible terms, affordable prices, and hassle-free rentals.</p>
-                <div class="cta-buttons">
-                    <button class="btn btn-primary" onclick="showPage('items')">Browse Items</button>
-                    <button class="btn btn-secondary" onclick="showPage('login')">Sign In</button>
+            <div class="hero-inner">
+
+                <!-- LEFT: Text -->
+                <div class="hero-left">
+
+                    <div class="hero-eyebrow">
+                        <div class="hero-eyebrow-dot"></div>
+                        <span class="hero-eyebrow-text">Furniture &amp; Appliance Rentals &mdash; Delhi NCR</span>
+                    </div>
+
+                    <h1 class="hero-headline">Just Move In,</h1>
+                    <h1 class="hero-headline hero-headline-line2">We&rsquo;ve Got <span class="hero-accent-word">You.</span></h1>
+
+                    <p class="hero-subtext">Premium furniture and appliances for rent. Flexible terms, affordable prices, and hassle-free rentals.</p>
+
+                    <div class="hero-stats">
+                        <div class="hero-stat">
+                            <span class="hero-stat-number">500+</span>
+                            <span class="hero-stat-label">Happy Renters</span>
+                        </div>
+                        <div class="hero-stat-divider"></div>
+                        <div class="hero-stat">
+                            <span class="hero-stat-number">4.8★</span>
+                            <span class="hero-stat-label">Avg. Rating</span>
+                        </div>
+                        <div class="hero-stat-divider"></div>
+                        <div class="hero-stat">
+                            <span class="hero-stat-number">Free</span>
+                            <span class="hero-stat-label">Delivery &amp; Setup</span>
+                        </div>
+                    </div>
+
+                    <div class="hero-cta-row">
+                        <button class="hero-btn-primary" onclick="showPage('items')">Browse Items</button>
+                        <button class="hero-btn-secondary" onclick="showPage('login')">Sign In</button>
+                    </div>
+
                 </div>
-            </div>
 
-            <div class="card card-right">
-                <img src="images/ac.jpeg" alt="Appliance Mockup">
+                <!-- RIGHT: Single hero image with two minimal float cards -->
+                <div class="hero-right">
+                    <div class="hero-img-main-wrap">
+
+                        <img src="images/chair.jpg" alt="Premium Furniture for Rent" class="hero-img-main">
+
+                        <!-- Bottom-left card -->
+                        <div class="hero-float-card">
+                            <div>
+                                <div class="hero-float-label">Premium Coffee Table</div>
+                                <div class="hero-float-sub">Free delivery &amp; installation</div>
+                            </div>
+                        </div>
+
+                        <!-- Top-right card -->
+                        <div class="hero-float-card-2">
+                            <div class="fc2-num">&#8377;100</div>
+                            <div class="fc2-label">Per month</div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- =============================================
+             CUSTOMER REVIEWS SECTION (NEW)
+             ============================================= -->
+        <section class="reviews-section">
+            <div class="container">
+                <div class="reviews-header">
+                    <span class="eyebrow">Testimonials</span>
+                    <h2>What Our Customers Say</h2>
+                    <p>Trusted by hundreds of families, students, and working professionals across the city.</p>
+                </div>
+
+                <div class="reviews-aggregate">
+                    <div class="aggregate-score">4.8</div>
+                    <div class="reviews-divider"></div>
+                    <div class="aggregate-right">
+                        <div class="stars-row">
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                        </div>
+                        <div class="aggregate-label">Based on 200+ verified reviews</div>
+                    </div>
+                </div>
+
+                <div class="reviews-grid">
+
+                    <div class="review-card">
+                        <div class="review-card-stars">
+                            <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+                        </div>
+                        <p class="review-text">Moving to a new city was stressful enough — Rentilla made setting up my flat effortless. Delivery was on time, everything was clean and well-maintained. Couldn't ask for more.</p>
+                        <div class="review-author">
+                            <div class="review-avatar">A</div>
+                            <div class="review-author-info">
+                                <div class="author-name">Arjun Mehta</div>
+                                <div class="author-detail">Rented 2BHK Package · Delhi</div>
+                            </div>
+                            <div class="review-verified">✓ Verified</div>
+                        </div>
+                    </div>
+
+                    <div class="review-card">
+                        <div class="review-card-stars">
+                            <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+                        </div>
+                        <p class="review-text">As a student, buying furniture was out of the question. Rentilla's single bed and wardrobe combo fit perfectly in my budget. The free maintenance is an absolute lifesaver!</p>
+                        <div class="review-author">
+                            <div class="review-avatar alt">P</div>
+                            <div class="review-author-info">
+                                <div class="author-name">Priya Sharma</div>
+                                <div class="author-detail">Rented Bed + Wardrobe · Noida</div>
+                            </div>
+                            <div class="review-verified">✓ Verified</div>
+                        </div>
+                    </div>
+
+                    <div class="review-card">
+                        <div class="review-card-stars">
+                            <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star" style="color:#d4c5bc">★</span>
+                        </div>
+                        <p class="review-text">The RO water purifier has been fantastic — truly clean water without the hassle of buying one outright. The quarterly plan saves money too. Very happy with the service overall.</p>
+                        <div class="review-author">
+                            <div class="review-avatar alt2">R</div>
+                            <div class="review-author-info">
+                                <div class="author-name">Rohan Gupta</div>
+                                <div class="author-detail">Rented RO Purifier · Gurgaon</div>
+                            </div>
+                            <div class="review-verified">✓ Verified</div>
+                        </div>
+                    </div>
+
+                    <div class="review-card">
+                        <div class="review-card-stars">
+                            <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+                        </div>
+                        <p class="review-text">I was in town for a 6-month work assignment. Rentilla let me rent exactly what I needed and return it without any drama. No hidden charges, just honest service. Will use again.</p>
+                        <div class="review-author">
+                            <div class="review-avatar">S</div>
+                            <div class="review-author-info">
+                                <div class="author-name">Sneha Nair</div>
+                                <div class="author-detail">Rented AC + Fridge · Lajpat Nagar</div>
+                            </div>
+                            <div class="review-verified">✓ Verified</div>
+                        </div>
+                    </div>
+
+                    <div class="review-card">
+                        <div class="review-card-stars">
+                            <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+                        </div>
+                        <p class="review-text">Rented the king size bed with mattress for my parents' visit. The quality was genuinely impressive — proper solid wood, not cheap stuff. Free delivery sealed the deal. Highly recommend.</p>
+                        <div class="review-author">
+                            <div class="review-avatar alt">V</div>
+                            <div class="review-author-info">
+                                <div class="author-name">Vikram Tiwari</div>
+                                <div class="author-detail">Rented King Size Bed · Dwarka</div>
+                            </div>
+                            <div class="review-verified">✓ Verified</div>
+                        </div>
+                    </div>
+
+                    <div class="review-card">
+                        <div class="review-card-stars">
+                            <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+                        </div>
+                        <p class="review-text">The customer support team is incredibly responsive. Had a minor issue with the washing machine — a technician came the same day. That kind of after-sales care is rare these days.</p>
+                        <div class="review-author">
+                            <div class="review-avatar alt2">M</div>
+                            <div class="review-author-info">
+                                <div class="author-name">Meena Agarwal</div>
+                                <div class="author-detail">Rented Appliance Bundle · Rohini</div>
+                            </div>
+                            <div class="review-verified">✓ Verified</div>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </section>
 
@@ -1313,28 +2231,112 @@
                     </table>
                 </div>
 
-                <div class="promo-card">
-                    <h3>Furnish Your Flat</h3>
-                    <p>Top-notch quality, budget-friendly packages.</p>
-                    
-                    <ul class="package-list">
-                        <li>
-                            <span class="pkg-name">1 BHK Package</span>
-                            <span class="pkg-price">₹1999/mo</span>
-                        </li>
-                        <li>
-                            <span class="pkg-name">2 BHK Package</span>
-                            <span class="pkg-price">₹3999/mo</span>
-                        </li>
-                        <li>
-                            <span class="pkg-name">3 BHK Package</span>
-                            <span class="pkg-price">₹5999/mo</span>
-                        </li>
-                    </ul>
-                    
-                    <button class="btn" onclick="showPage('items')">Explore Packages</button>
+                <!-- IMAGE CAROUSEL (replaces promo-card) -->
+                <div class="promo-carousel-wrap" id="promoCarousel">
+                    <div class="promo-carousel-track" id="promoTrack">
+                        <div class="promo-carousel-slide">
+                            <img src="images/promo1.png" alt="King Size Bed for Rent">
+                        </div>
+                        <div class="promo-carousel-slide">
+                            <img src="images/promo2.png" alt="RO Water Purifier for Rent">
+                        </div>
+                        <div class="promo-carousel-slide">
+                            <img src="images/promo3.png" alt="Appliance Bundle Package">
+                        </div>
+                        <div class="promo-carousel-slide">
+                            <img src="images/promo4.png" alt="Window Air Conditioner for Rent">
+                        </div>
+                    </div>
+
+                    <button class="carousel-arrow carousel-arrow-left" id="carouselPrev" aria-label="Previous">
+                        <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                    </button>
+                    <button class="carousel-arrow carousel-arrow-right" id="carouselNext" aria-label="Next">
+                        <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </button>
+
+                    <div class="carousel-dots" id="carouselDots">
+                        <button class="carousel-dot active" data-index="0"></button>
+                        <button class="carousel-dot" data-index="1"></button>
+                        <button class="carousel-dot" data-index="2"></button>
+                        <button class="carousel-dot" data-index="3"></button>
+                    </div>
                 </div>
 
+            </div>
+        </section>
+
+        <!-- =============================================
+             PACKAGES SECTION (moved below comparison, redesigned)
+             ============================================= -->
+        <section class="packages-section">
+            <div class="container">
+                <div class="packages-header">
+                    <span class="eyebrow">Our Plans</span>
+                    <h2>Furnish Your Flat</h2>
+                    <p>Top-notch quality, budget-friendly packages — pick what fits your home.</p>
+                </div>
+
+                <div class="packages-grid">
+
+                    <div class="package-tile">
+                        <span class="pkg-icon">🏠</span>
+                        <div class="pkg-title">Appliance Pack</div>
+                        <div class="pkg-subtitle">Essentials for your home</div>
+                        <div class="pkg-price-wrap">
+                            <div class="pkg-price-amount">₹1,199</div>
+                            <div class="pkg-price-period">per month</div>
+                        </div>
+                        <ul class="pkg-features">
+                            <li>Single Door Refrigerator</li>
+                            <li>Semi-Automatic Washing Machine</li>
+                            <li>RO Water Purifier (10-stage)</li>
+                            <li>Free Delivery & Installation</li>
+                            <li>Free Maintenance & Support</li>
+                        </ul>
+                        <button class="pkg-cta" onclick="showPage('items')">Get This Plan</button>
+                    </div>
+
+                    <div class="package-tile featured">
+                        <span class="pkg-badge">Most Popular</span>
+                        <span class="pkg-icon">🏡</span>
+                        <div class="pkg-title">2 BHK</div>
+                        <div class="pkg-subtitle">Ideal for small families</div>
+                        <div class="pkg-price-wrap">
+                            <div class="pkg-price-amount">₹3,999</div>
+                            <div class="pkg-price-period">per month</div>
+                        </div>
+                        <ul class="pkg-features">
+                            <li>2 Beds with Mattresses</li>
+                            <li>Wardrobes & Storage</li>
+                            <li>Sofa + Coffee Table</li>
+                            <li>Fridge & Washing Machine</li>
+                            <li>Free Delivery & Installation</li>
+                            <li>Free Maintenance & Support</li>
+                        </ul>
+                        <button class="pkg-cta" onclick="showPage('items')">Get This Plan</button>
+                    </div>
+
+                    <div class="package-tile">
+                        <span class="pkg-icon">🏘️</span>
+                        <div class="pkg-title">3 BHK</div>
+                        <div class="pkg-subtitle">Complete home setup</div>
+                        <div class="pkg-price-wrap">
+                            <div class="pkg-price-amount">₹5,999</div>
+                            <div class="pkg-price-period">per month</div>
+                        </div>
+                        <ul class="pkg-features">
+                            <li>3 Beds with Mattresses</li>
+                            <li>Full Wardrobe Set</li>
+                            <li>Living Room Furniture</li>
+                            <li>Full Appliance Bundle</li>
+                            <li>Priority Delivery & Setup</li>
+                            <li>Free Maintenance & Support</li>
+                        </ul>
+                        <button class="pkg-cta" onclick="showPage('items')">Get This Plan</button>
+                    </div>
+
+                </div>
             </div>
         </section>
 
@@ -1527,7 +2529,7 @@
             </div>
             <div>
                 <h4>Contact Us</h4>
-                <p>Email: support@rentilla.com</p>
+                <p>Email: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="fc8f898c8c938e88bc8e9992889590909dd29f9391">[email&#160;protected]</a></p>
                 <p>Phone: 1-800-RENTILLA</p>
                 <p>Hours: 24/7 Support</p>
             </div>
@@ -1537,7 +2539,7 @@
         </div>
     </footer>
 
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 function showPage(pageId, event) {
     document.querySelectorAll(".page").forEach(page => {
         page.classList.remove("active");
@@ -1589,6 +2591,71 @@ function toggleLoginMethod(method, event) {
         document.getElementById("phone").required = true;
     }
 }
+
+// =========================================
+// PROMO IMAGE CAROUSEL
+// =========================================
+(function() {
+    const TOTAL_SLIDES = 4;
+    const AUTO_INTERVAL = 2000; // 2 seconds
+    let currentIndex = 0;
+    let autoTimer = null;
+
+    const track = document.getElementById('promoTrack');
+    const dots = document.querySelectorAll('.carousel-dot');
+    const prevBtn = document.getElementById('carouselPrev');
+    const nextBtn = document.getElementById('carouselNext');
+
+    function goTo(index) {
+        currentIndex = (index + TOTAL_SLIDES) % TOTAL_SLIDES;
+        track.style.transform = 'translateX(-' + (currentIndex * 100) + '%)';
+        dots.forEach(function(d, i) {
+            d.classList.toggle('active', i === currentIndex);
+        });
+    }
+
+    function startAuto() {
+        stopAuto();
+        autoTimer = setInterval(function() {
+            goTo(currentIndex + 1);
+        }, AUTO_INTERVAL);
+    }
+
+    function stopAuto() {
+        if (autoTimer) {
+            clearInterval(autoTimer);
+            autoTimer = null;
+        }
+    }
+
+    prevBtn.addEventListener('click', function() {
+        goTo(currentIndex - 1);
+        stopAuto();
+        startAuto();
+    });
+
+    nextBtn.addEventListener('click', function() {
+        goTo(currentIndex + 1);
+        stopAuto();
+        startAuto();
+    });
+
+    dots.forEach(function(dot) {
+        dot.addEventListener('click', function() {
+            goTo(parseInt(this.dataset.index));
+            stopAuto();
+            startAuto();
+        });
+    });
+
+    // Pause on hover
+    var carousel = document.getElementById('promoCarousel');
+    carousel.addEventListener('mouseenter', stopAuto);
+    carousel.addEventListener('mouseleave', startAuto);
+
+    // Start
+    startAuto();
+})();
 </script>
 <script type="module" src="js/firebase-config.js"></script>
 <script type="module" src="js/auth.js"></script>
