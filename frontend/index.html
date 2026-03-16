@@ -715,22 +715,27 @@
             transform: translateY(-4px);
         }
 
-        .review-card::before {
-            content: '\201C';
+        .review-quote-mark {
             font-family: 'Playfair Display', serif;
-            font-size: 5rem;
+            font-size: 3.5rem;
             color: var(--accent-dino);
-            opacity: 0.15;
-            position: absolute;
-            top: 0.5rem;
-            left: 1.2rem;
+            opacity: 0.3;
             line-height: 1;
+            display: block;
+            margin-bottom: -0.5rem;
+        }
+
+        .review-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
         }
 
         .review-card-stars {
             display: flex;
             gap: 3px;
-            margin-bottom: 1rem;
+            flex-shrink: 0;
         }
 
         .review-card-stars .star {
@@ -867,7 +872,7 @@
 
         .comparison-container {
             display: grid;
-            grid-template-columns: 1.4fr 1fr;
+            grid-template-columns: 1fr 1fr;
             gap: 4rem;
             align-items: center;
         }
@@ -955,10 +960,12 @@
             position: relative;
             border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.12);
-            background: var(--charcoal);
-            aspect-ratio: 3/4;
-            max-height: 520px;
+            box-shadow: 0 8px 16px rgba(44,36,32,0.08),
+                        0 20px 48px rgba(44,36,32,0.12),
+                        0 0 0 1px rgba(44,36,32,0.06);
+            background: var(--white);
+            aspect-ratio: 1 / 1;
+            width: 100%;
         }
 
         .promo-carousel-track {
@@ -973,16 +980,20 @@
             height: 100%;
             position: relative;
             overflow: hidden;
+            background: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .promo-carousel-slide img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain;
             display: block;
         }
 
-        /* Nav arrows */
+        /* Nav arrows — hidden until hover */
         .carousel-arrow {
             position: absolute;
             top: 50%;
@@ -990,21 +1001,28 @@
             z-index: 20;
             width: 40px;
             height: 40px;
-            background: rgba(255,255,255,0.9);
+            background: rgba(255,255,255,0.92);
             border: none;
             border-radius: 50%;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.18);
-            transition: background 0.2s ease, transform 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transition: background 0.2s ease, transform 0.2s ease, opacity 0.25s ease;
             backdrop-filter: blur(4px);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .promo-carousel-wrap:hover .carousel-arrow {
+            opacity: 1;
+            pointer-events: auto;
         }
 
         .carousel-arrow:hover {
             background: var(--white);
-            transform: translateY(-50%) scale(1.08);
+            transform: translateY(-50%) scale(1.1);
         }
 
         .carousel-arrow svg {
@@ -1033,7 +1051,7 @@
             width: 7px;
             height: 7px;
             border-radius: 50%;
-            background: rgba(255,255,255,0.45);
+            background: rgba(44,36,32,0.2);
             cursor: pointer;
             transition: background 0.3s ease, transform 0.3s ease;
             border: none;
@@ -1041,13 +1059,13 @@
         }
 
         .carousel-dot.active {
-            background: var(--white);
+            background: var(--charcoal);
             transform: scale(1.3);
         }
 
         @media (max-width: 980px) {
             .comparison-container { grid-template-columns: 1fr; }
-            .promo-carousel-wrap { max-height: 400px; aspect-ratio: auto; height: 400px; }
+            .promo-carousel-wrap { aspect-ratio: 1 / 1; width: 100%; max-width: 480px; margin: 0 auto; }
         }
 
         /* =========================================
@@ -1978,8 +1996,11 @@
                 <div class="reviews-grid">
 
                     <div class="review-card">
-                        <div class="review-card-stars">
-                            <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+                        <div class="review-card-header">
+                            <span class="review-quote-mark">&ldquo;</span>
+                            <div class="review-card-stars">
+                                <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+                            </div>
                         </div>
                         <p class="review-text">Moving to a new city was stressful enough — Rentilla made setting up my flat effortless. Delivery was on time, everything was clean and well-maintained. Couldn't ask for more.</p>
                         <div class="review-author">
@@ -1993,8 +2014,11 @@
                     </div>
 
                     <div class="review-card">
-                        <div class="review-card-stars">
-                            <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+                        <div class="review-card-header">
+                            <span class="review-quote-mark">&ldquo;</span>
+                            <div class="review-card-stars">
+                                <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+                            </div>
                         </div>
                         <p class="review-text">As a student, buying furniture was out of the question. Rentilla's single bed and wardrobe combo fit perfectly in my budget. The free maintenance is an absolute lifesaver!</p>
                         <div class="review-author">
@@ -2008,8 +2032,11 @@
                     </div>
 
                     <div class="review-card">
-                        <div class="review-card-stars">
-                            <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star" style="color:#d4c5bc">★</span>
+                        <div class="review-card-header">
+                            <span class="review-quote-mark">&ldquo;</span>
+                            <div class="review-card-stars">
+                                <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star" style="color:#d4c5bc">★</span>
+                            </div>
                         </div>
                         <p class="review-text">The RO water purifier has been fantastic — truly clean water without the hassle of buying one outright. The quarterly plan saves money too. Very happy with the service overall.</p>
                         <div class="review-author">
@@ -2023,8 +2050,11 @@
                     </div>
 
                     <div class="review-card">
-                        <div class="review-card-stars">
-                            <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+                        <div class="review-card-header">
+                            <span class="review-quote-mark">&ldquo;</span>
+                            <div class="review-card-stars">
+                                <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+                            </div>
                         </div>
                         <p class="review-text">I was in town for a 6-month work assignment. Rentilla let me rent exactly what I needed and return it without any drama. No hidden charges, just honest service. Will use again.</p>
                         <div class="review-author">
@@ -2038,8 +2068,11 @@
                     </div>
 
                     <div class="review-card">
-                        <div class="review-card-stars">
-                            <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+                        <div class="review-card-header">
+                            <span class="review-quote-mark">&ldquo;</span>
+                            <div class="review-card-stars">
+                                <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+                            </div>
                         </div>
                         <p class="review-text">Rented the king size bed with mattress for my parents' visit. The quality was genuinely impressive — proper solid wood, not cheap stuff. Free delivery sealed the deal. Highly recommend.</p>
                         <div class="review-author">
@@ -2053,8 +2086,11 @@
                     </div>
 
                     <div class="review-card">
-                        <div class="review-card-stars">
-                            <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+                        <div class="review-card-header">
+                            <span class="review-quote-mark">&ldquo;</span>
+                            <div class="review-card-stars">
+                                <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+                            </div>
                         </div>
                         <p class="review-text">The customer support team is incredibly responsive. Had a minor issue with the washing machine — a technician came the same day. That kind of after-sales care is rare these days.</p>
                         <div class="review-author">
