@@ -158,6 +158,20 @@ function normalizeStatus(status) {
 }
 
 /* ---------------------------
+   STATUS MESSAGES
+--------------------------- */
+function getStatusMessage(status) {
+  const messages = {
+    pending:   "Your request is being reviewed.",
+    approved:  "Your request has been approved. Payment will be requested shortly.",
+    rejected:  "Your request was not approved.",
+    active:    "Your rental is currently active.",
+    completed: "Your rental has been completed."
+  };
+  return messages[status] || "";
+}
+
+/* ---------------------------
    USER PROFILE
 --------------------------- */
 async function loadUserProfile(user) {
@@ -282,6 +296,7 @@ function renderRequestHistory(requests) {
     const totalMonthlyRent = Number(request.totalMonthlyRent || 0);
     const status = normalizeStatus(request.status);
     const paymentStatus = escapeHtml(request.paymentStatus || "unpaid");
+    const statusMessage = getStatusMessage(status);
 
     const itemsHtml = (request.items || [])
       .map((item) => {
@@ -313,6 +328,8 @@ function renderRequestHistory(requests) {
         </div>
         <span class="status-badge status-${status}">${escapeHtml(status)}</span>
       </div>
+
+      ${statusMessage ? `<p class="request-status-message request-status-message-${status}">${statusMessage}</p>` : ""}
 
       <div class="request-card-body">
         <div class="request-card-grid">
