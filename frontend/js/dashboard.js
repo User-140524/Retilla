@@ -163,7 +163,7 @@ function normalizeStatus(status) {
 function getStatusMessage(status) {
   const messages = {
     pending:   "Your request is being reviewed.",
-    approved:  "Your request has been approved. Payment will be requested shortly.",
+    approved:  "Your request has been approved. Please complete payment to confirm your rental.",
     rejected:  "Your request was not approved.",
     active:    "Your rental is currently active.",
     completed: "Your rental has been completed."
@@ -275,6 +275,20 @@ function renderDashboardMetrics(requests) {
 }
 
 /* ---------------------------
+   PAY NOW HANDLER
+   Placeholder for Razorpay.
+   requestId and amount are passed in
+   so Razorpay can be wired in later
+   by replacing the alert below.
+--------------------------- */
+function handlePayNow(requestId, amount) {
+  // TODO: Replace this with Razorpay integration
+  // requestId → use as Razorpay order reference
+  // amount    → pass as amount in paise (amount * 100)
+  alert(`Payment coming soon!\n\nRequest: #${requestId.slice(0, 8)}\nAmount: ₹${Number(amount).toLocaleString("en-IN")}/month`);
+}
+
+/* ---------------------------
    REQUEST HISTORY RENDER
 --------------------------- */
 function renderRequestHistory(requests) {
@@ -295,8 +309,11 @@ function renderRequestHistory(requests) {
     const totalItems = Number(request.totalItems || 0);
     const totalMonthlyRent = Number(request.totalMonthlyRent || 0);
     const status = normalizeStatus(request.status);
-    const paymentStatus = escapeHtml(request.paymentStatus || "unpaid");
+    const paymentStatus = normalizeStatus(request.paymentStatus || "unpaid");
     const statusMessage = getStatusMessage(status);
+
+    // Pay Now button only shows for approved + unpaid requests
+    const showPayNow = status === "approved" && paymentStatus === "unpaid";
 
     const itemsHtml = (request.items || [])
       .map((item) => {
@@ -336,7 +353,7 @@ function renderRequestHistory(requests) {
           <p><strong>Preferred Delivery:</strong> ${preferredDeliveryDate}</p>
           <p><strong>Total Items:</strong> ${totalItems}</p>
           <p><strong>Monthly Rent:</strong> ${formatCurrency(totalMonthlyRent)}</p>
-          <p><strong>Payment:</strong> ${paymentStatus}</p>
+          <p><strong>Payment:</strong> ${escapeHtml(paymentStatus)}</p>
         </div>
 
         <div class="request-items-block">
@@ -345,10 +362,27 @@ function renderRequestHistory(requests) {
             ${itemsHtml || "<li>No items found</li>"}
           </ul>
         </div>
+
+        ${showPayNow ? `
+        <div class="pay-now-block">
+          <button class="pay-now-btn" data-request-id="${request.id}" data-amount="${totalMonthlyRent}">
+            💳 Pay Now — ${formatCurrency(totalMonthlyRent)}/month
+          </button>
+        </div>
+        ` : ""}
       </div>
     `;
 
     requestsList.appendChild(card);
+  });
+
+  // Bind Pay Now buttons after cards are in the DOM
+  document.querySelectorAll(".pay-now-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const requestId = btn.dataset.requestId;
+      const amount = btn.dataset.amount;
+      handlePayNow(requestId, amount);
+    });
   });
 }
 
