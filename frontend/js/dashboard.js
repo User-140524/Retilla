@@ -16,7 +16,7 @@ import {
   orderBy
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-const GOOGLE_SHEET_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwnyvshOimh4YEvL2nOgL_Oo4s-YF3PdNALowu4MIa1ERhNxKxDJCtwLRv-X8z4jISp/exec";
+const GOOGLE_SHEET_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwVfHFPtKdbk44_5cxUP7WdT5Fy9Nn_CaIoBSU-qIxR6VZHAXLfJt2iSv_nhheM5pZ7/exec";
 
 /* ---------------------------
    DOM ELEMENTS
