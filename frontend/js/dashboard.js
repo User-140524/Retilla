@@ -499,54 +499,77 @@ async function submitRentalRequest(user) {
       requestSubmitBtn.textContent = "Submitting...";
     }
 
+    // 1. Save request to Firebase — this is the critical step.
     const requestRef = await addDoc(
-  collection(db, "rentalRequests"),
-  payload
-);
+      collection(db, "rentalRequests"),
+      payload
+    );
 
-// Send request to Google Sheet
-      await fetch(GOOGLE_SHEET_WEB_APP_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
+    // 2. Send request to Google Sheet.
+    // Isolated in its own try/catch so a Sheets/network/CORS failure
+    // can NEVER cause the user-facing submission to fail after the
+    // Firestore write has already succeeded.
+    //
+    // NOTE: Content-Type is deliberately "text/plain" (not
+    // "application/json"). Google Apps Script web apps do not return
+    // proper CORS headers on the preflight OPTIONS request that
+    // browsers send for "application/json" bodies, causing:
+    //   "Response to preflight request doesn't pass access control
+    //    check: No 'Access-Control-Allow-Origin' header is present"
+    // Using "text/plain" makes this a CORS "simple request", which
+    // skips the preflight entirely. The body is still valid JSON text,
+    // so your Apps Script doPost(e) can keep doing
+    // JSON.parse(e.postData.contents) exactly as before.
+    try {
+      const sheetPayload = {
         name: fullName,
         email: user.email || "",
         phone: phone,
-
         message: `
-    Rental Request ID: ${requestRef.id}
+Rental Request ID: ${requestRef.id}
 
-    Items:
-    ${items.map(item =>
-      `${item.productName} (Qty: ${item.quantity}, Duration: ${item.durationMonths} months)`
-    ).join("\n")}
+Items:
+${items.map(item =>
+  `${item.productName} (Qty: ${item.quantity}, Duration: ${item.durationMonths} months)`
+).join("\n")}
 
-    Address:
-    ${address}
+Address:
+${address}
 
-    Pincode:
-    ${pincode}
+Pincode:
+${pincode}
 
-    Preferred Delivery Date:
-    ${preferredDeliveryDate}
+Preferred Delivery Date:
+${preferredDeliveryDate}
 
-    Total Items:
-    ${totalItems}
+Total Items:
+${totalItems}
 
-    Monthly Rent:
-    ₹${totalMonthlyRent}
+Monthly Rent:
+₹${totalMonthlyRent}
 
-    Notes:
-    ${notes || "None"}
+Notes:
+${notes || "None"}
 
-    Status:
-    Pending
-    `
-      })
-    });
+Status:
+Pending
+`
+      };
 
+      await fetch(GOOGLE_SHEET_WEB_APP_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "text/plain;charset=utf-8"
+        },
+        body: JSON.stringify(sheetPayload)
+      });
+
+      console.log("Google Sheet updated successfully");
+    } catch (sheetError) {
+      console.error("Google Sheet sync failed (request was still saved):", sheetError);
+    }
+
+    // 3. Clear cart + reset UI — always runs, regardless of Sheet outcome.
     clearCheckoutFlow();
 
     if (requestForm) requestForm.reset();
