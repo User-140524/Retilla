@@ -505,36 +505,47 @@ async function submitRentalRequest(user) {
 );
 
 // Send request to Google Sheet
-    await fetch(GOOGLE_SHEET_WEB_APP_URL, {
+      await fetch(GOOGLE_SHEET_WEB_APP_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        requestId: requestRef.id,
+        name: fullName,
+        email: user.email || "",
+        phone: phone,
 
-        userName: fullName,
-        userEmail: user.email || "",
-        userPhone: phone,
+        message: `
+    Rental Request ID: ${requestRef.id}
 
-        address,
-        pincode,
-        preferredDeliveryDate,
-        notes,
+    Items:
+    ${items.map(item =>
+      `${item.productName} (Qty: ${item.quantity}, Duration: ${item.durationMonths} months)`
+    ).join("\n")}
 
-        items: items.map(item => 
-          `${item.productName} (Qty:${item.quantity}, ${item.durationMonths} months)`
-        ).join(", "),
+    Address:
+    ${address}
 
-        totalItems,
-        totalMonthlyRent,
+    Pincode:
+    ${pincode}
 
-        status: "pending"
+    Preferred Delivery Date:
+    ${preferredDeliveryDate}
+
+    Total Items:
+    ${totalItems}
+
+    Monthly Rent:
+    ₹${totalMonthlyRent}
+
+    Notes:
+    ${notes || "None"}
+
+    Status:
+    Pending
+    `
       })
     });
-
-    clearCheckoutFlow();
-    await addDoc(collection(db, "rentalRequests"), payload);
 
     clearCheckoutFlow();
 
