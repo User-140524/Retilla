@@ -16,6 +16,8 @@ import {
   orderBy
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
+const GOOGLE_SHEET_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwnyvshOimh4YEvL2nOgL_Oo4s-YF3PdNALowu4MIa1ERhNxKxDJCtwLRv-X8z4jISp/exec";
+
 /* ---------------------------
    DOM ELEMENTS
 --------------------------- */
@@ -497,6 +499,41 @@ async function submitRentalRequest(user) {
       requestSubmitBtn.textContent = "Submitting...";
     }
 
+    const requestRef = await addDoc(
+  collection(db, "rentalRequests"),
+  payload
+);
+
+// Send request to Google Sheet
+    await fetch(GOOGLE_SHEET_WEB_APP_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        requestId: requestRef.id,
+
+        userName: fullName,
+        userEmail: user.email || "",
+        userPhone: phone,
+
+        address,
+        pincode,
+        preferredDeliveryDate,
+        notes,
+
+        items: items.map(item => 
+          `${item.productName} (Qty:${item.quantity}, ${item.durationMonths} months)`
+        ).join(", "),
+
+        totalItems,
+        totalMonthlyRent,
+
+        status: "pending"
+      })
+    });
+
+    clearCheckoutFlow();
     await addDoc(collection(db, "rentalRequests"), payload);
 
     clearCheckoutFlow();
