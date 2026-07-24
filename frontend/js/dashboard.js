@@ -16,7 +16,7 @@ import {
   orderBy
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-const GOOGLE_SHEET_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwVfHFPtKdbk44_5cxUP7WdT5Fy9Nn_CaIoBSU-qIxR6VZHAXLfJt2iSv_nhheM5pZ7/exec";
+const GOOGLE_SHEET_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzl3ReC4yDPB0jbbRAm1I6J_5fm2jltqfViDXmERbBWk9Jc4Gy-ofNp3mBxl7Zmd7cS/exec";
 
 /* ---------------------------
    DOM ELEMENTS
@@ -278,15 +278,8 @@ function renderDashboardMetrics(requests) {
 
 /* ---------------------------
    PAY NOW HANDLER
-   Placeholder for Razorpay.
-   requestId and amount are passed in
-   so Razorpay can be wired in later
-   by replacing the alert below.
 --------------------------- */
 function handlePayNow(requestId, amount) {
-  // TODO: Replace this with Razorpay integration
-  // requestId → use as Razorpay order reference
-  // amount    → pass as amount in paise (amount * 100)
   alert(`Payment coming soon!\n\nRequest: #${requestId.slice(0, 8)}\nAmount: ₹${Number(amount).toLocaleString("en-IN")}/month`);
 }
 
@@ -314,7 +307,6 @@ function renderRequestHistory(requests) {
     const paymentStatus = normalizeStatus(request.paymentStatus || "unpaid");
     const statusMessage = getStatusMessage(status);
 
-    // Pay Now button only shows for approved + unpaid requests
     const showPayNow = status === "approved" && paymentStatus === "unpaid";
 
     const itemsHtml = (request.items || [])
@@ -378,7 +370,6 @@ function renderRequestHistory(requests) {
     requestsList.appendChild(card);
   });
 
-  // Bind Pay Now buttons after cards are in the DOM
   document.querySelectorAll(".pay-now-btn").forEach((btn) => {
     btn.addEventListener("click", () => {
       const requestId = btn.dataset.requestId;
@@ -513,47 +504,21 @@ async function submitRentalRequest(user) {
     // NOTE: Content-Type is deliberately "text/plain" (not
     // "application/json"). Google Apps Script web apps do not return
     // proper CORS headers on the preflight OPTIONS request that
-    // browsers send for "application/json" bodies, causing:
-    //   "Response to preflight request doesn't pass access control
-    //    check: No 'Access-Control-Allow-Origin' header is present"
-    // Using "text/plain" makes this a CORS "simple request", which
-    // skips the preflight entirely. The body is still valid JSON text,
-    // so your Apps Script doPost(e) can keep doing
-    // JSON.parse(e.postData.contents) exactly as before.
+    // browsers send for "application/json" bodies. Using "text/plain"
+    // makes this a CORS "simple request", skipping preflight entirely.
+    // The body is still valid JSON text, so Apps Script's doPost(e)
+    // can keep doing JSON.parse(e.postData.contents) as before.
     try {
       const sheetPayload = {
         name: fullName,
-        email: user.email || "",
-        phone: phone,
-        message: `
-Rental Request ID: ${requestRef.id}
-
-Items:
-${items.map(item =>
-  `${item.productName} (Qty: ${item.quantity}, Duration: ${item.durationMonths} months)`
-).join("\n")}
-
-Address:
-${address}
-
-Pincode:
-${pincode}
-
-Preferred Delivery Date:
-${preferredDeliveryDate}
-
-Total Items:
-${totalItems}
-
-Monthly Rent:
-₹${totalMonthlyRent}
-
-Notes:
-${notes || "None"}
-
-Status:
-Pending
-`
+        contact: phone,
+        address: address,
+        area: pincode, // no separate "area" field in the form yet — using pincode
+        items: items.map((item) => ({
+          productName: item.productName,
+          qty: item.quantity
+        })),
+        remarks: notes || ""
       };
 
       await fetch(GOOGLE_SHEET_WEB_APP_URL, {
