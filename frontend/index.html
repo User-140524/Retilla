@@ -752,7 +752,122 @@
             justify-content: center;
         }
 
-              /* =========================================
+       ! /*         /* =========================================
+           IMAGE CAROUSEL (replaces promo-card)
+           ========================================= */
+        .promo-carousel-wrap {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(44,36,32,0.08),
+                        0 20px 48px rgba(44,36,32,0.12),
+                        0 0 0 1px rgba(44,36,32,0.06);
+            background: var(--white);
+            aspect-ratio: 1 / 1;
+            width: 100%;
+        }
+
+        .promo-carousel-track {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .promo-carousel-slide {
+            min-width: 100%;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+            background: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .promo-carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+        /* Nav arrows — hidden until hover */
+        .carousel-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 20;
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.92);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transition: background 0.2s ease, transform 0.2s ease, opacity 0.25s ease;
+            backdrop-filter: blur(4px);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .promo-carousel-wrap:hover .carousel-arrow {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .carousel-arrow:hover {
+            background: var(--white);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .carousel-arrow svg {
+            width: 16px;
+            height: 16px;
+            stroke: var(--charcoal);
+            stroke-width: 2.5;
+            fill: none;
+        }
+
+        .carousel-arrow-left { left: 12px; }
+        .carousel-arrow-right { right: 12px; }
+
+        /* Dots */
+        .carousel-dots {
+            position: absolute;
+            bottom: 14px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 7px;
+            z-index: 20;
+        }
+
+        .carousel-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: rgba(44,36,32,0.2);
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.3s ease;
+            border: none;
+            padding: 0;
+        }
+
+        .carousel-dot.active {
+            background: var(--charcoal);
+            transform: scale(1.3);
+        }
+
+        @media (max-width: 980px) {
+            .comparison-container { grid-template-columns: 1fr; }
+            .promo-carousel-wrap { aspect-ratio: 1 / 1; width: 100%; max-width: 480px; margin: 0 auto; }
+        }
+!
+        /* =========================================
            PACKAGES SECTION (moved below comparison)
            ========================================= */
         .packages-section {
