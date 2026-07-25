@@ -605,202 +605,155 @@
         }
 
         /* =========================================
-           CUSTOMER REVIEWS SECTION
+           HERO — MINIMAL VARIANT
            ========================================= */
-        .reviews-section {
-            padding: 5rem 0;
-            background: var(--white);
-            border-top: 1px solid var(--dark-cream);
-            border-bottom: 1px solid var(--dark-cream);
-            overflow: hidden;
+        .hero-minimal { min-height: 62vh; }
+        .hero-inner-centered {
+            grid-template-columns: 1fr;
         }
-
-        .reviews-header {
+        .hero-inner-centered .hero-left {
+            align-items: center;
             text-align: center;
-            margin-bottom: 3.5rem;
+            padding: 6rem 0;
+            max-width: 780px;
+            margin: 0 auto;
         }
-
-        .reviews-header .eyebrow {
-            display: inline-block;
-            font-size: 0.78rem;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            color: var(--accent-dino);
-            font-weight: 600;
-            margin-bottom: 0.9rem;
+        .hero-inner-centered .hero-subtext {
+            max-width: 620px;
+            text-align: center;
+            margin: 1.6rem auto 0;
+            font-size: 1.15rem;
         }
-
-        .reviews-header h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.6rem;
-            color: var(--charcoal);
-            margin-bottom: 0.8rem;
-            line-height: 1.2;
-        }
-
-        .reviews-header p {
-            color: var(--taupe);
-            font-size: 1.05rem;
-        }
-
-        .reviews-aggregate {
-            display: flex;
-            align-items: center;
+        .hero-inner-centered .hero-cta-row {
             justify-content: center;
-            gap: 1rem;
-            margin-bottom: 3rem;
         }
-
-        .aggregate-score {
-            font-family: 'Playfair Display', serif;
-            font-size: 3.5rem;
-            font-weight: 700;
-            color: var(--charcoal);
-            line-height: 1;
-        }
-
-        .aggregate-right {
-            display: flex;
-            flex-direction: column;
-            gap: 0.3rem;
-        }
-
-        .stars-row {
-            display: flex;
-            gap: 3px;
-        }
-
-        .star {
-            color: #e8a020;
-            font-size: 1.2rem;
-        }
-
-        .aggregate-label {
-            color: var(--taupe);
-            font-size: 0.9rem;
-        }
-
-        .reviews-divider {
-            width: 60px;
-            height: 1px;
-            background: var(--dark-cream);
-            margin: 0 1.5rem;
-        }
-
-        .reviews-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.8rem;
-        }
-
-        @media (max-width: 980px) {
-            .reviews-grid { grid-template-columns: repeat(2, 1fr); }
-        }
-        @media (max-width: 620px) {
-            .reviews-grid { grid-template-columns: 1fr; }
-            .reviews-header h2 { font-size: 2rem; }
-        }
-
-        .review-card {
-            background: var(--light-gray);
-            border-radius: 12px;
-            padding: 2rem 1.8rem;
-            border: 1px solid var(--dark-cream);
-            position: relative;
-            transition: box-shadow 0.3s ease, transform 0.3s ease;
-        }
-
-        .review-card:hover {
-            box-shadow: 0 10px 30px rgba(0,0,0,0.07);
-            transform: translateY(-4px);
-        }
-
-        .review-quote-mark {
-            font-family: 'Playfair Display', serif;
-            font-size: 3.5rem;
-            color: var(--accent-dino);
-            opacity: 0.3;
-            line-height: 1;
-            display: block;
-            margin-bottom: -0.5rem;
-        }
-
-        .review-card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 1rem;
-        }
-
-        .review-card-stars {
-            display: flex;
-            gap: 3px;
-            flex-shrink: 0;
-        }
-
-        .review-card-stars .star {
-            font-size: 1rem;
-        }
-
-        .review-text {
-            color: var(--charcoal);
-            font-size: 0.97rem;
-            line-height: 1.7;
-            margin-bottom: 1.5rem;
-            font-style: italic;
-        }
-
-        .review-author {
-            display: flex;
-            align-items: center;
-            gap: 0.9rem;
-            border-top: 1px solid var(--dark-cream);
-            padding-top: 1.2rem;
-        }
-
-        .review-avatar {
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            background: var(--accent-dino);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-family: 'Playfair Display', serif;
-            font-size: 1rem;
-            font-weight: 700;
-            flex-shrink: 0;
-        }
-
-        .review-avatar.alt { background: var(--charcoal); }
-        .review-avatar.alt2 { background: var(--taupe); }
-
-        .review-author-info .author-name {
-            font-family: 'Playfair Display', serif;
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--charcoal);
-            margin-bottom: 0.15rem;
-        }
-
-        .review-author-info .author-detail {
-            font-size: 0.8rem;
-            color: var(--taupe);
-        }
-
-        .review-verified {
-            margin-left: auto;
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
-            font-size: 0.75rem;
-            color: var(--accent-dino);
-            font-weight: 600;
+        @media (max-width: 600px) {
+            .hero-minimal { min-height: auto; }
+            .hero-inner-centered .hero-left { padding: 4rem 0 2.5rem; }
         }
 
         /* =========================================
-           FEATURES SECTION (MARQUEE)
+           RENT BY CATEGORY (Furlenco-style tiles)
+           ========================================= */
+        .category-section {
+            padding: 4.5rem 0 5rem;
+            background: var(--white);
+            border-top: 1px solid var(--dark-cream);
+            border-bottom: 1px solid var(--dark-cream);
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 2.5rem;
+        }
+
+        @media (max-width: 900px) {
+            .category-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 560px) {
+            .category-grid { grid-template-columns: 1fr; }
+        }
+
+        .category-tile {
+            position: relative;
+            background: var(--charcoal);
+            border-radius: 14px;
+            overflow: hidden;
+            cursor: pointer;
+            aspect-ratio: 16 / 11;
+            display: flex;
+            align-items: flex-end;
+            border: none;
+            padding: 0;
+            text-align: left;
+            font-family: inherit;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .category-tile:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 16px 36px rgba(44,36,32,0.18);
+        }
+
+        .category-tile img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease, opacity 0.3s ease;
+            opacity: 0.78;
+        }
+
+        .category-tile:hover img {
+            transform: scale(1.06);
+            opacity: 0.62;
+        }
+
+        .category-tile::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(20,16,14,0) 30%, rgba(20,16,14,0.82) 100%);
+        }
+
+        .category-tile-body {
+            position: relative;
+            z-index: 2;
+            padding: 1.4rem 1.5rem;
+            width: 100%;
+        }
+
+        .category-tile-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 0.3rem;
+        }
+
+        .category-tile-meta {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.78);
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .category-tile-arrow {
+            display: inline-block;
+            transition: transform 0.25s ease;
+        }
+
+        .category-tile:hover .category-tile-arrow {
+            transform: translateX(4px);
+        }
+
+        .category-tile.category-tile-all {
+            background: var(--accent-dino);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .category-tile.category-tile-all::after { display: none; }
+
+        .category-tile.category-tile-all .category-tile-body {
+            text-align: center;
+        }
+
+        .category-tile.category-tile-all .category-tile-name {
+            color: white;
+        }
+
+        .category-tile.category-tile-all .category-tile-meta {
+            color: rgba(255,255,255,0.85);
+            justify-content: center;
+        }
+
+        /* =========================================
+           FEATURES SECTION (MARQUEE / POINTER RIBBON)
            ========================================= */
         .feature-icon img {
             display: block;
@@ -877,8 +830,34 @@
             align-items: center;
         }
 
+        .comparison-gallery-only {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .comparison-gallery-only .promo-carousel-wrap {
+            max-width: 640px;
+            width: 100%;
+            aspect-ratio: 4 / 3;
+        }
+
         .comparison-header {
             margin-bottom: 2.5rem;
+        }
+
+        .comparison-header-center {
+            text-align: center;
+        }
+
+        .comparison-header-center .eyebrow {
+            display: inline-block;
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--accent-dino);
+            font-weight: 600;
+            margin-bottom: 0.9rem;
         }
 
         .comparison-header h2 {
@@ -1890,7 +1869,7 @@
             </div>
             <nav>
                 <a onclick="showPage('home', event)" class="nav-link active">Home</a>
-                <a onclick="showPage('items', event)" class="nav-link">Browse Items</a>
+                <a onclick="showPage('items', event)" class="nav-link">Rent</a>
                 <a onclick="showPage('cart', event)" class="nav-link">Cart</a>
                 <a href="#" id="accountNavBtn" class="nav-link account-nav-loading">Login</a>
                                 
@@ -1899,372 +1878,179 @@
     </header>
 
     <div id="home" class="page active">
-    <section class="hero">
+    <section class="hero hero-minimal">
             <div class="hero-top-line"></div>
 
-            <div class="hero-inner">
+            <div class="hero-inner hero-inner-centered">
 
-                <!-- LEFT: Text -->
                 <div class="hero-left">
-
-                    <div class="hero-eyebrow">
-                        <div class="hero-eyebrow-dot"></div>
-                        <span class="hero-eyebrow-text">Furniture &amp; Appliance Rentals &mdash; Delhi NCR</span>
-                    </div>
 
                     <h1 class="hero-headline">Just Move In,</h1>
                     <h1 class="hero-headline hero-headline-line2">We&rsquo;ve Got <span class="hero-accent-word">You.</span></h1>
 
-                    <p class="hero-subtext">Premium furniture and appliances for rent. Flexible terms, affordable prices, and hassle-free rentals.</p>
-
-                    <div class="hero-stats">
-                        <div class="hero-stat">
-                            <span class="hero-stat-number">500+</span>
-                            <span class="hero-stat-label">Happy Renters</span>
-                        </div>
-                        <div class="hero-stat-divider"></div>
-                        <div class="hero-stat">
-                            <span class="hero-stat-number">4.8★</span>
-                            <span class="hero-stat-label">Avg. Rating</span>
-                        </div>
-                        <div class="hero-stat-divider"></div>
-                        <div class="hero-stat">
-                            <span class="hero-stat-number">Free</span>
-                            <span class="hero-stat-label">Delivery &amp; Setup</span>
-                        </div>
-                    </div>
+                    <p class="hero-subtext">We provide furniture and appliances for rent. Flexible terms, affordable prices, and hassle-free rentals &mdash; delivered and installed right at your doorstep across Delhi NCR.</p>
 
                     <div class="hero-cta-row">
-                        <button class="hero-btn-primary" onclick="showPage('items')">Browse Items</button>
+                        <button class="hero-btn-primary" onclick="showPage('items')">Rent Now</button>
                         <button class="hero-btn-secondary" onclick="showPage('login')">Sign In</button>
                     </div>
 
-                </div>
-
-                <!-- RIGHT: Single hero image with two minimal float cards -->
-                <div class="hero-right">
-                    <div class="hero-img-main-wrap">
-
-                        <img src="images/coffeeTable.jpeg" alt="Premium Furniture for Rent" class="hero-img-main">
-
-                        <!-- Bottom-left card -->
-                        <div class="hero-float-card">
-                            <div>
-                                <div class="hero-float-label">Premium Coffee Table</div>
-                                <div class="hero-float-sub">Free delivery &amp; installation</div>
-                            </div>
-                        </div>
-
-                        <!-- Top-right card -->
-                        <div class="hero-float-card-2">
-                            <div class="fc2-num">&#8377;100</div>
-                            <div class="fc2-label">Per month</div>
-                        </div>
-
-                    </div>
                 </div>
 
             </div>
         </section>
 
         <!-- =============================================
-             CUSTOMER REVIEWS SECTION (NEW)
+             RENT BY CATEGORY
              ============================================= -->
-        <section class="reviews-section">
+        <section class="category-section">
             <div class="container">
-                <div class="reviews-header">
-                    <span class="eyebrow">Testimonials</span>
-                    <h2>What Our Customers Say</h2>
-                    <p>Trusted by hundreds of families, students, and working professionals across the city.</p>
+                <div class="packages-header">
+                    <span class="eyebrow">Shop By Category</span>
+                    <h2>What Would You Like to Rent?</h2>
+                    <p>Explore our most-loved categories, curated from our full furniture &amp; appliance catalog.</p>
                 </div>
 
-                <div class="reviews-aggregate">
-                    <div class="aggregate-score">4.8</div>
-                    <div class="reviews-divider"></div>
-                    <div class="aggregate-right">
-                        <div class="stars-row">
-                            <span class="star">★</span>
-                            <span class="star">★</span>
-                            <span class="star">★</span>
-                            <span class="star">★</span>
-                            <span class="star">★</span>
-                        </div>
-                        <div class="aggregate-label">Based on 200+ verified reviews</div>
-                    </div>
-                </div>
+                <div class="category-grid">
 
-                <div class="reviews-grid">
+                    <button class="category-tile" onclick="goToCategory('beds')">
+                        <img src="images/coffeeTable.jpeg" alt="Beds & Mattresses">
+                        <div class="category-tile-body">
+                            <div class="category-tile-name">Beds &amp; Mattresses</div>
+                            <div class="category-tile-meta">From ₹300/mo <span class="category-tile-arrow">→</span></div>
+                        </div>
+                    </button>
 
-                    <div class="review-card">
-                        <div class="review-card-header">
-                            <span class="review-quote-mark">&ldquo;</span>
-                            <div class="review-card-stars">
-                                <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
-                            </div>
+                    <button class="category-tile" onclick="goToCategory('sofas')">
+                        <img src="images/coffeeTable.jpeg" alt="Sofas">
+                        <div class="category-tile-body">
+                            <div class="category-tile-name">Sofas</div>
+                            <div class="category-tile-meta">From ₹200/mo <span class="category-tile-arrow">→</span></div>
                         </div>
-                        <p class="review-text">Moving to a new city was stressful enough — Rentilla made setting up my flat effortless. Delivery was on time, everything was clean and well-maintained. Couldn't ask for more.</p>
-                        <div class="review-author">
-                            <div class="review-avatar">A</div>
-                            <div class="review-author-info">
-                                <div class="author-name">Arjun Mehta</div>
-                                <div class="author-detail">Rented 2BHK Package · Delhi</div>
-                            </div>
-                            <div class="review-verified">✓ Verified</div>
-                        </div>
-                    </div>
+                    </button>
 
-                    <div class="review-card">
-                        <div class="review-card-header">
-                            <span class="review-quote-mark">&ldquo;</span>
-                            <div class="review-card-stars">
-                                <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
-                            </div>
+                    <button class="category-tile" onclick="goToCategory('tables')">
+                        <img src="images/coffeeTable.jpeg" alt="Tables & Dining">
+                        <div class="category-tile-body">
+                            <div class="category-tile-name">Tables &amp; Dining</div>
+                            <div class="category-tile-meta">From ₹100/mo <span class="category-tile-arrow">→</span></div>
                         </div>
-                        <p class="review-text">As a student, buying furniture was out of the question. Rentilla's single bed and wardrobe combo fit perfectly in my budget. The free maintenance is an absolute lifesaver!</p>
-                        <div class="review-author">
-                            <div class="review-avatar alt">P</div>
-                            <div class="review-author-info">
-                                <div class="author-name">Priya Sharma</div>
-                                <div class="author-detail">Rented Bed + Wardrobe · Noida</div>
-                            </div>
-                            <div class="review-verified">✓ Verified</div>
-                        </div>
-                    </div>
+                    </button>
 
-                    <div class="review-card">
-                        <div class="review-card-header">
-                            <span class="review-quote-mark">&ldquo;</span>
-                            <div class="review-card-stars">
-                                <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star" style="color:#d4c5bc">★</span>
-                            </div>
+                    <button class="category-tile" onclick="goToCategory('wardrobe')">
+                        <img src="images/coffeeTable.jpeg" alt="Wardrobes & Storage">
+                        <div class="category-tile-body">
+                            <div class="category-tile-name">Wardrobes &amp; Storage</div>
+                            <div class="category-tile-meta">From ₹150/mo <span class="category-tile-arrow">→</span></div>
                         </div>
-                        <p class="review-text">The RO water purifier has been fantastic — truly clean water without the hassle of buying one outright. The quarterly plan saves money too. Very happy with the service overall.</p>
-                        <div class="review-author">
-                            <div class="review-avatar alt2">R</div>
-                            <div class="review-author-info">
-                                <div class="author-name">Rohan Gupta</div>
-                                <div class="author-detail">Rented RO Purifier · Gurgaon</div>
-                            </div>
-                            <div class="review-verified">✓ Verified</div>
-                        </div>
-                    </div>
+                    </button>
 
-                    <div class="review-card">
-                        <div class="review-card-header">
-                            <span class="review-quote-mark">&ldquo;</span>
-                            <div class="review-card-stars">
-                                <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
-                            </div>
+                    <button class="category-tile" onclick="goToCategory('electronics')">
+                        <img src="images/coffeeTable.jpeg" alt="Appliances & Electronics">
+                        <div class="category-tile-body">
+                            <div class="category-tile-name">Appliances &amp; Electronics</div>
+                            <div class="category-tile-meta">From ₹100/mo <span class="category-tile-arrow">→</span></div>
                         </div>
-                        <p class="review-text">I was in town for a 6-month work assignment. Rentilla let me rent exactly what I needed and return it without any drama. No hidden charges, just honest service. Will use again.</p>
-                        <div class="review-author">
-                            <div class="review-avatar">S</div>
-                            <div class="review-author-info">
-                                <div class="author-name">Sneha Nair</div>
-                                <div class="author-detail">Rented AC + Fridge · Lajpat Nagar</div>
-                            </div>
-                            <div class="review-verified">✓ Verified</div>
-                        </div>
-                    </div>
+                    </button>
 
-                    <div class="review-card">
-                        <div class="review-card-header">
-                            <span class="review-quote-mark">&ldquo;</span>
-                            <div class="review-card-stars">
-                                <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
-                            </div>
+                    <button class="category-tile category-tile-all" onclick="showPage('items')">
+                        <div class="category-tile-body">
+                            <div class="category-tile-name">View All Items</div>
+                            <div class="category-tile-meta">Browse the full catalog <span class="category-tile-arrow">→</span></div>
                         </div>
-                        <p class="review-text">Rented the king size bed with mattress for my parents' visit. The quality was genuinely impressive — proper solid wood, not cheap stuff. Free delivery sealed the deal. Highly recommend.</p>
-                        <div class="review-author">
-                            <div class="review-avatar alt">V</div>
-                            <div class="review-author-info">
-                                <div class="author-name">Vikram Tiwari</div>
-                                <div class="author-detail">Rented King Size Bed · Dwarka</div>
-                            </div>
-                            <div class="review-verified">✓ Verified</div>
-                        </div>
-                    </div>
-
-                    <div class="review-card">
-                        <div class="review-card-header">
-                            <span class="review-quote-mark">&ldquo;</span>
-                            <div class="review-card-stars">
-                                <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
-                            </div>
-                        </div>
-                        <p class="review-text">The customer support team is incredibly responsive. Had a minor issue with the washing machine — a technician came the same day. That kind of after-sales care is rare these days.</p>
-                        <div class="review-author">
-                            <div class="review-avatar alt2">M</div>
-                            <div class="review-author-info">
-                                <div class="author-name">Meena Agarwal</div>
-                                <div class="author-detail">Rented Appliance Bundle · Rohini</div>
-                            </div>
-                            <div class="review-verified">✓ Verified</div>
-                        </div>
-                    </div>
+                    </button>
 
                 </div>
             </div>
         </section>
 
-       <div class="features-wrapper">
+        <!-- =============================================
+             DELIVERY / INSTALLATION / MAINTENANCE RIBBON
+             ============================================= -->
+        <div class="features-wrapper">
             <div class="features-track">
-                
+
                 <div class="feature-card">
-                    <div class="feature-icon">
-                        <img src="images/money.png" alt="money-icon">
-                    </div>
-                    <h3>Affordable Rentals</h3>
-                    <p>Flexible monthly plans that fit your budget. Single bed from ₹200, Double bed from ₹400.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <img src="images/unboxing.png" alt="unboxing-icon">
-                    </div>
-                    <h3>Easy Setup</h3>
-                    <p>We handle delivery and installation. Just sit back and relax.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <img src="images/customer-support.png" alt="support-icon">
-                    </div>
-                    <h3>Maintenance Included</h3>
-                    <p>Full maintenance and support included in every rental.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <img src="images/fast-delivery.png" alt="truck-icon">
-                    </div>
-                    <h3>Fast Delivery</h3>
-                    <p>Quick delivery to your doorstep. No long waits, just quality service.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <img src="images/quality.png" alt="tick-icon">
-                    </div>
-                    <h3>Quality Assurance</h3>
-                    <p>All items are inspected and maintained to the highest standards.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <img src="images/support.png" alt="support-icon">
-                    </div>
-                    <h3>24/7 Support</h3>
-                    <p>Customer support available round the clock for your peace of mind.</p>
+                    <div class="feature-icon"><img src="images/fast-delivery.png" alt="delivery-icon"></div>
+                    <h3>Free Delivery</h3>
+                    <p>Doorstep delivery on every order, anywhere in Delhi NCR — no extra charge.</p>
                 </div>
 
                 <div class="feature-card">
-                    <div class="feature-icon">
-                        <img src="images/money.png" alt="money-icon">
-                    </div>
-                    <h3>Affordable Rentals</h3>
-                    <p>Flexible monthly plans that fit your budget. Single bed from ₹200, Double bed from ₹400.</p>
+                    <div class="feature-icon"><img src="images/unboxing.png" alt="installation-icon"></div>
+                    <h3>Free Installation</h3>
+                    <p>Our team unpacks, assembles, and sets everything up for you.</p>
                 </div>
-                
+
                 <div class="feature-card">
-                    <div class="feature-icon">
-                        <img src="images/unboxing.png" alt="unboxing-icon">
-                    </div>
-                    <h3>Easy Setup</h3>
-                    <p>We handle delivery and installation. Just sit back and relax.</p>
+                    <div class="feature-icon"><img src="images/customer-support.png" alt="maintenance-icon"></div>
+                    <h3>Free Maintenance</h3>
+                    <p>Any repair, any time — we fix it at no extra cost, always.</p>
                 </div>
-                
+
                 <div class="feature-card">
-                    <div class="feature-icon">
-                        <img src="images/customer-support.png" alt="support-icon">
-                    </div>
-                    <h3>Maintenance Included</h3>
-                    <p>Full maintenance and support included in every rental.</p>
+                    <div class="feature-icon"><img src="images/money.png" alt="money-icon"></div>
+                    <h3>Pocket-Friendly Rentals</h3>
+                    <p>Plans starting as low as ₹50/month, with no lump-sum payment.</p>
                 </div>
-                
+
                 <div class="feature-card">
-                    <div class="feature-icon">
-                        <img src="images/fast-delivery.png" alt="truck-icon">
-                    </div>
-                    <h3>Fast Delivery</h3>
-                    <p>Quick delivery to your doorstep. No long waits, just quality service.</p>
+                    <div class="feature-icon"><img src="images/quality.png" alt="quality-icon"></div>
+                    <h3>Quality Assured</h3>
+                    <p>Every item is inspected and maintained to the highest standards.</p>
                 </div>
-                
+
                 <div class="feature-card">
-                    <div class="feature-icon">
-                        <img src="images/quality.png" alt="tick-icon">
-                    </div>
-                    <h3>Quality Assurance</h3>
-                    <p>All items are inspected and maintained to the highest standards.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <img src="images/support.png" alt="support-icon">
-                    </div>
+                    <div class="feature-icon"><img src="images/support.png" alt="support-icon"></div>
                     <h3>24/7 Support</h3>
-                    <p>Customer support available round the clock for your peace of mind.</p>
+                    <p>Real people, ready to help with your rental whenever you need it.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon"><img src="images/fast-delivery.png" alt="delivery-icon"></div>
+                    <h3>Free Delivery</h3>
+                    <p>Doorstep delivery on every order, anywhere in Delhi NCR — no extra charge.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon"><img src="images/unboxing.png" alt="installation-icon"></div>
+                    <h3>Free Installation</h3>
+                    <p>Our team unpacks, assembles, and sets everything up for you.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon"><img src="images/customer-support.png" alt="maintenance-icon"></div>
+                    <h3>Free Maintenance</h3>
+                    <p>Any repair, any time — we fix it at no extra cost, always.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon"><img src="images/money.png" alt="money-icon"></div>
+                    <h3>Pocket-Friendly Rentals</h3>
+                    <p>Plans starting as low as ₹50/month, with no lump-sum payment.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon"><img src="images/quality.png" alt="quality-icon"></div>
+                    <h3>Quality Assured</h3>
+                    <p>Every item is inspected and maintained to the highest standards.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon"><img src="images/support.png" alt="support-icon"></div>
+                    <h3>24/7 Support</h3>
+                    <p>Real people, ready to help with your rental whenever you need it.</p>
                 </div>
 
             </div>
         </div>
 
         <section class="comparison-section">
-            <div class="container comparison-container">
-                
-                <div class="comparison-left">
-                    <div class="comparison-header">
-                        <h2>Here's why <span>Rentilla</span> is a perfect choice</h2>
-                    </div>
-                    
-                    <table class="compare-table">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th>Purchase</th>
-                                <th>EMI</th>
-                                <th class="brand-col">Rentilla</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>No Lump Sum Payment</td>
-                                <td class="icon-cross">✖</td>
-                                <td class="icon-check">✔</td>
-                                <td class="brand-col icon-check">✔</td>
-                            </tr>
-                            <tr>
-                                <td>Free Delivery & Installation</td>
-                                <td class="icon-cross">✖</td>
-                                <td class="icon-cross">✖</td>
-                                <td class="brand-col icon-check">✔</td>
-                            </tr>
-                            <tr>
-                                <td>Free Maintenance & Support</td>
-                                <td class="icon-cross">✖</td>
-                                <td class="icon-cross">✖</td>
-                                <td class="brand-col icon-check">✔</td>
-                            </tr>
-                            <tr>
-                                <td>No Hidden Fees</td>
-                                <td class="icon-check">✔</td>
-                                <td class="icon-cross">✖</td>
-                                <td class="brand-col icon-check">✔</td>
-                            </tr>
-                            <tr>
-                                <td>No Long Commitment</td>
-                                <td class="icon-cross">✖</td>
-                                <td class="icon-cross">✖</td>
-                                <td class="brand-col icon-check">✔</td>
-                            </tr>
-                            <tr>
-                                <td>Student/Family Friendly</td>
-                                <td class="icon-cross">✖</td>
-                                <td class="icon-cross">✖</td>
-                                <td class="brand-col icon-check">✔</td>
-                            </tr>
-                        </tbody>
-                    </table>
+            <div class="container comparison-gallery-only">
+
+                <div class="comparison-header comparison-header-center">
+                    <span class="eyebrow">Our Collection</span>
+                    <h2>A Glimpse of What You Can <span>Rent</span></h2>
                 </div>
 
                 <!-- IMAGE CAROUSEL (replaces promo-card) -->
@@ -2424,8 +2210,8 @@
         <div id="cartContent">
             <div class="empty-cart-state">
                 <h3>Your cart is empty</h3>
-                <p>Add products from the Browse Items page to continue.</p>
-                <button class="btn btn-primary" onclick="showPage('items', event)">Browse Items</button>
+                <p>Add products from the Rent page to continue.</p>
+                <button class="btn btn-primary" onclick="showPage('items', event)">Rent Now</button>
             </div>
         </div>
     </div>
@@ -2551,7 +2337,7 @@
             </div>
             <div>
                 <h4>Quick Links</h4>
-                <a onclick="showPage('items')">Browse Items</a>
+                <a onclick="showPage('items')">Rent</a>
                 <a onclick="showPage('home')">Home</a>
                 <a href="#about">About Us</a>
                 <a href="#contact">Contact</a>
@@ -2603,6 +2389,16 @@ function showPage(pageId, event) {
     }
 
     window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function goToCategory(cat) {
+    showPage('items');
+    setTimeout(function () {
+        var btn = document.querySelector('.filter-btn[onclick*="\'' + cat + '\'"]');
+        if (btn) {
+            btn.click();
+        }
+    }, 150);
 }
 
 function toggleLoginMethod(method, event) {
