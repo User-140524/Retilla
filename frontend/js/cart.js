@@ -1,3 +1,6 @@
+import { auth, db } from "./firebase-config.js";
+import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
 let cart = JSON.parse(localStorage.getItem("rentillaCart")) || [];
 
 function saveCart() {
@@ -139,18 +142,22 @@ function renderCart() {
                 </div>
 
                 <p class="cart-summary-note">
-                    Payment will be requested only after the business owner approves item availability and delivery feasibility.
+                    You'll confirm your rental details and complete payment on the next step.
                 </p>
 
-                <button class="btn btn-primary" onclick="startRentalRequest()">
-                    Proceed to Request
+                <button class="btn btn-primary" id="proceedToBuyBtn" onclick="startRentalRequest()">
+                    Proceed to Buy
                 </button>
             </div>
         </div>
     `;
 }
 
-function startRentalRequest() {
+/**
+ * Gate: login -> KYC status -> dashboard (checkout) or kyc page.
+ * Async because checking kycStatus requires a Firestore read.
+ */
+async function startRentalRequest() {
     if (cart.length === 0) {
         alert("Your cart is empty.");
         return;
@@ -159,7 +166,7 @@ function startRentalRequest() {
     // Save checkout intent so app knows user wants to complete a request
     localStorage.setItem("rentillaCheckoutIntent", "true");
 
-    // If user is not logged in, send them to login page
+    // If user is not logged in, send them to login page first
     if (!window.isUserLoggedIn || !window.isUserLoggedIn()) {
         if (typeof showPage === "function") {
             showPage("login");
@@ -169,8 +176,36 @@ function startRentalRequest() {
         return;
     }
 
-    // If already logged in, go directly to dashboard
-    window.location.href = "dashboard.html";
+    const btn = document.getElementById("proceedToBuyBtn");
+    const originalText = btn ? btn.textContent : "";
+
+    try {
+        if (btn) {
+            btn.disabled = true;
+            btn.textContent = "Checking...";
+        }
+
+        const user = auth.currentUser;
+        const userSnap = await getDoc(doc(db, "users", user.uid));
+        const kycStatus = userSnap.exists() ? userSnap.data().kycStatus : "unverified";
+
+        if (kycStatus === "verified") {
+            // Verified users skip straight to the (shrunk) checkout form
+            window.location.href = "dashboard.html";
+        } else {
+            // Not verified yet — send them through DigiLocker KYC first.
+            // kyc.html will redirect to dashboard.html once verification succeeds.
+            window.location.href = "kyc.html";
+        }
+    } catch (error) {
+        console.error("Error checking KYC status:", error);
+        alert("Something went wrong checking your account. Please try again.");
+    } finally {
+        if (btn) {
+            btn.disabled = false;
+            btn.textContent = originalText;
+        }
+    }
 }
 
 function renderRequestSummary() {
