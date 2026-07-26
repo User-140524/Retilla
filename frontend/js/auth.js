@@ -104,12 +104,18 @@ if (signupForm) {
 
       await updateProfile(user, { displayName: name });
 
+      // NOTE: kycStatus starts as "unverified". Users can browse/add to
+      // cart freely regardless of this value — it is only checked at
+      // "Proceed to Buy" time (see cart.js). Once DigiLocker verification
+      // succeeds, a Cloud Function sets this to "verified" and populates
+      // kycVerifiedName / kycVerifiedAddress / kycVerifiedDOB / kycVerifiedAt.
       await setDoc(doc(db, "users", user.uid), {
         uid: user.uid,
         name,
         phone,
         email,
         role: "user",
+        kycStatus: "unverified",
         createdAt: serverTimestamp()
       });
 
