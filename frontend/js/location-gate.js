@@ -4,7 +4,32 @@
    the visitor enters a pincode inside our service area
    (Delhi NCR + Dehradun). Re-asked every session (sessionStorage,
    not localStorage) per product decision.
+
+   Every attempt (accepted AND rejected) is logged to Firestore
+   under "pincodeLogs" — this works even for anonymous, not-yet-
+   logged-in visitors, so you can see demand outside your current
+   service area too.
    ========================================================== */
+
+import { db } from "./firebase-config.js";
+import { collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const PINCODE_SESSION_KEY = "rentillaVerifiedPincode";
+
+async function logPincodeAttempt(pincode, accepted, matchedCity) {
+  try {
+    await addDoc(collection(db, "pincodeLogs"), {
+      pincode,
+      accepted,
+      matchedCity: matchedCity || null,
+      createdAt: serverTimestamp()
+    });
+  } catch (error) {
+    // Never block the user flow if logging fails — this is analytics,
+    // not critical path.
+    console.error("Pincode log failed:", error);
+  }
+}
 
 // Approximate pincode ranges for the service area.
 // NOTE: these ranges are a reasonable approximation based on general
@@ -23,10 +48,11 @@ const SERVICE_AREA_RANGES = [
 
 const SESSION_KEY = "rentillaLocationVerified";
 
-function isPincodeInServiceArea(pincode) {
+function matchServiceArea(pincode) {
   const num = parseInt(pincode, 10);
-  if (isNaN(num) || String(pincode).length !== 6) return false;
-  return SERVICE_AREA_RANGES.some(range => num >= range.min && num <= range.max);
+  if (isNaN(num) || String(pincode).length !== 6) return null;
+  const match = SERVICE_AREA_RANGES.find(range => num >= range.min && num <= range.max);
+  return match ? match.label : null;
 }
 
 function showLocationGate() {
@@ -70,15 +96,23 @@ function showLocationGate() {
   const errorEl = document.getElementById("locationGateError");
   const submitBtn = document.getElementById("locationGateSubmitBtn");
 
-  function attemptSubmit() {
+  async function attemptSubmit() {
     const pincode = input.value.trim();
+    const matchedCity = matchServiceArea(pincode);
 
-    if (isPincodeInServiceArea(pincode)) {
+    submitBtn.disabled = true;
+
+    // Log every attempt — accepted or rejected — without blocking the UI on it.
+    logPincodeAttempt(pincode, !!matchedCity, matchedCity);
+
+    if (matchedCity) {
       sessionStorage.setItem(SESSION_KEY, "true");
+      sessionStorage.setItem(PINCODE_SESSION_KEY, pincode);
       document.body.style.overflow = "";
       overlay.remove();
     } else {
       errorEl.textContent = "Sorry, we don't currently deliver to this pincode. We serve Delhi NCR and Dehradun only.";
+      submitBtn.disabled = false;
     }
   }
 
